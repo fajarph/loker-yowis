@@ -1,7 +1,8 @@
 const express = require("express")
 const cors = require('cors')
 const session = require('express-session')
-
+const SequelizeStore = require('connect-session-sequelize')
+const db = require("./config/Database.js")
 const dotenv = require('dotenv')
 const app = express()
 const PORT = 5000
@@ -11,12 +12,17 @@ const auth = require("./routes/auth.js")
 const users = require("./routes/user.js")
 const jobs = require("./routes/job.js")
 
-// app.get('/', (req, res) => res.send('Hey Fajar'))
+const sessionStore = SequelizeStore(session.Store)
+
+const store = new sessionStore({
+    db: db 
+})
 
 app.use(session({
     secret: process.env.SESS_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: store,
     cookie: {
         secure: 'auto'
     }
@@ -32,6 +38,8 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(auth)
 app.use(users)
 app.use(jobs)
+
+store.sync()
 
 app.listen(PORT, () => {
     console.log(`Server Menyala di PORT ` +PORT);
