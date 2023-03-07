@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
@@ -35,20 +35,19 @@ const ProfileUser = () => {
                         <h1>Picture</h1>
                     </div>
                     <div className='col-6 ms-2'>
-
-                            <div className=''>
-                                <h4>{username}</h4>
-                                <div className='row mt-5'>
-                                    <div className='col-6'>
-                                        <h5>Nomer Hp</h5>
-                                        <h5>Status</h5>
-                                    </div>
-                                    <div className='col'>
-                                        <h5>: {nohp}</h5>
-                                        <h5>: {status}</h5>
-                                    </div>
+                        <div className=''>
+                            <h4>{username}</h4>
+                            <div className='row mt-5'>
+                                <div className='col-6'>
+                                    <h5>Nomer Hp</h5>
+                                    <h5>Status</h5>
+                                </div>
+                                <div className='col'>
+                                    <h5>: {nohp}</h5>
+                                    <h5>: {status}</h5>
                                 </div>
                             </div>
+                        </div>
                     </div> 
                 </div>
             </div>

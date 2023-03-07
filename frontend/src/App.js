@@ -17,7 +17,6 @@ function App() {
           <Route path="/edit-profile/:id" element={<EditProfile />}/>
           <Route path="/profile/:id" element={<Profile />}/>
           <Route path="/jobs" element={<JobList />}/>
-
         </Routes>
       </BrowserRouter>
     </div>

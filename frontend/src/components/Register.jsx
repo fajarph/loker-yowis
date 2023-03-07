@@ -28,7 +28,7 @@ const Register = () => {
             <h2 className="fw-bold  text-uppercase text-center text-dark mt-5">Register</h2>
             <form onSubmit={saveUser} className='container justify-content-center'>
                 <div className="mb-3">
-                    <label for="exampleInputEmail1" className="form-label">Email</label>
+                    <label className="form-label">Email</label>
                     <input 
                         type="email" 
                         className="form-control" 
@@ -38,7 +38,7 @@ const Register = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Password</label>
+                    <label className="form-label">Password</label>
                     <input 
                         type="password" 
                         className="form-control"
@@ -48,7 +48,7 @@ const Register = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Confirm Password</label>
+                    <label className="form-label">Confirm Password</label>
                     <input 
                         type="password" 
                         className="form-control" 

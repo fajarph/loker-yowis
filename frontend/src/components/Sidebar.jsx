@@ -1,12 +1,7 @@
 import React from 'react'
-import { useSelector } from "react-redux"
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
-
-    const {user, isError, isSuccess, isLoading, message} = useSelector(
-        (state) => state.auth
-    );
     
   return (
     <div>
@@ -22,8 +17,8 @@ const Sidebar = () => {
                 </div>
                 <div className='mt-3 ms-3 me-3'>
                     <h6 className='row'>
-                        <Link to={`/edit-profile/${user.uuid}`}>
-                            <button type="button" class="btn btn-dark">Edit Profile</button>
+                        <Link to={``} className="btn btn-dark">
+                            Edit Profile
                         </Link>
                     </h6>
                 </div>
