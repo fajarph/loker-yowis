@@ -26,7 +26,7 @@ const EditProfile = () => {
                 instagramUrl,
                 facebookUrl
             });
-            navigate(`/profile`)
+            navigate(`/profile/${id}`)
         } catch (error) {
             console.log(error);
         }

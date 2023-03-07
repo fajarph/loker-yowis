@@ -33,7 +33,7 @@ const ProfileUser = () => {
             <div className='mt-5 row'>
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
-                        <h1 className='d-flex justify-content-center'>Username</h1>
+                        <h1 className='d-flex justify-content-center'>{username}</h1>
                     </div>
                     <div className='border border-1 rounded-bottom'>
                         <div className='mt-3 ms-3'>
@@ -43,7 +43,7 @@ const ProfileUser = () => {
                         </div>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                <Link to={``} className="btn btn-dark">
+                                <Link to={`/edit/profile/${id}`} className="btn btn-dark">
                                     Edit Profile
                                 </Link>
                             </h6>
