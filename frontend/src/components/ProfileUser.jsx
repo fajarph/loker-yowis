@@ -36,9 +36,11 @@ const ProfileUser = () => {
                         <h1 className='d-flex justify-content-center'>{username}</h1>
                     </div>
                     <div className='border border-1 rounded-bottom'>
-                        <div className='mt-3 ms-3'>
-                            <h6>
-                                Cari Lowongan Kerja
+                        <div className='mt-3 ms-3 me-3'>
+                            <h6 className='row'>
+                                <Link to={`/jobs`} className="btn btn-dark">
+                                    Cari Lowongan Kerja
+                                </Link>
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3'>
@@ -46,16 +48,6 @@ const ProfileUser = () => {
                                 <Link to={`/edit/profile/${id}`} className="btn btn-dark">
                                     Edit Profile
                                 </Link>
-                            </h6>
-                        </div>
-                        <div className='mt-3 ms-3'>
-                            <h6>
-                                Cari Lowongan Kerja
-                            </h6>
-                        </div>
-                        <div className='mt-3 ms-3'>
-                            <h6>
-                                Cari Lowongan Kerja
                             </h6>
                         </div>
                     </div>

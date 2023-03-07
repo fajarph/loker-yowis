@@ -42,20 +42,20 @@ const JobList = () => {
                 <h2>Cari Lowongan kerja</h2>
                 <div className='row mt-4'>
                     <div className='col-3'>
-                        <h4>VACANCY</h4>
+                        <h5>VACANCY</h5>
                     </div>
                     <div className='col-4'>
-                        <h4>DETAIL</h4>
+                        <h5>DETAIL</h5>
                     </div>
                     <div className='col-5'>    
-                        <h4>DESKRIPSI PEKERJAAN</h4>
+                        <h5>DESKRIPSI PEKERJAAN</h5>
                     </div>
                 </div>
                 {jobs.map((job, index) => (
                     <div className='row border border-1'>
                         <div className='col-3'>
                             <div className='row'> 
-                                <div className='col-4 mt-2'>
+                                <div className='col-3 mt-2'>
                                     <h5>Image</h5>
                                 </div>
                                 <div className='col mt-2'>
@@ -83,7 +83,7 @@ const JobList = () => {
                                 </table>
                             </div>
                         </div>
-                        <div className='col-5'>
+                        <div className='col-4'>
                             <div className=''> 
                                 <p className='mt-2'>
                                     {job.jobDescription}
