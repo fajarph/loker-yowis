@@ -61,7 +61,7 @@ const updateUser = async(req, res) => {
             facebookUrl: facebookUrl
         },{
             where:{
-                id: user.id
+                uuid: req.params.id
             }
         })
         

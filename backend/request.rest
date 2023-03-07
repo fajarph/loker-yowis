@@ -16,7 +16,7 @@ POST http://localhost:5000/users
 Content-Type: application/json
 
 {
-    "email": "gopalx@gmail.com",
+    "email": "Yowisjar@gmail.com",
     "password": "12345678",
     "confPassword": "12345678"
 }
@@ -41,11 +41,11 @@ Content-Type: application/json
 
 //Update User
 ###
-PATCH http://localhost:5000/users/2de1405b-6130-4f42-896d-61ad41aa75be
+PATCH http://localhost:5000/users/78c50742-ee71-42ea-8a4e-a6e9f91fe58b
 Content-Type: application/json
 
 {
-    "username": "Fajar",
+    "username": "Yowis",
     "nohp": "085882046322",
     "status": "Belum Menikah",
     "instagramUrl": "https://www.instagram.com/yowisjar/",

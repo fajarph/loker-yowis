@@ -8,14 +8,13 @@ const Login = () => {
     const [password, setPassword] = useState("")   
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { id } = useParams()
     const {user, isError, isSuccess, isLoading, message} = useSelector(
         (state) => state.auth
     );
 
     useEffect(() => {
         if(user || isSuccess){
-            navigate(`/profile/edit/${id}`)
+            navigate(`/edit-profile/${user.uuid}`)
         }
         dispatch(reset())
     },[user, isSuccess, dispatch, navigate])
