@@ -1,0 +1,96 @@
+//Get All User
+GET http://localhost:5000/users
+
+//Get All Job
+###
+GET http://localhost:5000/jobs
+
+
+//Get Single User 
+###
+GET http://localhost:5000/users/b4a3292e-b5f4-4836-bbbb-abebbd77c5dc
+
+//Create User
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "email": "gopalx@gmail.com",
+    "password": "12345678",
+    "confPassword": "12345678"
+}
+
+//Create Job
+###
+POST http://localhost:5000/jobs
+Content-Type: application/json
+
+{
+    "companyName": "PT.Yowisjar",
+    "companyAddress": "Bali",
+    "salery": "RP. 2 - 4 juta",
+    "jobRole": "programmer",
+    "jobLevel": "junior",
+    "jobType": "programmer",
+    "jobDescription": "harus udah jago ngoding",
+    "education": "SMK",
+    "industry": "programmer"
+    
+}
+
+//Update User
+###
+PATCH http://localhost:5000/users/2de1405b-6130-4f42-896d-61ad41aa75be
+Content-Type: application/json
+
+{
+    "username": "Fajar",
+    "nohp": "085882046322",
+    "status": "Belum Menikah",
+    "instagramUrl": "https://www.instagram.com/yowisjar/",
+    "facebookUrl": "https://www.facebook.com/fajar.p.herianto.3"
+}
+
+//Update Job
+###
+PATCH http://localhost:5000/jobs/1
+Content-Type: application/json
+
+{
+    "companyName": "PT.Yowisjar",
+    "companyAddress": "Bandung",
+    "salery": "RP. 5 - 9 juta",
+    "jobRole": "programmer",
+    "jobLevel": "junior",
+    "jobType": "programmer",
+    "jobDescription": "harus udah jago ngoding",
+    "education": "S1",
+    "industry": "programmer"
+}
+
+###
+//Cek Akun
+GET http://localhost:5000/me
+
+###
+//Login User
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "Fajar@gmail.com",
+    "password": "12345678"
+}
+
+//Delete User
+###
+DELETE http://localhost:5000/users/286c9630-04a6-42f1-806b-e9624b4078c3
+
+//Delete User
+###
+DELETE http://localhost:5000/jobs/1
+
+//Logout User
+###
+DELETE http://localhost:5000/logout
