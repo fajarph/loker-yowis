@@ -3,8 +3,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./pages/Dashboard";
 import EditProfile from "./components/EditProfile";
-import Profile from "./pages/Profile";
 import JobList from "./components/JobList";
+import ProfileUser from "./components/ProfileUser";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/edit-profile/:id" element={<EditProfile />}/>
-          <Route path="/profile/:id" element={<Profile />}/>
+          <Route path="/profile/:id" element={<ProfileUser />}/>
           <Route path="/jobs" element={<JobList />}/>
         </Routes>
       </BrowserRouter>
