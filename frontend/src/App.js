@@ -6,6 +6,7 @@ import JobList from "./components/JobList";
 import ProfileUser from "./components/ProfileUser";
 import Beranda from "./pages/Beranda";
 import Dashboard from "./components/Dashboard";
+import AddJobs from "./components/AddJobs";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/edit/profile/:id" element={<EditProfile />}/>
           <Route path="/profile/:id" element={<ProfileUser />}/>
           <Route path="/jobs" element={<JobList />}/>
+          <Route path="/add/job" element={<AddJobs />}/>
         </Routes>
       </BrowserRouter>
     </div>

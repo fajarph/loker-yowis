@@ -10,7 +10,6 @@ const ProfileUser = () => {
     const [status, setStatus] = useState("")
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
-    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
@@ -47,6 +46,13 @@ const ProfileUser = () => {
                             <h6 className='row'>
                                 <Link to={`/edit/profile/${id}`} className="btn btn-dark">
                                     Edit Profile
+                                </Link>
+                            </h6>
+                        </div>
+                        <div className='mt-3 ms-3 me-3 mb-3'>
+                            <h6 className='row'>
+                                <Link to={"/add/job"} className="btn btn-dark">
+                                    Add Job
                                 </Link>
                             </h6>
                         </div>

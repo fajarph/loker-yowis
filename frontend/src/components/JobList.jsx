@@ -22,7 +22,7 @@ const JobList = () => {
 
   return (
     <>
-        <div className='container mt-5'>
+        <div className='container mt-5 mb-5'>
             <form>
                 <div className='d-flex justify-content-center row'>
                     <div className="col-9">
