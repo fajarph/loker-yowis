@@ -24,15 +24,15 @@ const JobList = () => {
     <>
         <div className='container mt-5'>
             <form>
-                <div className='d-flex justify-content-center'>
-                    <div className="mb-3">
+                <div className='d-flex justify-content-center row'>
+                    <div className="col-9">
                         <input 
                             type="text" 
                             className="form-control"
                         />
                     </div>
-                    <div>
-                        <button type="submit" className="btn btn-dark">Search</button>
+                    <div className='col-1'>
+                        <button type="submit" className="btn btn-dark row">Search</button>
                     </div>
                 </div>
                 
