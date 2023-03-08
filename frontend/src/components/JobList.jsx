@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 
 const JobList = () => {
@@ -15,13 +14,9 @@ const JobList = () => {
         setJobs(response.data);
     }
 
-    const deleteJob = async(jobId) => {
-        await axios.delete(`http://localhost:5000/jobs/${jobId}`)
-        getJobs()
-    }
-
   return (
     <>
+        <Navbar/>
         <div className='container mt-5 mb-5'>
             <form>
                 <div className='d-flex justify-content-center row'>

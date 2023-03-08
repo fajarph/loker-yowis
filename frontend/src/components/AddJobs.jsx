@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from './Navbar'
@@ -14,6 +14,7 @@ const AddJobs = () => {
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
     const navigate = useNavigate();
+    const { id } = useParams()
 
     const SaveJobs = async (e) => {
         e.preventDefault();
@@ -29,7 +30,7 @@ const AddJobs = () => {
                 education,
                 industry
             });
-            navigate(`/jobs`)
+            navigate(`/jobs/${id}`)
         } catch (error) {
             console.log(error);
         }

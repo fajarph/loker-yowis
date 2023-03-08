@@ -31,7 +31,7 @@ const ProfileUser = () => {
                     <div className='border border-1 rounded-bottom'>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                <Link to={`/jobs`} className="btn btn-dark">
+                                <Link to={`/jobs/${id}`} className="btn btn-dark">
                                     Cari Lowongan Kerja
                                 </Link>
                             </h6>
@@ -40,6 +40,13 @@ const ProfileUser = () => {
                             <h6 className='row'>
                                 <Link to={`/edit/profile/${id}`} className="btn btn-dark">
                                     Edit Profile
+                                </Link>
+                            </h6>
+                        </div>
+                        <div className='mt-3 ms-3 me-3 mb-3'>
+                            <h6 className='row'>
+                                <Link to={`/add/job/${id}`} className="btn btn-dark">
+                                    Add Job
                                 </Link>
                             </h6>
                         </div>
