@@ -22,7 +22,6 @@ const JobList = () => {
 
   return (
     <>
-        <Navbar/>
         <div className='container mt-5'>
             <form>
                 <div className='d-flex justify-content-center'>

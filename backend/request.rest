@@ -27,14 +27,14 @@ POST http://localhost:5000/jobs
 Content-Type: application/json
 
 {
-    "companyName": "PT.Yowisjar",
-    "companyAddress": "Bali",
+    "companyName": "PT. Arvitech Mega Solusi",
+    "companyAddress": "Jakarta Pusat",
     "salery": "RP. 2 - 4 juta",
-    "jobRole": "programmer",
+    "jobRole": "Senior Programmer",
     "jobLevel": "junior",
     "jobType": "programmer",
-    "jobDescription": "harus udah jago ngoding",
-    "education": "SMK",
+    "jobDescription": "PT. Arvitech Mega Solusi, Driven by technology powered business innovation and committed to bridge the gap between technology and business needs. ARVITECH empowering business by building, integrating, and providing IT ...",
+    "education": "Diploma/D1/D2/D3, Sarjana / S1",
     "industry": "programmer"
     
 }

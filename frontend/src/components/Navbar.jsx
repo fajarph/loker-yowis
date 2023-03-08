@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from "react-redux"  
 import { LogOut, reset } from "../features/authSlice"
 
@@ -7,6 +7,7 @@ const Navbar = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { id } = useParams();
 
     const logout = () => {
         dispatch(LogOut())
@@ -29,6 +30,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
+                <Link to={`/dashboard/${id}`} type="submit" className="btn btn-light me-3">Dasboard</Link>
                 <Link to={'/register'} type="submit" className="btn btn-light me-3" >Register</Link>
                 <Link to={'/login'} type="submit" className="btn btn-light me-3">Loginn</Link>
                 <button onClick={logout} className="btn btn-light">Logout</button>

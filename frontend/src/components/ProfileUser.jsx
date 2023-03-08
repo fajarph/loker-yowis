@@ -33,7 +33,7 @@ const ProfileUser = () => {
             <div className='mt-5 row'>
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
-                        <h1 className='d-flex justify-content-center'>{username}</h1>
+                        <h4 className='d-flex justify-content-center mt-2'>{username}</h4>
                     </div>
                     <div className='border border-1 rounded-bottom'>
                         <div className='mt-3 ms-3 me-3'>
