@@ -62,44 +62,80 @@ const AddJobs = () => {
                     />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Salery</label>
+                    <label className="form-label">Salary</label>
                     <input 
                         type="text" 
                         className="form-control" 
                         value={salery} 
                         onChange={(e) => setSalery(e.target.value)}
-                        placeholder='Salery'
+                        placeholder='Salary'
                     />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Role</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
+                    <select
+                        className="form-select" 
                         value={jobRole} 
                         onChange={(e) => steJobRole(e.target.value)}
                         placeholder='Job Role'
-                    />
+                    >
+                        <option selected hidden>Job Role</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Engineer">Engineer</option>
+                        <option value="Accountant">Accountant</option>
+                        <option value="Human Resources Specialist">Human Resources Specialist</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Data Scientist">Data Scientist</option>
+                        <option value="Programmer">Programmer</option>
+                        <option value="Designer">Designer</option>
+                        <option value="Project Manager">Project Manager</option>
+                        <option value="Web Developer">Web Developer</option>
+                        <option value="Writer">Writer</option>
+                        <option value="Penerjemah">Penerjemah</option>
+                        <option value="Customer Service ">Customer Service </option>
+                        <option value="Trainer">Trainer</option>
+                        <option value="Supervisor">Supervisor</option>
+                    </select>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Level</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
+                    <select
+                        className="form-select" 
                         value={jobLevel} 
                         onChange={(e) => setJobLevel(e.target.value)}
                         placeholder='Job Level'
-                    />
+                    >
+                        <option selected hidden>Job Level</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Senior">Senior</option>
+                    </select>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Type</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
+                    <select
+                        className="form-select"
                         value={jobType} 
                         onChange={(e) => setJobType(e.target.value)}
                         placeholder='Job Type'
-                    />
+                    >
+                        <option selected hidden>Job Type</option>
+                        <option value="General Manager">General Manager</option>
+                        <option value="Akunting">Akunting</option>
+                        <option value="Analis">Analis</option>
+                        <option value="Jurnalis">Jurnalis</option>
+                        <option value="Karyawan Restoran">Karyawan Restoran</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Programmer">Programmer</option>
+                        <option value="Arsitek">Arsitek</option>
+                        <option value="Guru">Guru</option>
+                        <option value="Programmer">Programmer</option>
+                        <option value="Penulis">Penulis</option>
+                        <option value="Penerjemah">Penerjemah</option>
+                        <option value="Insinyur">Insinyur</option>
+                        <option value="Psikolog">Psikolog</option>
+                        <option value="Fotografer">Fotografer</option>
+                    </select>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Description</label>

@@ -68,12 +68,11 @@ const EditProfile = () => {
                 <div>
                     <label className="form-label">Status</label>
                     <select 
-                        className="form-select" 
-                        aria-label="Default select example"
+                        className="form-select"
                         value={status} 
                         onChange={(e) => setStatus(e.target.value)}
-                        >
-                        <option disabled selected hidden>Your Status</option>
+                    >
+                        <option selected hidden>Your Status</option>
                         <option value="Sudah Menikah">Sudah Menikah</option>
                         <option value="Belum Menikah">Belum Menikah</option>
                     </select>
