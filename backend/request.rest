@@ -3,7 +3,7 @@ GET http://localhost:5000/users
 
 //Get All Job
 ###
-GET http://localhost:5000/jobs
+GET http://localhost:5000/jobs?search_query=Fajar&page=0&limit=5
 
 
 //Get Single User 
