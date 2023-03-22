@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom';
+import { Editor } from '@tinymce/tinymce-react';
 import Navbar from './Navbar'
 
 const AddJobs = () => {
@@ -10,16 +11,21 @@ const AddJobs = () => {
     const [jobRole, steJobRole] = useState("");
     const [jobLevel, setJobLevel] = useState("");
     const [jobType, setJobType] = useState("");
-    const [jobDescription, setJobDescription] = useState("");
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
     const navigate = useNavigate();
     const { id } = useParams()
+    const editorRef = useRef(null);
 
     const SaveJobs = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`http://localhost:5000/jobs`,{
+            let jobDescription = ""
+            if (editorRef.current) {
+                jobDescription = editorRef.current.getContent()
+            }
+
+            axios.post(`http://localhost:5000/jobs`,{
                 companyName,
                 companyAddress,
                 salery,
@@ -139,13 +145,23 @@ const AddJobs = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Description</label>
-                    <textarea 
-                        type="text" 
-                        className="form-control"
-                        value={jobDescription} 
-                        onChange={(e) => setJobDescription(e.target.value)}
-                        placeholder='Job Description'
-                        rows="4"
+                    <Editor
+                        onInit={(_, editor) => editorRef.current = editor}
+                        initialValue=""
+                        init={{
+                        height: 350,
+                        menubar: false,
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar: 'undo redo | formatselect | ' +
+                        'bold italic backcolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                        'removeformat | help',
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        }}
                     />
                 </div>
                 <div className="mb-3">

@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate'
 const JobList = () => {
     const [jobs, setJobs] = useState([])
     const [page, setPage] = useState(0)
-    const [limit, setlimit] = useState(3)
+    const [limit, setlimit] = useState(5)
     const [pages, setPages] = useState(0)
     const [rows, setRows] = useState(0)
     const [keyword, setKeyword] = useState("")
@@ -108,7 +108,7 @@ const JobList = () => {
                         <div className='col-4'>
                             <div className=''> 
                                 <p className='mt-2'>
-                                    {job.jobDescription}
+                                    <div dangerouslySetInnerHTML={{__html: job.jobDescription}} />
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>
                                     <button type="button" className="btn btn-dark me-1">SELENGKAPNYA</button>
