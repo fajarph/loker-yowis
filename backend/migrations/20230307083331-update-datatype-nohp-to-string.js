@@ -10,7 +10,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
     await queryInterface.changeColumn("Users", "nohp", {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true,
     })
   }

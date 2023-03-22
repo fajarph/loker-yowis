@@ -26,7 +26,10 @@ module.exports = {
       jobType: {
         type: Sequelize.STRING
       },
-      jobDescription: {
+      jobShortDescription: {
+        type: Sequelize.STRING
+      },
+      jobLongDescription: {
         type: Sequelize.STRING
       },
       education: {

@@ -7,6 +7,7 @@ import ProfileUser from "./components/ProfileUser";
 import Beranda from "./pages/Beranda";
 import Dashboard from "./components/Dashboard";
 import AddJobs from "./components/AddJobs";
+import JobDetail from "./components/JobDetail";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/profile/:id" element={<ProfileUser />}/>
           <Route path="/jobs/:id" element={<JobList />}/>
           <Route path="/add/job/:id" element={<AddJobs />}/>
+          <Route path="/job/detail" element={<JobDetail />}/>
         </Routes>
       </BrowserRouter>
     </div>
