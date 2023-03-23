@@ -38,7 +38,7 @@ const AddJobs = () => {
                 education,
                 industry
             });
-            navigate(`/jobs/${id}`)
+            navigate(`/jobs`)
         } catch (error) {
             console.log(error);
         }

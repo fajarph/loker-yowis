@@ -44,8 +44,7 @@ const getJobs = async(req, res) => {
         limit: limit,
         order:[
             ['id', 'DESC']
-        ],
-        attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry"],
+        ]
     })
     res.json({
         result: result,
@@ -59,8 +58,9 @@ const getJobs = async(req, res) => {
 const getJobById = async(req, res) => {
     try {
         const response = await Job.findOne({
+            attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry"],
             where:{
-                id: req.params.id
+                uuid: req.params.id
             }
         });
         res.status(200).json(response);
@@ -82,7 +82,7 @@ const updateJob = async(req, res) => {
     try {
         await Job.update(req.body, {
             where:{
-                id: req.params.id
+                uuid: req.params.id
             }
         });
         res.status(200).json({msg: "Job Updated"});
@@ -95,7 +95,7 @@ const deleteJob = async(req, res) => {
     try {
         await Job.destroy({
             where:{
-                id: req.params.id
+                uuid: req.params.id
             }
         });
         res.status(200).json({msg: "Job Deleted"});

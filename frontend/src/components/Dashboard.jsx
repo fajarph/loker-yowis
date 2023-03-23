@@ -1,21 +1,32 @@
 import React, { useState, useEffect} from 'react'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
 import Navbar from './Navbar';
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
     const [createdAt, setCreatedAt] = useState("")
     const navigate = useNavigate();
-    const { id } = useParams();
+    const dispatch = useDispatch()
+    const {user, isError, isSuccess, isLoading, message} = useSelector(
+        (state) => state.auth
+    );
 
     useEffect(() => {
-        getUserById()
-    }, [])
+        dispatch(getMe())
+    }, []);
+
+    useEffect(() => {
+        if (user !== undefined) {
+            getUserById();
+        }
+    }, [user]);
 
     const getUserById = async () => {
-        const response = await axios.get(`http://localhost:5000/users`)
+        const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
         setUsername(response.data.username)
     }
 

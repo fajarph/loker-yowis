@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from 'axios'
+import { useParams } from "react-router-dom";
 
 const JobDetail = () => {
     const [companyName, setCompanyName] = useState("");
@@ -14,11 +14,11 @@ const JobDetail = () => {
     const [jobLongDescription, setJobLongDescription] = useState("")
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
-    const {id} = useParams()
+    const { id } = useParams()
 
     useEffect(() => {
         getJobDetail()
-    }, [])
+    }, []);
 
     const getJobDetail = async () => {
         const response = await axios.get(`http://localhost:5000/jobs/${id}`)

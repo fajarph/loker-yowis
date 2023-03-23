@@ -1,4 +1,7 @@
 'use strict';
+
+const { v4: uuidv4 } = require('uuid');
+
 const {
   Model
 } = require('sequelize');
@@ -14,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Job.init({
+    uuid: DataTypes.STRING,
     companyName: DataTypes.STRING,
     companyAddress: DataTypes.STRING,
     salary: DataTypes.STRING,
@@ -28,5 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Job',
   });
+
+  Job.beforeCreate(job => job.uuid = uuidv4());
+
   return Job;
 };
