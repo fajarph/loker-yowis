@@ -108,7 +108,7 @@ const JobList = () => {
                         <div className='col-4'>
                             <div className=''> 
                                 <p className='mt-2'>
-                                    <div dangerouslySetInnerHTML={{__html: job.jobDescription}} />
+                                    {job.jobShortDescription}
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>
                                     <button type="button" className="btn btn-dark me-1">SELENGKAPNYA</button>

@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import axios from 'axios'
 
 const JobDetail = () => {
+    const [jobLongDescription, setJobLongDescription] = useState("")
+    const {id} = useParams()
+
+    useEffect(() => {
+        getJobLongDescriptionById()
+    }, [])
+
+    const getJobLongDescriptionById = async () => {
+        const response = await axios.get(`http://localhost:5000/jobs/${id}`)
+        setJobLongDescription(response.data.jobLongDescription)
+    }
+
+    
 
     return(
         <div>
@@ -14,7 +29,7 @@ const JobDetail = () => {
                                 <div className="entry-content">
                                     <div className="card mt-5">
                                         <div className="card-body">
-                                            <h2>Lowongan Kerja</h2>
+                                            <h4 className="fw-bold">Lowongan Kerja</h4>
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
                                                 <h6>PT. KAMINDO SUKSES SELALU</h6>
                                                 <h6>Jakarta Barat</h6>
@@ -43,12 +58,40 @@ const JobDetail = () => {
                                     </div>
                                     <div className="card mt-4">
                                         <div className="card-body">
-                                            <h6>Posted Date: Maret 22, 2023</h6>
+                                            <h6 className="fw-bold">Posted Date: Maret 22, 2023</h6>
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
-                                                <div>
-                                                    {}
+                                                <div dangerouslySetInnerHTML={{__html: jobLongDescription}} />
+                                            </div>
+                                            <div className="card">
+                                            <div className="card-body">
+                                                <div className='d-flex justify-content-end mb-4'>
+                                                    <button type="button" className="btn btn-dark me-1">SIMPAN</button>
+                                                    <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-4">
+                            <div className="job-company-details">
+                                <div className="">
+                                    <div className="card mt-5">
+                                        <div className="card-body">
+                                            <h5 className="fw-bold">Profile Perusahaan</h5>
+                                        </div>
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <div className="text-center">
+                                                    <h3>IMAGE</h3>
+                                                </div>
+                                                <div className="mt-4">
+                                                    <h6 className="fw-bold text-secondary">Deskripsi Perusahaan</h6>
+                                                    <p>{}</p>
                                                 </div>
                                             </div>
                                         </div>

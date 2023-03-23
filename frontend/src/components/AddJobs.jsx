@@ -11,6 +11,7 @@ const AddJobs = () => {
     const [jobRole, steJobRole] = useState("");
     const [jobLevel, setJobLevel] = useState("");
     const [jobType, setJobType] = useState("");
+    const [jobShortDescription, setJobShortDescription] = useState("");
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
     const navigate = useNavigate();
@@ -20,9 +21,9 @@ const AddJobs = () => {
     const SaveJobs = async (e) => {
         e.preventDefault();
         try {
-            let jobDescription = ""
+            let jobLongDescription = ""
             if (editorRef.current) {
-                jobDescription = editorRef.current.getContent()
+                jobLongDescription = editorRef.current.getContent()
             }
 
             axios.post(`http://localhost:5000/jobs`,{
@@ -32,7 +33,8 @@ const AddJobs = () => {
                 jobRole,
                 jobLevel,
                 jobType,
-                jobDescription,
+                jobShortDescription,
+                jobLongDescription,
                 education,
                 industry
             });
@@ -144,7 +146,17 @@ const AddJobs = () => {
                     </select>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Job Description</label>
+                    <label className="form-label">Job Short Description</label>
+                    <textarea 
+                        type="text" 
+                        className="form-control"
+                        value={jobShortDescription} 
+                        onChange={(e) => setJobShortDescription(e.target.value)}
+                        placeholder='Job Short Description'
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Job Long Description</label>
                     <Editor
                         onInit={(_, editor) => editorRef.current = editor}
                         initialValue=""

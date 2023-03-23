@@ -22,7 +22,7 @@ function App() {
           <Route path="/profile/:id" element={<ProfileUser />}/>
           <Route path="/jobs/:id" element={<JobList />}/>
           <Route path="/add/job/:id" element={<AddJobs />}/>
-          <Route path="/job/detail" element={<JobDetail />}/>
+          <Route path="/job/detail/:id" element={<JobDetail />}/>
         </Routes>
       </BrowserRouter>
     </div>
