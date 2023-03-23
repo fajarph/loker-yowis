@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from 'axios'
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const JobDetail = () => {
     const [companyName, setCompanyName] = useState("");
@@ -85,6 +85,7 @@ const JobDetail = () => {
                                             <div className="card">
                                             <div className="card-body">
                                                 <div className='d-flex justify-content-end mb-4'>
+                                                    <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
                                                     <button type="button" className="btn btn-dark me-1">SIMPAN</button>
                                                     <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
                                                 </div>

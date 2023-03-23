@@ -8,6 +8,7 @@ import Beranda from "./pages/Beranda";
 import Dashboard from "./components/Dashboard";
 import AddJobs from "./components/AddJobs";
 import JobDetail from "./components/JobDetail";
+import EditJobs from "./components/EditJobs";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/profile" element={<ProfileUser />}/>
           <Route path="/jobs" element={<JobList />}/>
           <Route path="/add/job" element={<AddJobs />}/>
+          <Route path="/edit/jobs/:id" element={<EditJobs />}/>
           <Route path="/job/detail/:id" element={<JobDetail />}/>
         </Routes>
       </BrowserRouter>
