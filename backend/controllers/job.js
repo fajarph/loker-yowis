@@ -58,7 +58,7 @@ const getJobs = async(req, res) => {
 const getJobById = async(req, res) => {
     try {
         const response = await Job.findOne({
-            attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry"],
+            attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry", 'createdAt'],
             where:{
                 uuid: req.params.id
             }

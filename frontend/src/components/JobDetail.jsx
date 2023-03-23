@@ -14,6 +14,7 @@ const JobDetail = () => {
     const [jobLongDescription, setJobLongDescription] = useState("")
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
+    const [createdAt, setCreatedAt] = useState("")
     const { id } = useParams()
 
     useEffect(() => {
@@ -32,6 +33,7 @@ const JobDetail = () => {
         setJobLongDescription(response.data.jobLongDescription)
         setEducation(response.data.education)
         setIndustry(response.data.industry)
+        setCreatedAt(response.data.createdAt)
     }
 
     return(
@@ -74,7 +76,7 @@ const JobDetail = () => {
                                     </div>
                                     <div className="card mt-4">
                                         <div className="card-body">
-                                            <h6 className="fw-bold">Posted Date: </h6>
+                                            <h6 className="fw-bold">Posted Date: {createdAt}</h6>
                                         </div>
                                         <div className="card">
                                             <div className="card-body">

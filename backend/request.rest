@@ -10,6 +10,10 @@ GET http://localhost:5000/jobs?search_query=Fajar&page=0&limit=5
 ###
 GET http://localhost:5000/users/b4a3292e-b5f4-4836-bbbb-abebbd77c5dc
 
+//Get Single Job 
+###
+GET http://localhost:5000/jobs/c7129cab-dbab-4a5c-8884-3a9aebc4f974
+
 //Create User
 ###
 POST http://localhost:5000/users

@@ -44,7 +44,7 @@ const Register = () => {
                         className="form-control"
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder='Email'
+                        placeholder='Password'
                     />
                 </div>
                 <div className="mb-3">
@@ -54,7 +54,7 @@ const Register = () => {
                         className="form-control" 
                         value={confPassword} 
                         onChange={(e) => setConfPassword(e.target.value)}
-                        placeholder='Email'
+                        placeholder='Confirm Password'
                     />
                 </div>
                 <button type="submit" className="btn btn-dark">Submit</button>
