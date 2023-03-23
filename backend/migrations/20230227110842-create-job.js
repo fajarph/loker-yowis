@@ -14,7 +14,7 @@ module.exports = {
       companyAddress: {
         type: Sequelize.STRING
       },
-      salery: {
+      salary: {
         type: Sequelize.STRING
       },
       jobRole: {

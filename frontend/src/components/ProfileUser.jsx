@@ -1,8 +1,10 @@
 import React, { useState, useEffect} from 'react'
-import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 import Navbar from './Navbar';
+import { getMe } from "../features/authSlice"
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
@@ -10,14 +12,23 @@ const ProfileUser = () => {
     const [status, setStatus] = useState("")
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
-    const { id } = useParams();
+    const dispatch = useDispatch()
+    const {user, isError, isSuccess, isLoading, message} = useSelector(
+        (state) => state.auth
+    );
+
+     useEffect(() => {
+        dispatch(getMe())
+    }, []);
 
     useEffect(() => {
-        getUserById()
-    }, [])
+        if (user !== undefined) {
+            getUserById();
+        }
+    }, [user]);
 
     const getUserById = async () => {
-        const response = await axios.get(`http://localhost:5000/users/${id}`)
+        const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
         setUsername(response.data.username)
         setNohp(response.data.nohp)
         setStatus(response.data.status)
@@ -37,21 +48,21 @@ const ProfileUser = () => {
                     <div className='border border-1 rounded-bottom'>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                <Link to={`/jobs/${id}`} className="btn btn-dark">
+                                <Link to={`/jobs`} className="btn btn-dark">
                                     Cari Lowongan Kerja
                                 </Link>
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                <Link to={`/edit/profile/${id}`} className="btn btn-dark">
+                                <Link to={`/edit/profile`} className="btn btn-dark">
                                     Edit Profile
                                 </Link>
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3 mb-3'>
                             <h6 className='row'>
-                                <Link to={`/add/job/${id}`} className="btn btn-dark">
+                                <Link to={`/add/job`} className="btn btn-dark">
                                     Add Job
                                 </Link>
                             </h6>

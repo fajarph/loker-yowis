@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
 
 const EditProfile = () => {
@@ -9,31 +11,40 @@ const EditProfile = () => {
     const [status, setStatus] = useState("")
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
-    const navigate = useNavigate();
-    const { id } = useParams();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {user, isError, isSuccess, isLoading, message} = useSelector(
+        (state) => state.auth
+    );
 
     useEffect(() => {
-        getEditUserById();
+        dispatch(getMe())
     }, []);
+
+    useEffect(() => {
+        if (user !== undefined) {
+            getUserById();
+        }
+    }, [user]);
 
     const EditUser = async (e) => {
         e.preventDefault();
         try {
-            await axios.patch(`http://localhost:5000/users/${id}`,{
+            await axios.patch(`http://localhost:5000/users/${user.uuid}`,{
                 username,
                 nohp,
                 status,
                 instagramUrl,
                 facebookUrl
             });
-            navigate(`/profile/${id}`)
+            navigate(`/profile`)
         } catch (error) {
             console.log(error);
         }
     }
 
-    const getEditUserById = async () => {
-        const response = await axios.get(`http://localhost:5000/users/${id}`)
+    const getUserById = async () => {
+        const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
         setUsername(response.data.username)
         setNohp(response.data.nohp)
         setStatus(response.data.status)

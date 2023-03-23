@@ -7,7 +7,7 @@ import Navbar from './Navbar'
 const AddJobs = () => {
     const [companyName, setCompanyName] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
-    const [salery, setSalery] = useState("");
+    const [salary, setSalary] = useState("");
     const [jobRole, steJobRole] = useState("");
     const [jobLevel, setJobLevel] = useState("");
     const [jobType, setJobType] = useState("");
@@ -29,7 +29,7 @@ const AddJobs = () => {
             axios.post(`http://localhost:5000/jobs`,{
                 companyName,
                 companyAddress,
-                salery,
+                salary,
                 jobRole,
                 jobLevel,
                 jobType,
@@ -74,8 +74,8 @@ const AddJobs = () => {
                     <input 
                         type="text" 
                         className="form-control" 
-                        value={salery} 
-                        onChange={(e) => setSalery(e.target.value)}
+                        value={salary} 
+                        onChange={(e) => setSalary(e.target.value)}
                         placeholder='Salary'
                     />
                 </div>

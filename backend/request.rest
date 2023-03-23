@@ -29,7 +29,7 @@ Content-Type: application/json
 {
     "companyName": "PT. Arvitech Mega Solusi",
     "companyAddress": "Jakarta Pusat",
-    "salery": "RP. 2 - 4 juta",
+    "salary": "RP. 2 - 4 juta",
     "jobRole": "Senior Programmer",
     "jobLevel": "junior",
     "jobType": "programmer",
@@ -60,7 +60,7 @@ Content-Type: application/json
 {
     "companyName": "PT.Yowisjar",
     "companyAddress": "Bandung",
-    "salery": "RP. 5 - 9 juta",
+    "salary": "RP. 5 - 9 juta",
     "jobRole": "programmer",
     "jobLevel": "junior",
     "jobType": "programmer",

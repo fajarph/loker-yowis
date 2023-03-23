@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Job.init({
     companyName: DataTypes.STRING,
     companyAddress: DataTypes.STRING,
-    salery: DataTypes.STRING,
+    salary: DataTypes.STRING,
     jobRole: DataTypes.STRING,
     jobLevel: DataTypes.STRING,
     jobType: DataTypes.STRING,

@@ -15,13 +15,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Beranda />}/>
-          <Route path="/dashboard/:id" element={<Dashboard />}/>
+          <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="/edit/profile/:id" element={<EditProfile />}/>
-          <Route path="/profile/:id" element={<ProfileUser />}/>
-          <Route path="/jobs/:id" element={<JobList />}/>
-          <Route path="/add/job/:id" element={<AddJobs />}/>
+          <Route path="/edit/profile" element={<EditProfile />}/>
+          <Route path="/profile" element={<ProfileUser />}/>
+          <Route path="/jobs" element={<JobList />}/>
+          <Route path="/add/job" element={<AddJobs />}/>
           <Route path="/job/detail/:id" element={<JobDetail />}/>
         </Routes>
       </BrowserRouter>

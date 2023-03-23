@@ -14,7 +14,7 @@ const Login = () => {
 
     useEffect(() => {
         if(user || isSuccess){
-            navigate(`/profile/${user.uuid}`)
+            navigate(`/profile`)
         }
         dispatch(reset())
     },[user, isSuccess, dispatch, navigate])
@@ -45,7 +45,7 @@ const Login = () => {
                         className="form-control" 
                         value={password} 
                         onChange={(e)=>setPassword(e.target.value)} 
-                        placeholder='Email'
+                        placeholder='Password'
                     />
                 </div>
                 <button type="submit" className="btn btn-dark">{isLoading ? 'Loading...' : "Login"}</button>

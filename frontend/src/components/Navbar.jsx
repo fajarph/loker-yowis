@@ -30,7 +30,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-                <Link to={`/dashboard/${id}`} type="submit" className="btn btn-light me-3">Dasboard</Link>
+                <Link to={'/dashboard'} type="submit" className="btn btn-light me-3">Dasboard</Link>
                 <Link to={'/register'} type="submit" className="btn btn-light me-3" >Register</Link>
                 <Link to={'/login'} type="submit" className="btn btn-light me-3">Loginn</Link>
                 <button onClick={logout} className="btn btn-light">Logout</button>

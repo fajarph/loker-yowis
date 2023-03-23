@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import ReactPaginate from 'react-paginate'
+import { Link, useParams } from 'react-router-dom'
 
 const JobList = () => {
     const [jobs, setJobs] = useState([])
@@ -12,6 +13,7 @@ const JobList = () => {
     const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
     const [msg, setMsg] = useState("")
+    const { id } = useParams()
 
     useEffect(() => {
         getJobs()
@@ -111,7 +113,9 @@ const JobList = () => {
                                     {job.jobShortDescription}
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>
-                                    <button type="button" className="btn btn-dark me-1">SELENGKAPNYA</button>
+                                    <Link to={`/job/detail/${id}`} className="btn btn-dark me-1">
+                                        SELENGKAPNYA
+                                    </Link>
                                     <button type="button" className="btn btn-dark">SIMPAN</button>
                                 </div>
                             </div>

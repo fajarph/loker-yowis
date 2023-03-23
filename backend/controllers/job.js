@@ -44,7 +44,8 @@ const getJobs = async(req, res) => {
         limit: limit,
         order:[
             ['id', 'DESC']
-        ]   
+        ],
+        attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry"],
     })
     res.json({
         result: result,
