@@ -115,7 +115,7 @@ const JobList = () => {
                                     <Link to={`/job/detail/${job.uuid}`} className="btn btn-dark me-1">
                                         SELENGKAPNYA
                                     </Link>
-                                    <button type="button" className="btn btn-dark">SIMPAN</button>
+                                    <button type="button" className="btn btn-dark"><i class="bi bi-star"></i> SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -133,14 +133,18 @@ const JobList = () => {
                 aria-label='Page navigation example'
             >
                 <ReactPaginate 
-                    className='pagination'
+                    containerClassName={'pagination'}
+                    previousLabel={'Previous'}
+                    nextLabel={'Next'}
                     pageCount={Math.min(10, pages)}
                     onPageChange={changePage}
-                    pageLinkClassName={"page-link"}
-                    previousLinkClassName={"Previous"}
-                    nextLinkClassName={"Next"}
-                    activeLinkClassName={"pagination-link is-current"}
-                    disabledLinkClassName={"pagination-link is-disabled"}
+                    activeClassName={'active'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    nextClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextLinkClassName={'page-link'}
                 />
             </nav>
         </div>

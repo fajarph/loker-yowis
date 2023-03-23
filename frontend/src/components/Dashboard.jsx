@@ -28,6 +28,7 @@ const ProfileUser = () => {
     const getUserById = async () => {
         const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
         setUsername(response.data.username)
+        setCreatedAt(response.data.createdAt)
     }
 
   return (

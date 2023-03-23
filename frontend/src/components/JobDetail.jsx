@@ -49,10 +49,10 @@ const JobDetail = () => {
                                         <div className="card-body">
                                             <h4 className="fw-bold">Lowongan Kerja</h4>
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
-                                                <h6>{companyName}</h6>
-                                                <h6>{companyAddress}</h6>
-                                                <h6>{jobRole}</h6>
-                                                <h6>{salary}</h6>
+                                                <h6><i class="bi bi-building-fill"></i> {companyName}</h6>
+                                                <h6><i class="bi bi-geo-alt-fill"></i> {companyAddress}</h6>
+                                                <h6><i class="bi bi-folder-fill"></i> {jobRole}</h6>
+                                                <h6><i class="bi bi-cash"></i> {salary}</h6>
                                             </div>
                                         </div>
                                         <div className="card">
@@ -74,7 +74,7 @@ const JobDetail = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card mt-4">
+                                    <div className="card mt-4 mb-5">
                                         <div className="card-body">
                                             <h6 className="fw-bold">Posted Date: {createdAt}</h6>
                                         </div>
@@ -84,9 +84,9 @@ const JobDetail = () => {
                                             </div>
                                             <div className="card">
                                             <div className="card-body">
-                                                <div className='d-flex justify-content-end mb-4'>
+                                                <div className='d-flex justify-content-end mb-3'>
                                                     <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
-                                                    <button type="button" className="btn btn-dark me-1">SIMPAN</button>
+                                                    <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
                                                     <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
                                                 </div>
                                             </div>
@@ -101,7 +101,7 @@ const JobDetail = () => {
                                 <div className="">
                                     <div className="card mt-5">
                                         <div className="card-body">
-                                            <h5 className="fw-bold">Profile Perusahaan</h5>
+                                            <h5 className="fw-bold"><i class="bi bi-building-fill"></i> Profile Perusahaan</h5>
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
