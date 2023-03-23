@@ -1,4 +1,6 @@
 const {Job} = require('../models')
+const path = require("path")
+const fs = require("fs")
 const { Op } = require('sequelize')
 
 const getJobs = async(req, res) => {
@@ -70,37 +72,133 @@ const getJobById = async(req, res) => {
 }
 
 const createJob = async(req, res) => {
-    try {
-        await Job.create(req.body);
-        res.status(201).json({msg: "Job Created"});
-    } catch (error) {
-        res.status(500).json({msg: error.message})
-    }
+    if(req.files === null) return res.status(400).json({msg: "No File Uploaded"})
+    const companyName = req.body.companyName
+    const companyAddress = req.body.companyAddress
+    const salary = req.body.salary
+    const jobRole = req.body.jobRole
+    const jobLevel = req.body.jobLevel
+    const jobType = req.body.jobType
+    const jobShortDescription = req.body.jobShortDescription
+    const jobLongDescription = req.body.jobLongDescription
+    const education = req.body.education
+    const industry = req.body.industry
+    const file = req.files.file
+    const fileSize = file.data.lenght
+    const ext = path.extname(file.name)
+    const fileName = file.md5 + ext
+    const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`
+    
+    const allowedType = ['.png','.jpg','jpeg']
+
+    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Ivalid Image"})
+    if(fileSize > 5000000) return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
+
+    file.mv(`./public/jobs/${fileName}`, async(err)=>{
+        if(err) return res.status(500).json({msg: err.message})
+        try {
+            await Job.create({
+                companyName: companyName, 
+                companyAddress: companyAddress, 
+                salary: salary, 
+                jobRole: jobRole,
+                jobLevel: jobLevel,
+                jobType: jobType,
+                jobShortDescription: jobShortDescription,
+                jobLongDescription: jobLongDescription,
+                education: education,
+                industry: industry,
+                image: fileName, 
+                url: url
+            })
+            res.status(201).json({msg: "Job Created Succesfully"})
+        } catch (error) {
+            console.log(error.message);
+        }
+    })
 }
 
 const updateJob = async(req, res) => {
+    const job = await Job.findOne({
+        where:{
+            id: req.params.id
+        }
+    })
+    if(!job) return res.status(404).json({msg: "No Data Found"})
+    let fileName = ""
+    if(req.files === null){
+        fileName = Job.image
+    }else{
+        const file = req.files.file
+        const fileSize = file.data.lenght
+        const ext = path.extname(file.name)
+        fileName = file.md5 + ext
+        const allowedType = ['.png','.jpg','jpeg']
+
+        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Ivalid Image"})
+        if(fileSize > 5000000) return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
+
+        const filepath = `./public/jobs/${job.image}`
+        fs.unlinkSync(filepath)
+
+        file.mv(`./public/jobs/${fileName}`, (err)=>{
+            if(err) return res.status(500).json({msg: err.message})
+        })
+    }
+    const companyName = req.body.companyName
+    const companyAddress = req.body.companyAddress
+    const salary = req.body.salary
+    const jobRole = req.body.jobRole
+    const jobLevel = req.body.jobLevel
+    const jobType = req.body.jobType
+    const jobShortDescription = req.body.jobShortDescription
+    const jobLongDescription = req.body.jobLongDescription
+    const education = req.body.education
+    const industry = req.body.industry
+    const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`
     try {
-        await Job.update(req.body, {
+        await Job.update({
+            companyName: companyName, 
+            companyAddress: companyAddress, 
+            salary: salary, 
+            jobRole: jobRole,
+            jobLevel: jobLevel,
+            jobType: jobType,
+            jobShortDescription: jobShortDescription,
+            jobLongDescription: jobLongDescription,
+            education: education,
+            industry: industry,
+            image: fileName, 
+            url: url
+        },{
             where:{
-                uuid: req.params.id
+                id: req.params.id
             }
-        });
-        res.status(200).json({msg: "Job Updated"});
+        })
+        res.status(200).json({msg: "Jobs Updated Succesfully"})
     } catch (error) {
-        res.status(500).json({msg: error.message})
+        console.log(error.message);
     }
 }
 
 const deleteJob = async(req, res) => {
+    const job = await Job.findOne({
+        where:{
+            id: req.params.id
+        }
+    })
+    if(!job) return res.status(404).json({msg: "No Data Found"})
     try {
+        const filepath = `./public/jobs/${job.image}`
+        fs.unlinkSync(filepath)
         await Job.destroy({
             where:{
-                uuid: req.params.id
+                id: req.params.id
             }
-        });
-        res.status(200).json({msg: "Job Deleted"});
+        })
+        res.status(200).json({msg: "Job Deleted Succesfully"})
     } catch (error) {
-        res.status(500).json({msg: error.message})
+        console.log(error.message);
     }
 }
 

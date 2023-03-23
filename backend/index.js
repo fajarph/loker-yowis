@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require('cors')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')
+const FileUpload = require("express-fileupload")
 const db = require("./config/Database.js")
 const dotenv = require('dotenv')
 const app = express()
@@ -34,6 +35,8 @@ app.use(cors({
 }))
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(FileUpload())
+app.use(express.static("public"))
 
 app.use(auth)
 app.use(users)

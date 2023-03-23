@@ -46,6 +46,12 @@ module.exports = {
       industry: {
         type: Sequelize.STRING
       },
+      image: {
+        type: Sequelize.STRING
+      },
+      url: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
