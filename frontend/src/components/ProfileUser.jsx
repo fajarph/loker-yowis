@@ -11,6 +11,7 @@ const ProfileUser = () => {
     const [status, setStatus] = useState("")
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
+    const [url, setUrl] = useState("")
     const dispatch = useDispatch()
     const {user, isError, isSuccess, isLoading, message} = useSelector(
         (state) => state.auth
@@ -33,6 +34,7 @@ const ProfileUser = () => {
         setStatus(response.data.status)
         setInstagramUrl(response.data.instagramUrl)
         setFacebookUrl(response.data.facebookUrl)
+        setUrl(response.data.url)
     }
 
   return (
@@ -42,7 +44,10 @@ const ProfileUser = () => {
             <div className='mt-5 row'>
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
-                        <h4 className='d-flex justify-content-center mt-2'>{username}</h4>
+                        <div className='d-flex justify-content-center mt-4'>
+                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                        </div>
+                        <h5 className='d-flex justify-content-center mt-3 text-body-secondary'>{username}</h5>
                     </div>
                     <div className='border border-1 rounded-bottom'>
                         <div className='mt-3 ms-3 me-3'>
@@ -71,9 +76,9 @@ const ProfileUser = () => {
                 <div className='col-9'>
                     <h5>User Profile</h5>
                     <div className='border border-1 rounded mt-3 mb-5'>
-                        <div className='row mt-3'>
+                        <div className='row mt-3 mb-5'>
                             <div className='col-3 d-flex justify-content-center'>
-                                <h1>Picture</h1>
+                                <img className='image rounded-circle' alt="Image" src={url} style={{width: "150px", height: "150px"}}/>
                             </div>
                             <div className='col-6 ms-2'>
                                 <div className=''>

@@ -11,6 +11,8 @@ const EditProfile = () => {
     const [status, setStatus] = useState("")
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
+    const [file, setFile] = useState("")
+    const [preview, setPreview] = useState("")
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user, isError, isSuccess, isLoading, message} = useSelector(
@@ -27,15 +29,26 @@ const EditProfile = () => {
         }
     }, [user]);
 
+    const loadImage = (e) => {
+        const image = e.target.files[0]
+        setFile(image)
+        setPreview(URL.createObjectURL(image))
+    }
+
     const EditUser = async (e) => {
         e.preventDefault();
+        const formData = new FormData()
+        formData.append("username", username)
+        formData.append("nohp", nohp)
+        formData.append("status", status)
+        formData.append("instagramUrl", instagramUrl)
+        formData.append("facebookUrl", facebookUrl)
+        formData.append("file", file)
         try {
-            await axios.patch(`http://localhost:5000/users/${user.uuid}`,{
-                username,
-                nohp,
-                status,
-                instagramUrl,
-                facebookUrl
+            await axios.patch(`http://localhost:5000/users/${user.uuid}`, formData,{
+                headers:{
+                    "Content-Type": "multipart/form-data"
+                }
             });
             navigate(`/profile`)
         } catch (error) {
@@ -108,6 +121,29 @@ const EditProfile = () => {
                         placeholder='Facebook'
                     />
                 </div>
+                <div className='field'>
+                    <label className='label '>Image</label>
+                    <div className='control'>
+                        <div className='input-group mb-3'>
+                            <label className="file-label">
+                                <input 
+                                    type="file" 
+                                    className='form-control' 
+                                    onChange={loadImage}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {preview ? (
+                    <figure className="img rounded">
+                        <img src={preview} alt="Preview Image"/>
+                    </figure>
+                ): ( 
+                    ""
+                )}
+
                 <div className="field">
                     <button type="submit" className="btn btn-dark">Save</button>
                 </div>

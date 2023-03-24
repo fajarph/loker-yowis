@@ -9,6 +9,7 @@ import Navbar from './Navbar';
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
     const [createdAt, setCreatedAt] = useState("")
+    const [url, setUrl] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const {user, isError, isSuccess, isLoading, message} = useSelector(
@@ -29,6 +30,7 @@ const ProfileUser = () => {
         const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
         setUsername(response.data.username)
         setCreatedAt(response.data.createdAt)
+        setUrl(response.data.url)
     }
 
   return (
@@ -38,7 +40,10 @@ const ProfileUser = () => {
             <div className='mt-5 row'>
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
-                        <h4 className='d-flex justify-content-center mt-2'>{username}</h4>
+                        <div className='d-flex justify-content-center mt-4'>
+                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                        </div>
+                        <h5 className='d-flex justify-content-center mt-3 text-body-secondary'>{username}</h5>
                     </div>
                     <div className='border border-1 rounded-bottom'>
                         <div className='mt-3 ms-3 me-3'>
