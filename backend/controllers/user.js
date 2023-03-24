@@ -1,10 +1,12 @@
 const { User } = require('../models')
 const argon2 = require('argon2')
+const fs = require("fs")
+const path = require("path")
 
 const getUsers = async(req, res) => {
     try {
         const response = await User.findAll({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "image", "url"],
         });
         res.status(200).json(response)
     } catch (error) {
@@ -15,7 +17,7 @@ const getUsers = async(req, res) => {
 const getUserById = async(req, res) => {
     try {
         const response = await User.findOne({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "image", "url"],
             where: {
                 uuid: req.params.id
             }
@@ -49,25 +51,64 @@ const updateUser = async(req, res) => {
             }
         });
 
-        if(!user) return res.status(404).json({msg: "User Tidak Ditemukan"})
-    
-        const { username, nohp, status, instagramUrl, facebookUrl } = req.body;
+        if (!user) {
+            return res.status(404).json({msg: "User Tidak Ditemukan"})
+        }
+
+        let fileName = user.image
+        if (req.files !== null) {
+            const file = req.files.file
+            const fileSize = file.size
+            const ext = path.extname(file.name)
+            fileName = file.md5 + ext
+            const allowedType = ['.png','.jpg','jpeg']
+
+            if (!allowedType.includes(ext.toLowerCase())) {
+                return res.status(422).json({msg: "Invalid Image"})
+            }
+
+            if (fileSize > 5000000) {
+                return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
+            }
+
+            if (user.image) {
+                const filepath = `./public/users/${user.image}`
+                fs.unlinkSync(filepath)
+            }
+
+            file.mv(`./public/users/${fileName}`, (err)=>{
+                if(err) {
+                    return res.status(500).json({msg: err.message})
+                }
+            })
+        } else if (!user.image) {
+            return res.status(422).json({msg: "Image harus diunggah"})
+        }
+
+        const username = req.body.username
+        const nohp = req.body.nohp
+        const status = req.body.status
+        const instagramUrl = req.body.instagramUrl
+        const facebookUrl = req.body.facebookUrl
+        const url = `${req.protocol}://${req.get("host")}/users/${fileName}`
 
         await User.update({
             username: username,
             nohp: nohp,
             status: status,
             instagramUrl: instagramUrl,
-            facebookUrl: facebookUrl
+            facebookUrl: facebookUrl,
+            image: fileName,
+            url: url
         },{
             where:{
                 uuid: req.params.id
             }
         })
-        
-        res.status(200).json({msg: "User Updated"})
+
+        res.status(200).json({msg: "Users Updated Successfully"})
     } catch (error) {
-        res.status(400).json({msg: error.message})
+        console.log(error.message);
     }
 }
 
@@ -79,6 +120,8 @@ const deleteUser = async(req, res) => {
     });
     if(!user) return res.status(404).json({msg: "User Tidak Ditemukan"})
     try {
+        const filepath = `./public/users/${user.image}`
+        fs.unlinkSync(filepath)
         await User.destroy({
             where:{
                 id: user.id
