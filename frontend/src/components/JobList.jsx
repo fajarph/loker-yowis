@@ -76,10 +76,10 @@ const JobList = () => {
                 </div>
                 {jobs.map((job, index) => (
                     <div key={job.id} className='row border border-1'>
-                        <div className='col-3'>
+                        <div className='col-3 mt-3'>
                             <div className='row'> 
                                 <div className='col-3 mt-2'>
-                                    <h5>Image</h5>
+                                <img className='image rounded-circle' alt="Image" src={job.url} style={{width: "64px", height: "64px"}} />
                                 </div>
                                 <div className='col mt-2'>
                                     <h5>{job.jobRole}</h5>
@@ -88,7 +88,7 @@ const JobList = () => {
                         </div>
                         <div className='col-4'>
                             <div className='row'> 
-                                <table className='ms-3 mt-2'>
+                                <table className='ms-3 mt-3'>
                                     <tbody>
                                     <tr className='col-5'>
                                         <td className='h5'>Perusahaan</td>
@@ -108,7 +108,7 @@ const JobList = () => {
                         </div>
                         <div className='col-4'>
                             <div className=''> 
-                                <p className='mt-2'>
+                                <p className='mt-3'>
                                     {job.jobShortDescription}
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>

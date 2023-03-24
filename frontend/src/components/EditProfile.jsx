@@ -63,6 +63,8 @@ const EditProfile = () => {
         setStatus(response.data.status)
         setInstagramUrl(response.data.instagramUrl)
         setFacebookUrl(response.data.facebookUrl)
+        setFile(response.data.image)
+        setPreview(response.data.url)
     }
   return (
     <div>
@@ -124,7 +126,7 @@ const EditProfile = () => {
                 <div className='field'>
                     <label className='label '>Image</label>
                     <div className='control'>
-                        <div className='input-group mb-3'>
+                        <div className='input-group mb-3 mt-2'>
                             <label className="file-label">
                                 <input 
                                     type="file" 
@@ -138,7 +140,7 @@ const EditProfile = () => {
 
                 {preview ? (
                     <figure className="img rounded">
-                        <img src={preview} alt="Preview Image"/>
+                        <img className='image rounded-circle' src={preview} alt="Preview Image" style={{width: "125px", height: "125px"}}/>
                     </figure>
                 ): ( 
                     ""

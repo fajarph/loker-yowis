@@ -17,6 +17,8 @@ const EditJobs = () => {
     const [jobShortDescription, setJobShortDescription] = useState("");
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
+    const [file, setFile] = useState("")
+    const [preview, setPreview] = useState("")
     const navigate = useNavigate();
     const { id } = useParams()
     const editorRef = useRef(null);
@@ -35,6 +37,12 @@ const EditJobs = () => {
         }
     }, [user]);
 
+    const loadImage = (e) => {
+        const image = e.target.files[0]
+        setFile(image)
+        setPreview(URL.createObjectURL(image))
+    }
+
     const SaveJobs = async (e) => {
         e.preventDefault();
         try {
@@ -43,17 +51,24 @@ const EditJobs = () => {
                 jobLongDescription = editorRef.current.getContent()
             }
 
-            axios.patch(`http://localhost:5000/jobs/${id}`,{
-                companyName,
-                companyAddress,
-                salary,
-                jobRole,
-                jobLevel,
-                jobType,
-                jobShortDescription,
-                jobLongDescription,
-                education,
-                industry
+            const formData = new FormData()
+            formData.append("companyName", companyName)
+            formData.append("companyAddress", companyAddress)
+            formData.append("salary", salary)
+            formData.append("jobRole", jobRole)
+            formData.append("jobLevel", jobLevel)
+            formData.append("jobType", jobType)
+            formData.append("jobShortDescription", jobShortDescription)
+            formData.append("jobLongDescription", jobLongDescription)
+            formData.append("education", education)
+            formData.append("industry", industry)
+            formData.append("file", file)
+
+            await axios.patch(`http://localhost:5000/jobs/${id}`, formData, {
+                headers:{
+                    "Content-Type": "multipart/form-data"
+                },
+                jobLongDescription
             });
             navigate(`/jobs`)
         } catch (error) {
@@ -73,6 +88,8 @@ const EditJobs = () => {
         setJobLongDescription(response.data.jobLongDescription)
         setEducation(response.data.education)
         setIndustry(response.data.industry)
+        setFile(response.data.image)
+        setPreview(response.data.url)
     }
 
   return (
@@ -227,6 +244,29 @@ const EditJobs = () => {
                         placeholder='Industry'
                     />
                 </div>
+                <div className='field'>
+                    <label className='label '>Image</label>
+                    <div className='control'>
+                        <div className='input-group mb-3 mt-2'>
+                            <label className="file-label">
+                                <input 
+                                    type="file" 
+                                    className='form-control' 
+                                    onChange={loadImage}
+                                />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {preview ? (
+                    <figure className="image rounded">
+                        <img className='image rounded-circle' src={preview} alt="Preview Image" style={{width: "125px", height: "125px"}}/>
+                    </figure>
+                ): ( 
+                    ""
+                )}
+
                 <div className="field">
                     <button type="submit" className="btn btn-dark">Save</button>
                 </div>

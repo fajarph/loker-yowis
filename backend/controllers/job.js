@@ -60,7 +60,7 @@ const getJobs = async(req, res) => {
 const getJobById = async(req, res) => {
     try {
         const response = await Job.findOne({
-            attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry", 'createdAt'],
+            attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry", 'createdAt', "image", "url"],
             where:{
                 uuid: req.params.id
             }
@@ -120,31 +120,42 @@ const createJob = async(req, res) => {
 
 const updateJob = async(req, res) => {
     const job = await Job.findOne({
-        where:{
-            id: req.params.id
+        where: {
+            uuid: req.params.id
         }
-    })
-    if(!job) return res.status(404).json({msg: "No Data Found"})
-    let fileName = ""
+    });
+
+    if(!job) return res.status(404).json({msg: "Job Tidak Ditemukan"});
+
+    let fileName = "";
+    let imageChanged = false; // variable untuk mengecek apakah gambar profil diubah atau tidak
+
     if(req.files === null){
-        fileName = Job.image
+        // Jika job tidak mengupload gambar baru
+        fileName = job.image; // menggunakan gambar lama
     }else{
-        const file = req.files.file
-        const fileSize = file.data.lenght
-        const ext = path.extname(file.name)
-        fileName = file.md5 + ext
-        const allowedType = ['.png','.jpg','jpeg']
+        // Jika job mengupload gambar baru
+        const file = req.files.file;
+        const fileSize = file.data.length;
+        const ext = path.extname(file.name);
+        fileName = file.md5 + ext;
+        const allowedType = ['.png','.jpg','jpeg'];
 
-        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Ivalid Image"})
-        if(fileSize > 5000000) return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
+        if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Image"});
+        if(fileSize > 5000000) return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"});
 
-        const filepath = `./public/jobs/${job.image}`
-        fs.unlinkSync(filepath)
+        const filepath = `./public/jobs/${job.image}`;
+        if (fs.existsSync(filepath)) {
+            // Jika gambar profil sebelumnya ada, hapus gambar profil sebelumnya
+            fs.unlinkSync(filepath);
+        }
 
         file.mv(`./public/jobs/${fileName}`, (err)=>{
-            if(err) return res.status(500).json({msg: err.message})
-        })
+            if(err) return res.status(500).json({msg: err.message});
+        });
+        imageChanged = true; // Set variable imageChanged menjadi true karena gambar profil diubah
     }
+
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress
     const salary = req.body.salary
@@ -155,7 +166,8 @@ const updateJob = async(req, res) => {
     const jobLongDescription = req.body.jobLongDescription
     const education = req.body.education
     const industry = req.body.industry
-    const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`
+    const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`;
+
     try {
         await Job.update({
             companyName: companyName, 
@@ -172,10 +184,10 @@ const updateJob = async(req, res) => {
             url: url
         },{
             where:{
-                id: req.params.id
+                uuid: req.params.id
             }
-        })
-        res.status(200).json({msg: "Jobs Updated Succesfully"})
+        });
+        res.status(200).json({msg: "Job Updated Succesfully", imageChanged: imageChanged}); // Mengirimkan response bahwa imageChanged bernilai true jika gambar profil diubah dan false jika tidak
     } catch (error) {
         console.log(error.message);
     }

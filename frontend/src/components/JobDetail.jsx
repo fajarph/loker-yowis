@@ -15,6 +15,7 @@ const JobDetail = () => {
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
     const [createdAt, setCreatedAt] = useState("")
+    const [url, setUrl] = useState("")
     const { id } = useParams()
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const JobDetail = () => {
         setEducation(response.data.education)
         setIndustry(response.data.industry)
         setCreatedAt(response.data.createdAt)
+        setUrl(response.data.url)
     }
 
     return(
@@ -49,10 +51,10 @@ const JobDetail = () => {
                                         <div className="card-body">
                                             <h4 className="fw-bold">Lowongan Kerja</h4>
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
-                                                <h6><i class="bi bi-building-fill"></i> {companyName}</h6>
-                                                <h6><i class="bi bi-geo-alt-fill"></i> {companyAddress}</h6>
-                                                <h6><i class="bi bi-folder-fill"></i> {jobRole}</h6>
-                                                <h6><i class="bi bi-cash"></i> {salary}</h6>
+                                                <h6><i className="bi bi-building-fill"></i> {companyName}</h6>
+                                                <h6><i className="bi bi-geo-alt-fill"></i> {companyAddress}</h6>
+                                                <h6><i className="bi bi-folder-fill"></i> {jobRole}</h6>
+                                                <h6><i className="bi bi-cash"></i> {salary}</h6>
                                             </div>
                                         </div>
                                         <div className="card">
@@ -101,12 +103,12 @@ const JobDetail = () => {
                                 <div className="">
                                     <div className="card mt-5">
                                         <div className="card-body">
-                                            <h5 className="fw-bold"><i class="bi bi-building-fill"></i> Profile Perusahaan</h5>
+                                            <h5 className="fw-bold"><i className="bi bi-building-fill"></i> Profile Perusahaan</h5>
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
-                                                <div className="text-center">
-                                                    <h3>IMAGE</h3>
+                                                <div className="d-flex justify-content-center">
+                                                    <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
                                                 </div>
                                                 <div className="mt-4">
                                                     <h6 className="fw-bold text-secondary">Deskripsi Perusahaan</h6>
