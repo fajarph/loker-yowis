@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
 
-const EditProfile = () => {
+const FormEditProfile = () => {
     const [username, setUsername] = useState("")
     const [nohp, setNohp] = useState("")
     const [status, setStatus] = useState("")
@@ -156,4 +156,4 @@ const EditProfile = () => {
   )
 }
 
-export default EditProfile
+export default FormEditProfile

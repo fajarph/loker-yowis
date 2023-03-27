@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import Navbar from './Navbar';
 import { getMe } from "../features/authSlice"
@@ -12,8 +12,9 @@ const ProfileUser = () => {
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
     const [url, setUrl] = useState("")
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {user, isError, isSuccess, isLoading, message} = useSelector(
+    const {user, isError} = useSelector(
         (state) => state.auth
     );
 
@@ -25,7 +26,10 @@ const ProfileUser = () => {
         if (user !== undefined) {
             getUserById();
         }
-    }, [user]);
+        if(isError){
+            navigate("/")
+        }
+    }, [user, isError, navigate]);
 
     const getUserById = async () => {
         const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
@@ -65,11 +69,13 @@ const ProfileUser = () => {
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3 mb-3'>
-                            <h6 className='row'>
-                                <Link to={`/add/job`} className="btn btn-dark">
-                                    Add Job
-                                </Link>
-                            </h6>
+                            {user && user.role === "Admin" && (
+                                <h6 className='row'>
+                                    <Link to={`/add/jobs`} className="btn btn-dark">
+                                        Add Job
+                                    </Link>
+                                </h6>
+                            )}
                         </div>
                     </div>
                 </div>

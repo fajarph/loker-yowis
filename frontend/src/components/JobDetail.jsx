@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from 'axios'
 import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
+import { useNavigate } from 'react-router-dom';
 
 const JobDetail = () => {
     const [companyName, setCompanyName] = useState("");
@@ -17,10 +20,22 @@ const JobDetail = () => {
     const [createdAt, setCreatedAt] = useState("")
     const [url, setUrl] = useState("")
     const { id } = useParams()
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const {user, isError} = useSelector(
+        (state) => state.auth
+    );
 
     useEffect(() => {
         getJobDetail()
+        dispatch(getMe())
     }, []);
+
+    useEffect(() => {
+        if(isError){
+            navigate("/")
+        }   
+    }, [isError, navigate]);
 
     const getJobDetail = async () => {
         const response = await axios.get(`http://localhost:5000/jobs/${id}`)

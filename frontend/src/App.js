@@ -1,14 +1,14 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Login from "./components/Login";
 import Register from "./components/Register";
-import EditProfile from "./components/EditProfile";
+import EditProfile from "./components/FormEditProfile";
 import JobList from "./components/JobList";
 import ProfileUser from "./components/ProfileUser";
 import Beranda from "./pages/Beranda";
 import Dashboard from "./components/Dashboard";
-import AddJobs from "./components/AddJobs";
 import JobDetail from "./components/JobDetail";
-import EditJobs from "./components/EditJobs";
+import AddJob from "./pages/AddJob";
+import EditJob from "./pages/EditJob";
 
 function App() {
   return (
@@ -22,9 +22,9 @@ function App() {
           <Route path="/edit/profile" element={<EditProfile />}/>
           <Route path="/profile" element={<ProfileUser />}/>
           <Route path="/jobs" element={<JobList />}/>
-          <Route path="/add/job" element={<AddJobs />}/>
-          <Route path="/edit/jobs/:id" element={<EditJobs />}/>
-          <Route path="/job/detail/:id" element={<JobDetail />}/>
+          <Route path="/add/jobs" element={<AddJob />}/>
+          <Route path="/edit/jobs/:id" element={<EditJob />}/>
+          <Route path="/jobs/detail/:id" element={<JobDetail />}/>
         </Routes>
       </BrowserRouter>
     </div>

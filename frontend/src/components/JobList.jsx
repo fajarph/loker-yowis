@@ -2,6 +2,9 @@ import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import ReactPaginate from 'react-paginate'
+import { useDispatch, useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
 const JobList = () => {
@@ -13,10 +16,22 @@ const JobList = () => {
     const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
     const [msg, setMsg] = useState("")
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const {isError} = useSelector(
+        (state) => state.auth
+    );
 
     useEffect(() => {
         getJobs()
+        dispatch(getMe())
     }, [page, keyword])
+
+    useEffect(() => {
+        if(isError){
+            navigate("/")
+        }   
+    }, [isError, navigate]);
 
     const getJobs = async () => {
         const response = await axios.get(`http://localhost:5000/jobs?search_query=${keyword}&page=${page}&limit=${limit}`)
@@ -112,7 +127,7 @@ const JobList = () => {
                                     {job.jobShortDescription}
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>
-                                    <Link to={`/job/detail/${job.uuid}`} className="btn btn-dark me-1">
+                                    <Link to={`/jobs/detail/${job.uuid}`} className="btn btn-dark me-1">
                                         SELENGKAPNYA
                                     </Link>
                                     <button type="button" className="btn btn-dark"><i class="bi bi-star"></i> SIMPAN</button>

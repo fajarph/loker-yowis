@@ -12,7 +12,7 @@ const ProfileUser = () => {
     const [url, setUrl] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const {user, isError, isSuccess, isLoading, message} = useSelector(
+    const {user, isError} = useSelector(
         (state) => state.auth
     );
 
@@ -24,7 +24,10 @@ const ProfileUser = () => {
         if (user !== undefined) {
             getUserById();
         }
-    }, [user]);
+        if(isError){
+            navigate("/")
+        }   
+    }, [user, isError, navigate]);
 
     const getUserById = async () => {
         const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
@@ -62,7 +65,7 @@ const ProfileUser = () => {
                         </div>
                         <div className='mt-3 ms-3 me-3 mb-3'>
                             <h6 className='row'>
-                                <Link to={`/add/job`} className="btn btn-dark">
+                                <Link to={`/add/jobs`} className="btn btn-dark">
                                     Add Job
                                 </Link>
                             </h6>

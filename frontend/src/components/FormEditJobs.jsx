@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import Navbar from './Navbar'
 
-const EditJobs = () => {
+const FormEditJobs = () => {
     const [companyName, setCompanyName] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
     const [salary, setSalary] = useState("");
@@ -276,4 +276,4 @@ const EditJobs = () => {
   )
 }
 
-export default EditJobs
+export default FormEditJobs
