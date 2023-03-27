@@ -11,6 +11,7 @@ const db = {};
 
 const Users = require('./user')
 const Jobs = require('./job')
+const Locations = require('./location')
 
 let sequelize;
 if (config.use_env_variable) {
@@ -42,5 +43,6 @@ db.users = require('./user')(sequelize, Sequelize);
 
 db.user = Users(sequelize, Sequelize)
 db.job = Jobs(sequelize, Sequelize)
+db.location = Locations(sequelize, Sequelize)
 
 module.exports = db;

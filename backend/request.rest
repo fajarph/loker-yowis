@@ -43,6 +43,14 @@ Content-Type: application/json
     
 }
 
+###
+POST http://localhost:5000/locations
+Content-Type: application/json
+
+{
+    "name": "Bekasi"
+}
+
 //Update User
 ###
 PATCH http://localhost:5000/users/78c50742-ee71-42ea-8a4e-a6e9f91fe58b

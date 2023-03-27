@@ -1,4 +1,4 @@
-const {Job} = require('../models')
+const {Job, Location} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')

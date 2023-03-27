@@ -16,6 +16,7 @@ const JobList = () => {
     const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
     const [msg, setMsg] = useState("")
+    const [companyAddress, setCompanyAddress] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const {isError, user} = useSelector(
@@ -67,20 +68,57 @@ const JobList = () => {
         <div className='container mt-5 mb-5'>
             <form onSubmit={searchData}>
                 <div className='d-flex justify-content-center row'>
-                    <div className="col-9">
-                        <input 
-                            type="text" 
-                            className="form-control"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                        />
+                    <div className="col-11">
+                        <div className='row'>
+                            <div className='col-md-12'>
+                                <div className='input-group'>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"
+                                        value={query}
+                                        onChange={(e) => setQuery(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <div className='col-4'>
+                                <div className='input-group'>
+                                    <select 
+                                        className='form-select' 
+                                        value={companyAddress} 
+                                        onChange={(e) => setCompanyAddress(e.target.value)}
+                                    >
+                                        <option selected hidden>Semua Lokasi</option>
+                                        <option value="Bekasi">Bekasi</option>
+                                        <option value="Business Analyst">Business Analyst</option>
+                                        <option value="Chef">Chef</option>
+                                        <option value="Content Creator">Content Creator</option>
+                                        <option value="Customer Service Representative">Customer Service Representative</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Financial Analyst">Financial Analyst</option>
+                                        <option value="Graphic Designer">Graphic Designer</option>
+                                        <option value="Human Resources Specialist">Human Resources Specialist</option>
+                                        <option value="Marketing Coordinator">Marketing Coordinator</option>
+                                        <option value="Nurse">Nurse</option>
+                                        <option value="Operations Manager">Operations Manager</option>
+                                        <option value="Programmer">Programmer</option>
+                                        <option value="Psikolog">Psikolog</option>
+                                        <option value="Project Manager">Project Manager</option>
+                                        <option value="Software Developer">Software Developer</option>
+                                        <option value="Supply Chain Manager">Supply Chain Manager</option>
+                                        <option value="Sales Executive">Sales Executive</option>
+                                        <option value="Teacher">Teacher</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className='col-1'>
                         <button type="submit" className="btn btn-dark row">Search</button>
                     </div>
                 </div>
-                
             </form>
+
             <div className='mt-5 container'>
                 <h2>Cari Lowongan kerja</h2>
                 <div className='row mt-4'>
@@ -132,7 +170,7 @@ const JobList = () => {
                                     {job.jobShortDescription}
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>
-                                    
+
                                     <Link to={`/jobs/detail/${job.uuid}`} className="btn btn-dark me-1">
                                         SELENGKAPNYA
                                     </Link>
