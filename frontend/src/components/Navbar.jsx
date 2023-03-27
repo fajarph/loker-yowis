@@ -43,7 +43,7 @@ const Navbar = () => {
                 </div>
                 <div>
                     {!isLoggedIn && (
-                        <Link to={'/login'} type="submit" className="btn btn-light me-3">Loginn</Link>
+                        <Link to={'/login'} type="submit" className="btn btn-light me-3">Login</Link>
                     )}
                 </div>
                 {isLoggedIn && (
