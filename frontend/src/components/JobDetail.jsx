@@ -102,11 +102,19 @@ const JobDetail = () => {
                                             <div className="card">
                                             <div className="card-body">
                                                 <div className='d-flex justify-content-end mb-3'>
+
                                                     {user && user.role === "Admin" && (
                                                         <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
                                                     )}
-                                                    <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
-                                                    <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
+
+                                                    {user && user.role === "User" && (
+                                                        <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
+                                                    )}
+
+                                                    {user && user.role === "User" && (
+                                                        <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
+                                                    )}
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -141,16 +149,15 @@ const JobDetail = () => {
                                         <div className="card">
                                             <div className="card-body">
                                                 <div className="row">
-                                                        <div className="d-flex justify-content-center col-3">
-                                                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "60px", height: "60px"}}/>
+                                                    <div className="d-flex justify-content-center col-3">
+                                                        <img className='image rounded-circle' alt="Image" src={url} style={{width: "60px", height: "60px"}}/>
+                                                    </div>
+                                                    <div className="d-flex justify-content-center col-9">
+                                                        <div className="row me-5">
+                                                            <h5 className="fw-bold text-secondary">Job Role</h5>
+                                                            <p className="text-secondary">Company Name</p>
                                                         </div>
-                                                        <div className="d-flex justify-content-center col-9">
-                                                            <div className="row me-5">
-                                                                <h5 className="fw-bold text-secondary">Job Role</h5>
-                                                                <p className="text-secondary">Company Name</p>
-                                                            </div>
-                                                            
-                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

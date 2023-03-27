@@ -18,7 +18,7 @@ const JobList = () => {
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const {isError} = useSelector(
+    const {isError, user} = useSelector(
         (state) => state.auth
     );
 
@@ -39,6 +39,11 @@ const JobList = () => {
         setPage(response.data.page)
         setPages(response.data.totalPage)
         setRows(response.data.totalRows)
+    }
+
+    const deleteJob = async (id) => {
+        await axios.delete(`http://localhost:5000/jobs/${id}`)
+        getJobs()
     }
 
     const changePage =({selected}) => {
@@ -127,10 +132,18 @@ const JobList = () => {
                                     {job.jobShortDescription}
                                 </p>
                                 <div className='d-flex justify-content-end mb-4'>
+                                    
                                     <Link to={`/jobs/detail/${job.uuid}`} className="btn btn-dark me-1">
                                         SELENGKAPNYA
                                     </Link>
-                                    <button type="button" className="btn btn-dark"><i class="bi bi-star"></i> SIMPAN</button>
+
+                                    {user && user.role === "User" && (
+                                        <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
+                                    )}
+                                    
+                                    {user && user.role === "Admin" && (
+                                        <button onClick={()=> deleteJob(job.uuid)} type="button" className="btn btn-dark">Delete</button>
+                                    )}
                                 </div>
                             </div>
                         </div>

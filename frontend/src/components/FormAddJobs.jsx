@@ -103,21 +103,26 @@ const FormAddJobs = () => {
                         placeholder='Job Role'
                     >
                         <option selected hidden>Job Role</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Engineer">Engineer</option>
                         <option value="Accountant">Accountant</option>
-                        <option value="Human Resources Specialist">Human Resources Specialist</option>
+                        <option value="Business Analyst">Business Analyst</option>
+                        <option value="Chef">Chef</option>
+                        <option value="Content Creator">Content Creator</option>
+                        <option value="Customer Service Representative">Customer Service Representative</option>
                         <option value="Marketing">Marketing</option>
-                        <option value="Data Scientist">Data Scientist</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Financial Analyst">Financial Analyst</option>
+                        <option value="Graphic Designer">Graphic Designer</option>
+                        <option value="Human Resources Specialist">Human Resources Specialist</option>
+                        <option value="Marketing Coordinator">Marketing Coordinator</option>
+                        <option value="Nurse">Nurse</option>
+                        <option value="Operations Manager">Operations Manager</option>
                         <option value="Programmer">Programmer</option>
-                        <option value="Designer">Designer</option>
+                        <option value="Psikolog">Psikolog</option>
                         <option value="Project Manager">Project Manager</option>
-                        <option value="Web Developer">Web Developer</option>
-                        <option value="Writer">Writer</option>
-                        <option value="Penerjemah">Penerjemah</option>
-                        <option value="Customer Service ">Customer Service </option>
-                        <option value="Trainer">Trainer</option>
-                        <option value="Supervisor">Supervisor</option>
+                        <option value="Software Developer">Software Developer</option>
+                        <option value="Supply Chain Manager">Supply Chain Manager</option>
+                        <option value="Sales Executive">Sales Executive</option>
+                        <option value="Teacher">Teacher</option>
                     </select>
                 </div>
                 <div className="mb-3">
@@ -143,21 +148,9 @@ const FormAddJobs = () => {
                         placeholder='Job Type'
                     >
                         <option selected hidden>Job Type</option>
-                        <option value="General Manager">General Manager</option>
-                        <option value="Akunting">Akunting</option>
-                        <option value="Analis">Analis</option>
-                        <option value="Jurnalis">Jurnalis</option>
-                        <option value="Karyawan Restoran">Karyawan Restoran</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Programmer">Programmer</option>
-                        <option value="Arsitek">Arsitek</option>
-                        <option value="Guru">Guru</option>
-                        <option value="Programmer">Programmer</option>
-                        <option value="Penulis">Penulis</option>
-                        <option value="Penerjemah">Penerjemah</option>
-                        <option value="Insinyur">Insinyur</option>
-                        <option value="Psikolog">Psikolog</option>
-                        <option value="Fotografer">Fotografer</option>
+                        <option value="Kontrak">Kontrak</option>
+                        <option value="Purna Waktu / Full Time">Purna Waktu / Full Time</option>
+                        <option value="Tetap">Tetap</option>
                     </select>
                 </div>
                 <div className="mb-3">
@@ -193,13 +186,25 @@ const FormAddJobs = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Education</label>
-                    <input 
+                    <select
                         type="text" 
-                        className="form-control"
+                        className="form-select"
                         value={education} 
                         onChange={(e) => setEducation(e.target.value)}
                         placeholder='Education'
-                    />
+                    >
+                        <option selected hidden>Education</option>
+                        <option value="Diploma/D1/D2/D3">Diploma/D1/D2/D3</option>
+                        <option value="Diploma/D1/D2/D3, Doctor / S3, Sarjana / S1">Diploma/D1/D2/D3, Doctor / S3, Sarjana / S1</option>
+                        <option value="Diploma/D1/D2/D3, Sarjana / S1, SMA / SMK / STM">Diploma/D1/D2/D3, Sarjana / S1, SMA / SMK / STM</option>
+                        <option value="Diploma/D1/D2/D3, SMA / SMK / STM">Diploma/D1/D2/D3, SMA / SMK / STM</option>
+                        <option value="Diploma/D1/D2/D3, Sarjana / S1">Diploma/D1/D2/D3, Sarjana / S1</option>
+                        <option value="Doctor / S3">Doctor / S3</option>
+                        <option value="Doctor / S3, Master / S2, Sarjana / S1">Doctor / S3, Master / S2, Sarjana / S1</option>
+                        <option value="Doctor / S3, Master / S2">Doctor / S3, Master / S2</option>
+                        <option value="Master / S2, Sarjana / S1">Master / S2, Sarjana / S1</option>
+                        <option value="SMA / SMK / STM">SMA / SMK / STM</option>
+                    </select>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Industry</label>

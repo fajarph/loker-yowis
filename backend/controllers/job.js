@@ -196,7 +196,7 @@ const updateJob = async(req, res) => {
 const deleteJob = async(req, res) => {
     const job = await Job.findOne({
         where:{
-            id: req.params.id
+            uuid: req.params.id
         }
     })
     if(!job) return res.status(404).json({msg: "No Data Found"})
@@ -205,7 +205,7 @@ const deleteJob = async(req, res) => {
         fs.unlinkSync(filepath)
         await Job.destroy({
             where:{
-                id: req.params.id
+                uuid: req.params.id
             }
         })
         res.status(200).json({msg: "Job Deleted Succesfully"})
