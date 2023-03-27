@@ -13,7 +13,8 @@ const Login = async (req, res) => {
     req.session.userId = user.uuid
     const uuid = user.uuid
     const email = user.email
-    res.status(200).json({uuid, email, match})
+    const role = user.role
+    res.status(200).json({uuid, email, role})
 }
 
 const Me = async(req, res) => {
@@ -21,7 +22,7 @@ const Me = async(req, res) => {
         return res.status(401).json({msg: "Mohon Login ke Akun Anda"})
     }
     const user = await User.findOne({
-        attributes:["uuid", "email"],
+        attributes:["uuid", "email", "role"],
         where: {
             uuid: req.session.userId
         }

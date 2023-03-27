@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { LoginUser, reset } from "../features/authSlice"
 
 const Login = () => {
@@ -28,6 +28,7 @@ const Login = () => {
         <div className='container-fluid'>
             <h2 className="fw-bold  text-uppercase text-center text-dark mt-5">Login</h2>
             <form onSubmit={Auth} className='container justify-content-center'>
+                {isError && <p className='d-flex text-danger justify-content-center'>{message}</p>}
                 <div className="mb-3">
                     <label className="form-label">Email</label>
                     <input 

@@ -98,9 +98,10 @@ const EditProfile = () => {
                         value={status} 
                         onChange={(e) => setStatus(e.target.value)}
                     >
-                        <option selected hidden>Your Status</option>
-                        <option value="Sudah Menikah">Sudah Menikah</option>
-                        <option value="Belum Menikah">Belum Menikah</option>
+                        <option selected hidden>Status</option>
+                        <option value="Aktif">Saya aktif mencari kerja dan terbuka untuk mendapatkan tawaran kerja (Aktif)</option>
+                        <option value="Pasif">Saya tidak mencari kerja, tetapi tertarik untuk mendapatkan tawaran kerja (Pasif)</option>
+                        <option value="Nonaktif">Saya tidak mencari kerja dan tidak tertarik dengan tawaran kerja (Nonaktif)</option>
                     </select>
                 </div>
                 <div className="mb-3">

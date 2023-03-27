@@ -8,7 +8,7 @@ const AddJobs = () => {
     const [companyName, setCompanyName] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
     const [salary, setSalary] = useState("");
-    const [jobRole, steJobRole] = useState("");
+    const [jobRole, setJobRole] = useState("");
     const [jobLevel, setJobLevel] = useState("");
     const [jobType, setJobType] = useState("");
     const [jobShortDescription, setJobShortDescription] = useState("");
@@ -99,7 +99,7 @@ const AddJobs = () => {
                     <select
                         className="form-select" 
                         value={jobRole} 
-                        onChange={(e) => steJobRole(e.target.value)}
+                        onChange={(e) => setJobRole(e.target.value)}
                         placeholder='Job Role'
                     >
                         <option selected hidden>Job Role</option>

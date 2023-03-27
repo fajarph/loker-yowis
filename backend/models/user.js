@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     instagramUrl: DataTypes.STRING,
     facebookUrl: DataTypes.STRING,
+    role: DataTypes.STRING,
     image: DataTypes.STRING,
     url: DataTypes.STRING
   }, {

@@ -6,6 +6,7 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confPassword, setConfPassword] = useState("")
+    const [role, setRole] = useState("")
     const navigate = useNavigate()
 
     const saveUser = async(e) => {
@@ -15,6 +16,7 @@ const Register = () => {
                 email: email,
                 password: password,
                 confPassword: confPassword,
+                role: role
             })
             navigate("/login")
         } catch (error) {
@@ -56,6 +58,19 @@ const Register = () => {
                         onChange={(e) => setConfPassword(e.target.value)}
                         placeholder='Confirm Password'
                     />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Role</label>
+                    <select
+                        className="form-select" 
+                        value={role} 
+                        onChange={(e) => setRole(e.target.value)}
+                        placeholder='Job Role'
+                    >
+                        <option selected hidden>Select Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                    </select>
                 </div>
                 <button type="submit" className="btn btn-dark">Submit</button>
                 <p className="text-dark mt-3">

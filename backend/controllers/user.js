@@ -6,7 +6,7 @@ const path = require("path")
 const getUsers = async(req, res) => {
     try {
         const response = await User.findAll({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "image", "url"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "role", "image", "url"],
         });
         res.status(200).json(response)
     } catch (error) {
@@ -17,7 +17,7 @@ const getUsers = async(req, res) => {
 const getUserById = async(req, res) => {
     try {
         const response = await User.findOne({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "image", "url"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl","role", "image", "url"],
             where: {
                 uuid: req.params.id
             }
@@ -29,13 +29,14 @@ const getUserById = async(req, res) => {
 }
 
 const createUser = async(req, res) => {
-    const {email, password, confPassword,  } = req.body;
+    const {email, password, confPassword, role} = req.body;
     if(password !== confPassword) return res.status(400).json({msg: "Password dan Confirm Password Tidak Cocok"})
     const hashPassword = await argon2.hash(password);
     try {
         await User.create({
             email: email,
-            password: hashPassword
+            password: hashPassword,
+            role: role
         })
         res.status(201).json({msg: "Register Berhasil"})
     } catch (error) {
