@@ -57,7 +57,7 @@ const JobDetail = () => {
         <div>
             <Navbar/>
             <div className="job-detail">
-                <div className="container">
+                <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-8">
                             <div>
@@ -130,6 +130,27 @@ const JobDetail = () => {
                                                 <div className="mt-4">
                                                     <h6 className="fw-bold text-secondary">Deskripsi Perusahaan</h6>
                                                     <p>{jobShortDescription}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="card mt-4">
+                                        <div className="card-body">
+                                            <h5 className="fw-bold"><i class="bi bi-briefcase-fill"></i> Lowongan Serupa</h5>
+                                        </div>
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <div className="row">
+                                                        <div className="d-flex justify-content-center col-3">
+                                                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "60px", height: "60px"}}/>
+                                                        </div>
+                                                        <div className="d-flex justify-content-center col-9">
+                                                            <div className="row me-5">
+                                                                <h5 className="fw-bold text-secondary">Job Role</h5>
+                                                                <p className="text-secondary">Company Name</p>
+                                                            </div>
+                                                            
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
