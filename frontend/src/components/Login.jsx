@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom'
 import { LoginUser, reset } from "../features/authSlice"
+import Navbar from "./Navbar";
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -25,6 +26,7 @@ const Login = () => {
     }
   return (
     <>
+        <Navbar/>
         <div className='container-fluid'>
             <h2 className="fw-bold  text-uppercase text-center text-dark mt-5">Login</h2>
             <form onSubmit={Auth} className='container justify-content-center'>

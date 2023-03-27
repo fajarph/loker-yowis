@@ -79,4 +79,5 @@ export const authSlice = createSlice({
 })
 
 export const {reset} = authSlice.actions
+export const selectIsLoggedIn = (state) => state.auth.user !== null
 export default authSlice.reducer

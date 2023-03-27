@@ -4,18 +4,18 @@ import Register from "./components/Register";
 import EditProfile from "./components/FormEditProfile";
 import JobList from "./components/JobList";
 import ProfileUser from "./components/ProfileUser";
-import Beranda from "./pages/Beranda";
 import Dashboard from "./components/Dashboard";
 import JobDetail from "./components/JobDetail";
 import AddJob from "./pages/AddJob";
 import EditJob from "./pages/EditJob";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Beranda />}/>
+          <Route path="/" element={<Home />}/>
           <Route path="/dashboard" element={<Dashboard />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 
-const Beranda = () => {
+const Home = () => {
 
     return (
         <div>
@@ -10,4 +10,4 @@ const Beranda = () => {
     )
 }
 
-export default Beranda
+export default Home
