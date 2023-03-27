@@ -64,11 +64,13 @@ const ProfileUser = () => {
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3 mb-3'>
-                            <h6 className='row'>
-                                <Link to={`/add/jobs`} className="btn btn-dark">
-                                    Add Job
-                                </Link>
-                            </h6>
+                            {user && user.role === "Admin" && (
+                                <h6 className='row'>
+                                    <Link to={`/add/jobs`} className="btn btn-dark">
+                                        Add Job
+                                    </Link>
+                                </h6>
+                            )}
                         </div>
                     </div>
                 </div>

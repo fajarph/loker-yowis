@@ -7,7 +7,7 @@ import { getMe } from '../features/authSlice'
 const AddJob = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {isError} = useSelector((state => state.auth))
+    const {isError, user} = useSelector((state => state.auth))
 
     useEffect(() => {
         dispatch(getMe())   
@@ -17,7 +17,10 @@ const AddJob = () => {
         if(isError){
             navigate("/")
         }
-    }, [isError, navigate])
+        if(user && user.role !== "Admin"){
+          navigate("/")
+        }
+    }, [isError, user, navigate])
   return (
     <FormAddJobs/>
   )

@@ -11,6 +11,7 @@ const ProfileUser = () => {
     const [status, setStatus] = useState("")
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
+    const [role, setRole] = useState("")
     const [url, setUrl] = useState("")
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -38,6 +39,7 @@ const ProfileUser = () => {
         setStatus(response.data.status)
         setInstagramUrl(response.data.instagramUrl)
         setFacebookUrl(response.data.facebookUrl)
+        setRole(response.data.role)
         setUrl(response.data.url)
     }
 
@@ -80,8 +82,11 @@ const ProfileUser = () => {
                     </div>
                 </div>
                 <div className='col-9'>
-                    <h5>User Profile</h5>
-                    <div className='border border-1 rounded mt-3 mb-5'>
+                    <div className='d-flex justify-content-between'>
+                        <h5>User Profile</h5>
+                        <h5>{role}</h5>
+                    </div>
+                    <div className='border border-1 rounded mt-2 mb-5'>
                         <div className='row mt-3 mb-5'>
                             <div className='col-3 d-flex justify-content-center'>
                                 <img className='image rounded-circle' alt="Image" src={url} style={{width: "150px", height: "150px"}}/>

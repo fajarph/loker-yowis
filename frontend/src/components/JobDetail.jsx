@@ -102,7 +102,9 @@ const JobDetail = () => {
                                             <div className="card">
                                             <div className="card-body">
                                                 <div className='d-flex justify-content-end mb-3'>
-                                                    <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
+                                                    {user && user.role === "Admin" && (
+                                                        <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
+                                                    )}
                                                     <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
                                                     <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
                                                 </div>
