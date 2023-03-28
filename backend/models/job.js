@@ -17,11 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       Job.belongsTo(models.Location)
       models.Location.hasMany(Job)
 
-      Job.belongsTo(models.Category)
-      models.Category.hasMany(Job)
-
       Job.belongsTo(models.Educations)
       models.Educations.hasMany(Job)
+
+      Job.belongsTo(models.Level)
+      models.Level.hasMany(Job)
+
+      Job.belongsTo(models.Role)
+      models.Role.hasMany(Job)
     }
   }
   Job.init({
@@ -29,16 +32,14 @@ module.exports = (sequelize, DataTypes) => {
     companyName: DataTypes.STRING,
     companyAddress: DataTypes.STRING,
     salary: DataTypes.STRING,
-    jobRole: DataTypes.STRING,
-    jobLevel: DataTypes.STRING,
     jobType: DataTypes.STRING,
     jobShortDescription: DataTypes.STRING,
     jobLongDescription: DataTypes.STRING,
-    education: DataTypes.STRING,
     industry: DataTypes.STRING,
     LocationId: DataTypes.INTEGER,
-    CategoryId: DataTypes.INTEGER,
     EducationId: DataTypes.INTEGER,
+    LevelId: DataTypes.INTEGER,
+    RoleId: DataTypes.INTEGER,
     image: DataTypes.STRING,
     url: DataTypes.STRING
   }, {

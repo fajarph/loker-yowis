@@ -71,45 +71,57 @@ const JobList = () => {
                     <div className="col-11">
                         <div className='row'>
                             <div className='col-md-12'>
-                                <div className='input-group'>
-                                    <input 
-                                        type="text" 
-                                        className="form-control"
-                                        value={query}
-                                        onChange={(e) => setQuery(e.target.value)}
-                                    />
-                                </div>
+                                <input 
+                                    type="text" 
+                                    className="form-control"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                />
                             </div>
                             <div className='col-4'>
-                                <div className='input-group'>
-                                    <select 
-                                        className='form-select' 
-                                        value={companyAddress} 
-                                        onChange={(e) => setCompanyAddress(e.target.value)}
-                                    >
-                                        <option selected hidden>Semua Lokasi</option>
-                                        <option value="Bekasi">Bekasi</option>
-                                        <option value="Business Analyst">Business Analyst</option>
-                                        <option value="Chef">Chef</option>
-                                        <option value="Content Creator">Content Creator</option>
-                                        <option value="Customer Service Representative">Customer Service Representative</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="Manager">Manager</option>
-                                        <option value="Financial Analyst">Financial Analyst</option>
-                                        <option value="Graphic Designer">Graphic Designer</option>
-                                        <option value="Human Resources Specialist">Human Resources Specialist</option>
-                                        <option value="Marketing Coordinator">Marketing Coordinator</option>
-                                        <option value="Nurse">Nurse</option>
-                                        <option value="Operations Manager">Operations Manager</option>
-                                        <option value="Programmer">Programmer</option>
-                                        <option value="Psikolog">Psikolog</option>
-                                        <option value="Project Manager">Project Manager</option>
-                                        <option value="Software Developer">Software Developer</option>
-                                        <option value="Supply Chain Manager">Supply Chain Manager</option>
-                                        <option value="Sales Executive">Sales Executive</option>
-                                        <option value="Teacher">Teacher</option>
-                                    </select>
-                                </div>
+                                <select 
+                                    className='form-select' 
+                                    value={companyAddress} 
+                                    onChange={(e) => setCompanyAddress(e.target.value)}
+                                >
+                                    <option selected hidden>Semua Lokasi</option>
+                                    <option value="Bekasi">Bekasi</option>
+                                    <option value="Business Analyst">Business Analyst</option>
+                                    <option value="Chef">Chef</option>
+                                    <option value="Content Creator">Content Creator</option>
+                                    <option value="Customer Service Representative">Customer Service Representative</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
+                            </div>
+                            <div className='col-4'>
+                                <select 
+                                    className='form-select' 
+                                    value={companyAddress} 
+                                    onChange={(e) => setCompanyAddress(e.target.value)}
+                                >
+                                    <option selected hidden>Semua Kategori</option>
+                                    <option value="Bekasi">Bekasi</option>
+                                    <option value="Business Analyst">Business Analyst</option>
+                                    <option value="Chef">Chef</option>
+                                    <option value="Content Creator">Content Creator</option>
+                                    <option value="Customer Service Representative">Customer Service Representative</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
+                            </div>
+                            <div className='col-4'>
+                                <select 
+                                    className='form-select' 
+                                    value={companyAddress} 
+                                    onChange={(e) => setCompanyAddress(e.target.value)}
+                                >
+                                    <option selected hidden>Semua Pendidikan</option>
+                                    <option value="Bekasi">Bekasi</option>
+                                    <option value="Business Analyst">Business Analyst</option>
+                                    <option value="Chef">Chef</option>
+                                    <option value="Content Creator">Content Creator</option>
+                                    <option value="Customer Service Representative">Customer Service Representative</option>
+                                    <option value="Marketing">Marketing</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -121,15 +133,17 @@ const JobList = () => {
 
             <div className='mt-5 container'>
                 <h2>Cari Lowongan kerja</h2>
-                <div className='row mt-4'>
-                    <div className='col-3'>
-                        <h5>VACANCY</h5>
-                    </div>
-                    <div className='col-4'>
-                        <h5>DETAIL</h5>
-                    </div>
-                    <div className='col-5'>    
-                        <h5>DESKRIPSI PEKERJAAN</h5>
+                <div className='mt-4'>
+                    <div className='row border border-dark bg-dark'>
+                        <div className='col-3 mt-3 mb-3 text-white'>
+                            <h5>VACANCY</h5>
+                        </div>
+                        <div className='col-4 mt-3 mb-3 text-white'>
+                            <h5>DETAIL</h5>
+                        </div>
+                        <div className='col-5 mt-3 mb-3 text-white'>    
+                            <h5>DESKRIPSI PEKERJAAN</h5>
+                        </div>
                     </div>
                 </div>
                 {jobs.map((job, index) => (

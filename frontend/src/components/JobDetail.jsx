@@ -69,7 +69,7 @@ const JobDetail = () => {
                                             <h4 className="fw-bold">Lowongan Kerja</h4>
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
                                                 <h6><i className="bi bi-building-fill"></i> {companyName}</h6>
-                                                <h6><i className="bi bi-geo-alt-fill"></i> {LocationId}</h6>
+                                                <h6><i className="bi bi-geo-alt-fill"></i> {companyAddress}</h6>
                                                 <h6><i className="bi bi-folder-fill"></i> {jobRole}</h6>
                                                 <h6><i className="bi bi-cash"></i> {salary}</h6>
                                             </div>

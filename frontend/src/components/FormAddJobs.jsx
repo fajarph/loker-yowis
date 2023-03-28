@@ -17,6 +17,10 @@ const FormAddJobs = () => {
     const [industry, setIndustry] = useState("");
     const [locations, setLocation] = useState([])
     const [LocationId, setLocationId] = useState("")
+    const [categories, setCategory] = useState([])
+    const [CategoryId, setCategoryId] = useState("")
+    const [educations, setEducations] = useState([])
+    const [EducationId, setEducationId] = useState("")
     const [file, setFile] = useState("")
     const [preview, setPreview] = useState("")
     const navigate = useNavigate(); 
@@ -24,6 +28,8 @@ const FormAddJobs = () => {
 
     useEffect(() => {
         getLocations()
+        getCategories()
+        getEducations()
     }, [])
 
     const loadImage = (e) => {
@@ -52,6 +58,8 @@ const FormAddJobs = () => {
             formData.append("education", education)
             formData.append("industry", industry)
             formData.append("LocationId", LocationId)
+            formData.append("CategoryId", CategoryId)
+            formData.append("EducationId", EducationId)
             formData.append("file", file)
             
             await axios.post(`http://localhost:5000/jobs`, formData, {
@@ -69,6 +77,16 @@ const FormAddJobs = () => {
     const getLocations = async () => {
         const response = await axios.get("http://localhost:5000/locations")
         setLocation(response.data);
+    }
+
+    const getCategories = async () => {
+        const response = await axios.get("http://localhost:5000/categories")
+        setCategory(response.data);
+    }
+
+    const getEducations = async () => {
+        const response = await axios.get("http://localhost:5000/educations")
+        setEducations(response.data);
     }
 
   return (
@@ -98,7 +116,7 @@ const FormAddJobs = () => {
                 </div>
                 <div className='field'>
                     <label className='label'>Location</label>
-                    <div className="control">
+                    <div className="control mt-2">
                         <select 
                         className="form-select" 
                         value={LocationId} 
@@ -111,7 +129,22 @@ const FormAddJobs = () => {
                         </select>
                     </div>
                 </div>
-                <div className="mb-3">
+                <div className='field'>
+                    <label className='label'>Location</label>
+                    <div className="control mt-2">
+                        <select 
+                        className="form-select" 
+                        value={EducationId} 
+                        onChange={(e) => setEducationId(e.target.value)}
+                        >
+                            <option selected hidden>Select Location</option>
+                            {educations.map((education) => (
+                                <option value={education.id}>{education.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className="mb-3 mt-3">
                     <label className="form-label">Salary</label>
                     <input 
                         type="text" 
@@ -211,7 +244,22 @@ const FormAddJobs = () => {
                         }}
                     />
                 </div>
-                <div className="mb-3">
+                <div className='field'>
+                    <label className='label'>Category</label>
+                    <div className="control mt-2">
+                        <select 
+                        className="form-select" 
+                        value={CategoryId} 
+                        onChange={(e) => setCategoryId(e.target.value)}
+                        >
+                            <option selected hidden>Select Category</option>
+                            {categories.map((categori) => (
+                                <option value={categori.id}>{categori.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className="mb-3 mt-3">
                     <label className="form-label">Education</label>
                     <select
                         type="text" 

@@ -25,12 +25,6 @@ module.exports = {
       salary: {
         type: Sequelize.STRING
       },
-      jobRole: {
-        type: Sequelize.STRING
-      },
-      jobLevel: {
-        type: Sequelize.STRING
-      },
       jobType: {
         type: Sequelize.STRING
       },

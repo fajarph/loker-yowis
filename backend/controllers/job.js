@@ -237,7 +237,7 @@ const updateJob = async(req, res) => {
                     attributes: ['id', 'name']
                 },
                 {
-                    model: Educations,
+                    model: Education,
                     attributes: ['id', 'name']
                 }
             ]
