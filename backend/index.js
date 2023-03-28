@@ -12,6 +12,9 @@ dotenv.config()
 const auth = require("./routes/auth.js")
 const users = require("./routes/user.js")
 const jobs = require("./routes/job.js")
+const locations = require("./routes/location.js")
+const categories = require("./routes/category.js")
+const educations = require("./routes/education.js")
 
 const sessionStore = SequelizeStore(session.Store)
 
@@ -41,6 +44,9 @@ app.use(express.static("public"))
 app.use(auth)
 app.use(users)
 app.use(jobs)
+app.use(locations)
+app.use(categories)
+app.use(educations)
 
 store.sync()
 

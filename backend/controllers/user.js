@@ -1,4 +1,4 @@
-const { User, Location } = require('../models')
+const { User, Location, Category, Education } = require('../models')
 const argon2 = require('argon2')
 const fs = require("fs")
 const path = require("path")
@@ -134,30 +134,12 @@ const deleteUser = async(req, res) => {
     }
 }
 
-const getLocations = async(req, res) => {
-    try {
-        const response = await Location.findAll();
-        res.status(200).json(response);
-    } catch (error) {
-        console.log(error.message);
-    }
-}
 
-const createLocation = async(req, res) => {
-    try {
-        await Location.create(req.body);
-        res.status(201).json({msg: "Location Created"});
-    } catch (error) {
-        console.log(error.message);
-    }
-}
 
 module.exports = {
     getUsers,
     getUserById,
     createUser,
     updateUser,
-    deleteUser,
-    getLocations,
-    createLocation
+    deleteUser
 }

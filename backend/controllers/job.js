@@ -1,4 +1,4 @@
-const {Job, Location} = require('../models')
+const {Job, Location, Category, Educations} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')
@@ -30,6 +30,14 @@ const getJobs = async(req, res) => {
             {
                 model: Location,
                 attributes: ['id', 'name']
+            },
+            {
+                model: Category,
+                attributes: ['id', 'name']
+            },
+            {
+                model: Educations,
+                attributes: ['id', 'name']
             }
         ]
     })
@@ -55,6 +63,14 @@ const getJobs = async(req, res) => {
         include: [
             {
                 model: Location,
+                attributes: ['id', 'name']
+            },
+            {
+                model: Category,
+                attributes: ['id', 'name']
+            },
+            {
+                model: Educations,
                 attributes: ['id', 'name']
             }
         ],
@@ -100,6 +116,8 @@ const createJob = async(req, res) => {
     const education = req.body.education
     const industry = req.body.industry
     const LocationId = req.body.LocationId
+    const CategoryId = req.body.CategoryId
+    const EducationId = req.body.EducationId
     const file = req.files.file
     const fileSize = file.data.lenght
     const ext = path.extname(file.name)
@@ -126,6 +144,8 @@ const createJob = async(req, res) => {
                 education: education,
                 industry: industry,
                 LocationId: LocationId,
+                CategoryId: CategoryId,
+                EducationId: EducationId,
                 image: fileName,
                 url: url
             })
@@ -182,6 +202,8 @@ const updateJob = async(req, res) => {
     const education = req.body.education
     const industry = req.body.industry
     const LocationId = req.body.LocationId
+    const CategoryId = req.body.CategoryId
+    const EducationId = req.body.EducationId
     const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`;
 
     try {
@@ -197,6 +219,8 @@ const updateJob = async(req, res) => {
             education: education,
             industry: industry,
             LocationId: LocationId,
+            CategoryId: CategoryId,
+            EducationId: EducationId,
             image: fileName, 
             url: url
         },{
@@ -206,6 +230,14 @@ const updateJob = async(req, res) => {
             include: [
                 {
                     model: Location,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Category,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Educations,
                     attributes: ['id', 'name']
                 }
             ]

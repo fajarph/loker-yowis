@@ -9,6 +9,14 @@ GET http://localhost:5000/jobs?search_query=Fajar&page=0&limit=5
 //Get All Location
 GET http://localhost:5000/locations
 
+###
+//Get All Category
+GET http://localhost:5000/categories
+
+###
+//Get All Education
+GET http://localhost:5000/educations
+
 
 //Get Single User 
 ###
@@ -53,7 +61,23 @@ POST http://localhost:5000/locations
 Content-Type: application/json
 
 {
-    "name": "Yogyakarta"
+    "name": "Malang"
+}
+
+###
+POST http://localhost:5000/categories
+Content-Type: application/json
+
+{
+    "name": "Automotive"
+}
+
+###
+POST http://localhost:5000/educations
+Content-Type: application/json
+
+{
+    "name": "Diploma/D1/D2/D3"
 }
 
 //Update User

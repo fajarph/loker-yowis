@@ -12,6 +12,8 @@ const db = {};
 const UserModel = require('./user')
 const JobModel = require('./job')
 const LocationModel = require('./location')
+const CategoryModel = require('./category')
+const EducationModel = require('./educations')
 
 let sequelize;
 if (config.use_env_variable) {
@@ -44,5 +46,7 @@ db.users = require('./user')(sequelize, Sequelize);
 db.user = UserModel(sequelize, Sequelize)
 db.job = JobModel(sequelize, Sequelize)
 db.location = LocationModel(sequelize, Sequelize)
+db.category = CategoryModel(sequelize, Sequelize)
+db.education = EducationModel(sequelize, Sequelize)
 
 module.exports = db;
