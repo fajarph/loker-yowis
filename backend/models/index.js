@@ -9,9 +9,9 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-const Users = require('./user')
-const Jobs = require('./job')
-const Locations = require('./location')
+const UserModel = require('./user')
+const JobModel = require('./job')
+const LocationModel = require('./location')
 
 let sequelize;
 if (config.use_env_variable) {
@@ -41,8 +41,8 @@ db.Sequelize = Sequelize;
 
 db.users = require('./user')(sequelize, Sequelize);
 
-db.user = Users(sequelize, Sequelize)
-db.job = Jobs(sequelize, Sequelize)
-db.location = Locations(sequelize, Sequelize)
+db.user = UserModel(sequelize, Sequelize)
+db.job = JobModel(sequelize, Sequelize)
+db.location = LocationModel(sequelize, Sequelize)
 
 module.exports = db;

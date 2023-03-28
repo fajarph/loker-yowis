@@ -1,6 +1,6 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import Navbar from './Navbar'
 
@@ -15,10 +15,16 @@ const FormAddJobs = () => {
     const [jobLongDescription, setJobLongDescription] = useState("");
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
+    const [locations, setLocation] = useState([])
+    const [LocationId, setLocationId] = useState("")
     const [file, setFile] = useState("")
     const [preview, setPreview] = useState("")
     const navigate = useNavigate(); 
     const editorRef = useRef(null);
+
+    useEffect(() => {
+        getLocations()
+    }, [])
 
     const loadImage = (e) => {
         const image = e.target.files[0]
@@ -45,6 +51,7 @@ const FormAddJobs = () => {
             formData.append("jobLongDescription", jobLongDescription)
             formData.append("education", education)
             formData.append("industry", industry)
+            formData.append("LocationId", LocationId)
             formData.append("file", file)
             
             await axios.post(`http://localhost:5000/jobs`, formData, {
@@ -57,6 +64,11 @@ const FormAddJobs = () => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const getLocations = async () => {
+        const response = await axios.get("http://localhost:5000/locations")
+        setLocation(response.data);
     }
 
   return (
@@ -83,6 +95,21 @@ const FormAddJobs = () => {
                         onChange={(e) => setCompanyAddress(e.target.value)}
                         placeholder='Company Address'
                     />
+                </div>
+                <div className='field'>
+                    <label className='label'>Location</label>
+                    <div className="control">
+                        <select 
+                        className="form-select" 
+                        value={LocationId} 
+                        onChange={(e) => setLocationId(e.target.value)}
+                        >
+                            <option selected hidden>Select Location</option>
+                            {locations.map((location) => (
+                                <option value={location.id}>{location.name}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Salary</label>

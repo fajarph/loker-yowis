@@ -22,8 +22,16 @@ const getJobs = async(req, res) => {
                 [Op.like]: '%'+search+'%'
             }}, {education:{
                 [Op.like]: '%'+search+'%'
+            }}, {industry:{
+                [Op.like]: '%'+search+'%'
             }}]
-        }
+        },
+        include: [
+            {
+                model: Location,
+                attributes: ['id', 'name']
+            }
+        ]
     })
     const totalPage = Math.ceil(totalRows / limit)
     const result = await Job.findAll({
@@ -40,8 +48,16 @@ const getJobs = async(req, res) => {
                 [Op.like]: '%'+search+'%'
             }}, {education:{
                 [Op.like]: '%'+search+'%'
+            }}, {industry:{
+                [Op.like]: '%'+search+'%'
             }}]
         },
+        include: [
+            {
+                model: Location,
+                attributes: ['id', 'name']
+            }
+        ],
         offset: offset,
         limit: limit,
         order:[
@@ -60,7 +76,6 @@ const getJobs = async(req, res) => {
 const getJobById = async(req, res) => {
     try {
         const response = await Job.findOne({
-            attributes:["companyName", "companyAddress", "salary", "jobRole", "jobLevel", "jobType", "jobShortDescription", "jobLongDescription", "education", "industry", 'createdAt', "image", "url"],
             where:{
                 uuid: req.params.id
             }
@@ -72,6 +87,7 @@ const getJobById = async(req, res) => {
 }
 
 const createJob = async(req, res) => {
+    console.log(req.body)
     if(req.files === null) return res.status(400).json({msg: "No File Uploaded"})
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress
@@ -83,6 +99,7 @@ const createJob = async(req, res) => {
     const jobLongDescription = req.body.jobLongDescription
     const education = req.body.education
     const industry = req.body.industry
+    const LocationId = req.body.LocationId
     const file = req.files.file
     const fileSize = file.data.lenght
     const ext = path.extname(file.name)
@@ -100,7 +117,7 @@ const createJob = async(req, res) => {
             await Job.create({
                 companyName: companyName, 
                 companyAddress: companyAddress, 
-                salary: salary, 
+                salary: salary,
                 jobRole: jobRole,
                 jobLevel: jobLevel,
                 jobType: jobType,
@@ -108,7 +125,8 @@ const createJob = async(req, res) => {
                 jobLongDescription: jobLongDescription,
                 education: education,
                 industry: industry,
-                image: fileName, 
+                LocationId: LocationId,
+                image: fileName,
                 url: url
             })
             res.status(201).json({msg: "Job Created Succesfully"})
@@ -128,13 +146,11 @@ const updateJob = async(req, res) => {
     if(!job) return res.status(404).json({msg: "Job Tidak Ditemukan"});
 
     let fileName = "";
-    let imageChanged = false; // variable untuk mengecek apakah gambar profil diubah atau tidak
+    let imageChanged = false;
 
     if(req.files === null){
-        // Jika job tidak mengupload gambar baru
-        fileName = job.image; // menggunakan gambar lama
+        fileName = job.image;
     }else{
-        // Jika job mengupload gambar baru
         const file = req.files.file;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
@@ -146,14 +162,13 @@ const updateJob = async(req, res) => {
 
         const filepath = `./public/jobs/${job.image}`;
         if (fs.existsSync(filepath)) {
-            // Jika gambar profil sebelumnya ada, hapus gambar profil sebelumnya
             fs.unlinkSync(filepath);
         }
 
         file.mv(`./public/jobs/${fileName}`, (err)=>{
             if(err) return res.status(500).json({msg: err.message});
         });
-        imageChanged = true; // Set variable imageChanged menjadi true karena gambar profil diubah
+        imageChanged = true;
     }
 
     const companyName = req.body.companyName
@@ -166,6 +181,7 @@ const updateJob = async(req, res) => {
     const jobLongDescription = req.body.jobLongDescription
     const education = req.body.education
     const industry = req.body.industry
+    const LocationId = req.body.LocationId
     const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`;
 
     try {
@@ -180,14 +196,21 @@ const updateJob = async(req, res) => {
             jobLongDescription: jobLongDescription,
             education: education,
             industry: industry,
+            LocationId: LocationId,
             image: fileName, 
             url: url
         },{
             where:{
                 uuid: req.params.id
-            }
+            },
+            include: [
+                {
+                    model: Location,
+                    attributes: ['id', 'name']
+                }
+            ]
         });
-        res.status(200).json({msg: "Job Updated Succesfully", imageChanged: imageChanged}); // Mengirimkan response bahwa imageChanged bernilai true jika gambar profil diubah dan false jika tidak
+        res.status(200).json({msg: "Job Updated Succesfully", imageChanged: imageChanged});
     } catch (error) {
         console.log(error.message);
     }

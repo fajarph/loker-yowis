@@ -5,6 +5,10 @@ GET http://localhost:5000/users
 ###
 GET http://localhost:5000/jobs?search_query=Fajar&page=0&limit=5
 
+###
+//Get All Location
+GET http://localhost:5000/locations
+
 
 //Get Single User 
 ###
@@ -37,10 +41,11 @@ Content-Type: application/json
     "jobRole": "Senior Programmer",
     "jobLevel": "junior",
     "jobType": "programmer",
-    "jobDescription": "PT. Arvitech Mega Solusi, Driven by technology powered business innovation and committed to bridge the gap between technology and business needs. ARVITECH empowering business by building, integrating, and providing IT ...",
+    "jobShortDescription": "PT. Arvitech Mega Solusi, Driven by technology powered business innovation and committed to bridge the gap between technology and business needs. ARVITECH empowering business by building, integrating, and providing IT ...",
+    "jobLongDescription": "dybqidwqdqbdoqwdnqoi",
     "education": "Diploma/D1/D2/D3, Sarjana / S1",
-    "industry": "programmer"
-    
+    "industry": "programmer",
+    "LocationId": 1
 }
 
 ###
@@ -48,7 +53,7 @@ POST http://localhost:5000/locations
 Content-Type: application/json
 
 {
-    "name": "Bekasi"
+    "name": "Yogyakarta"
 }
 
 //Update User

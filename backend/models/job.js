@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     jobLongDescription: DataTypes.STRING,
     education: DataTypes.STRING,
     industry: DataTypes.STRING,
-    location_id: DataTypes.INTEGER,
+    LocationId: DataTypes.INTEGER,
     image: DataTypes.STRING,
     url: DataTypes.STRING
   }, {

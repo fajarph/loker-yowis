@@ -17,6 +17,8 @@ const FormEditJobs = () => {
     const [jobShortDescription, setJobShortDescription] = useState("");
     const [education, setEducation] = useState("");
     const [industry, setIndustry] = useState("");
+    const [locations, setLocation] = useState([])
+    const [LocationId, setLocationId] = useState("")
     const [file, setFile] = useState("")
     const [preview, setPreview] = useState("")
     const navigate = useNavigate();
@@ -29,6 +31,7 @@ const FormEditJobs = () => {
 
     useEffect(() => {
         dispatch(getMe())
+        getLocations()
     }, []);
 
     useEffect(() => {
@@ -62,6 +65,7 @@ const FormEditJobs = () => {
             formData.append("jobLongDescription", jobLongDescription)
             formData.append("education", education)
             formData.append("industry", industry)
+            formData.append("LocationId", LocationId)
             formData.append("file", file)
 
             await axios.patch(`http://localhost:5000/jobs/${id}`, formData, {
@@ -76,6 +80,11 @@ const FormEditJobs = () => {
         }
     }
 
+    const getLocations = async () => {
+        const response = await axios.get("http://localhost:5000/locations")
+        setLocation(response.data);
+    }
+
     const getJobsById = async () => {
         const response = await axios.get(`http://localhost:5000/jobs/${id}`)
         setCompanyName(response.data.companyName)
@@ -88,6 +97,7 @@ const FormEditJobs = () => {
         setJobLongDescription(response.data.jobLongDescription)
         setEducation(response.data.education)
         setIndustry(response.data.industry)
+        setLocationId(response.data.LocationId)
         setFile(response.data.image)
         setPreview(response.data.url)
     }
@@ -126,6 +136,21 @@ const FormEditJobs = () => {
                         onChange={(e) => setSalary(e.target.value)}
                         placeholder='Salary'
                     />
+                </div>
+                <div className='field'>
+                    <label className='label'>Location</label>
+                    <div className="control">
+                        <select 
+                        className="form-select" 
+                        value={LocationId} 
+                        onChange={(e) => setLocationId(e.target.value)}
+                        >
+                            <option selected hidden>Select Location</option>
+                            {locations.map((location) => (
+                                <option value={location.id}>{location.name}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Role</label>
