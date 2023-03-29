@@ -1,4 +1,4 @@
-const {Job, Location, Category, Educations} = require('../models')
+const {Job, Location, Category, Educations, Role, Level, Province} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')
@@ -7,6 +7,7 @@ const getJobs = async(req, res) => {
     const page = parseInt(req.query.page) || 0
     const limit = parseInt(req.query.limit) || 10
     const search = req.query.search_query || ""
+    const EducationId = req.query.EducationId || ""
     const offset = limit * page
     const totalRows = await Job.count({
         where:{
@@ -14,31 +15,43 @@ const getJobs = async(req, res) => {
                 [Op.like]: '%'+search+'%'
             }}, {companyAddress:{
                 [Op.like]: '%'+search+'%'
-            }}, {jobRole:{
-                [Op.like]: '%'+search+'%'
-            }}, {jobLevel:{
-                [Op.like]: '%'+search+'%'
             }}, {jobType:{
-                [Op.like]: '%'+search+'%'
-            }}, {education:{
                 [Op.like]: '%'+search+'%'
             }}, {industry:{
                 [Op.like]: '%'+search+'%'
+            }}, {EducationId:{
+                [Op.eq]: EducationId
             }}]
         },
         include: [
             {
-                model: Location,
-                attributes: ['id', 'name']
-            },
-            {
-                model: Category,
-                attributes: ['id', 'name']
-            },
-            {
                 model: Educations,
                 attributes: ['id', 'name']
-            }
+            },
+            {
+                model: Role,
+                attributes: ['id', 'name', 'CategoryId'],
+                include: [
+                    {
+                        model: Category,
+                        attributes: ['id', 'name']
+                    }
+                ]
+            },
+            {
+                model: Location,
+                attributes: ['id', 'name', "ProvinceId"],
+                include: [
+                    {
+                        model: Province,
+                        attributes: ['id', 'name']
+                    }
+                ]
+            },
+            {
+                model: Level,
+                attributes: ['id', 'name']
+            },
         ]
     })
     const totalPage = Math.ceil(totalRows / limit)
@@ -48,31 +61,43 @@ const getJobs = async(req, res) => {
                 [Op.like]: '%'+search+'%'
             }}, {companyAddress:{
                 [Op.like]: '%'+search+'%'
-            }}, {jobRole:{
-                [Op.like]: '%'+search+'%'
-            }}, {jobLevel:{
-                [Op.like]: '%'+search+'%'
             }}, {jobType:{
-                [Op.like]: '%'+search+'%'
-            }}, {education:{
                 [Op.like]: '%'+search+'%'
             }}, {industry:{
                 [Op.like]: '%'+search+'%'
+            }}, {EducationId:{
+                [Op.eq]: EducationId
             }}]
         },
         include: [
             {
-                model: Location,
-                attributes: ['id', 'name']
-            },
-            {
-                model: Category,
-                attributes: ['id', 'name']
-            },
-            {
                 model: Educations,
                 attributes: ['id', 'name']
-            }
+            },
+            {
+                model: Role,
+                attributes: ['id', 'name', 'CategoryId'],
+                include: [
+                    {
+                        model: Category,
+                        attributes: ['id', 'name']
+                    }
+                ]
+            },
+            {
+                model: Location,
+                attributes: ['id', 'name', "ProvinceId"],
+                include: [
+                    {
+                        model: Province,
+                        attributes: ['id', 'name']
+                    }
+                ]
+            },
+            {
+                model: Level,
+                attributes: ['id', 'name']
+            },
         ],
         offset: offset,
         limit: limit,
@@ -108,16 +133,14 @@ const createJob = async(req, res) => {
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress
     const salary = req.body.salary
-    const jobRole = req.body.jobRole
-    const jobLevel = req.body.jobLevel
     const jobType = req.body.jobType
     const jobShortDescription = req.body.jobShortDescription
     const jobLongDescription = req.body.jobLongDescription
-    const education = req.body.education
     const industry = req.body.industry
-    const LocationId = req.body.LocationId
-    const CategoryId = req.body.CategoryId
     const EducationId = req.body.EducationId
+    const LevelId = req.body.LevelId
+    const RoleId = req.body.RoleId
+    const LocationId = req.body.LocationId
     const file = req.files.file
     const fileSize = file.data.lenght
     const ext = path.extname(file.name)
@@ -136,16 +159,14 @@ const createJob = async(req, res) => {
                 companyName: companyName, 
                 companyAddress: companyAddress, 
                 salary: salary,
-                jobRole: jobRole,
-                jobLevel: jobLevel,
                 jobType: jobType,
                 jobShortDescription: jobShortDescription,
                 jobLongDescription: jobLongDescription,
-                education: education,
                 industry: industry,
-                LocationId: LocationId,
-                CategoryId: CategoryId,
                 EducationId: EducationId,
+                LevelId: LevelId,
+                RoleId: RoleId,
+                LocationId: LocationId,
                 image: fileName,
                 url: url
             })
@@ -194,16 +215,14 @@ const updateJob = async(req, res) => {
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress
     const salary = req.body.salary
-    const jobRole = req.body.jobRole
-    const jobLevel = req.body.jobLevel
     const jobType = req.body.jobType
     const jobShortDescription = req.body.jobShortDescription
     const jobLongDescription = req.body.jobLongDescription
-    const education = req.body.education
     const industry = req.body.industry
-    const LocationId = req.body.LocationId
-    const CategoryId = req.body.CategoryId
     const EducationId = req.body.EducationId
+    const LevelId = req.body.LevelId
+    const RoleId = req.body.RoleId
+    const LocationId = req.body.LocationId
     const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`;
 
     try {
@@ -211,16 +230,14 @@ const updateJob = async(req, res) => {
             companyName: companyName, 
             companyAddress: companyAddress, 
             salary: salary, 
-            jobRole: jobRole,
-            jobLevel: jobLevel,
             jobType: jobType,
             jobShortDescription: jobShortDescription,
             jobLongDescription: jobLongDescription,
-            education: education,
             industry: industry,
-            LocationId: LocationId,
-            CategoryId: CategoryId,
             EducationId: EducationId,
+            LevelId: LevelId,
+            RoleId: RoleId,
+            LocationId: LocationId,
             image: fileName, 
             url: url
         },{
@@ -229,17 +246,33 @@ const updateJob = async(req, res) => {
             },
             include: [
                 {
+                    model: Educations,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Role,
+                    attributes: ['id', 'name', 'CategoryId'],
+                    include: [
+                        {
+                            model: Category,
+                            attributes: ['id', 'name']
+                        }
+                    ]
+                },
+                {
                     model: Location,
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name', "ProvinceId"],
+                    include: [
+                        {
+                            model: Province,
+                            attributes: ['id', 'name']
+                        }
+                    ]
                 },
                 {
-                    model: Category,
+                    model: Level,
                     attributes: ['id', 'name']
                 },
-                {
-                    model: Education,
-                    attributes: ['id', 'name']
-                }
             ]
         });
         res.status(200).json({msg: "Job Updated Succesfully", imageChanged: imageChanged});

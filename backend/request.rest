@@ -3,19 +3,31 @@ GET http://localhost:5000/users
 
 //Get All Job
 ###
-GET http://localhost:5000/jobs?search_query=Fajar&page=0&limit=5
+GET http://localhost:5000/jobs?search_query=Fajar&EducationId=1&page=0&limit=5
 
 ###
-//Get All Location
-GET http://localhost:5000/locations
+//Get All Education
+GET http://localhost:5000/educations
 
 ###
 //Get All Category
 GET http://localhost:5000/categories
 
 ###
-//Get All Education
-GET http://localhost:5000/educations
+//Get All Job Role
+GET http://localhost:5000/roles
+
+###
+//Get All Job Level
+GET http://localhost:5000/levels
+
+###
+//Get All Province
+GET http://localhost:5000/provinces
+
+###
+//Get All Location
+GET http://localhost:5000/locations
 
 
 //Get Single User 
@@ -56,14 +68,37 @@ Content-Type: application/json
     "LocationId": 1
 }
 
+//Create Province
+###
+POST http://localhost:5000/provinces
+Content-Type: application/json
+
+{
+    "name": "Yogyakarta"
+}
+
+//Create Location
 ###
 POST http://localhost:5000/locations
 Content-Type: application/json
 
 {
-    "name": "Malang"
+    "name": "Gianyar",
+    "ProvinceId": 3
 }
 
+
+
+//Create Education
+###
+POST http://localhost:5000/educations
+Content-Type: application/json
+
+{
+    "name": "SMA / SMK / STM"
+}
+
+//Create Category
 ###
 POST http://localhost:5000/categories
 Content-Type: application/json
@@ -72,12 +107,23 @@ Content-Type: application/json
     "name": "Automotive"
 }
 
+//Create Role
 ###
-POST http://localhost:5000/educations
+POST http://localhost:5000/roles
 Content-Type: application/json
 
 {
-    "name": "Diploma/D1/D2/D3"
+    "name": "Automotive",
+    "CategoryId": ""
+}
+
+//Create Level
+###
+POST http://localhost:5000/level
+Content-Type: application/json
+
+{
+    "name": "Automotive"
 }
 
 //Update User

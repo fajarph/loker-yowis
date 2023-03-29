@@ -14,9 +14,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Job.belongsTo(models.Location)
-      models.Location.hasMany(Job)
-
       Job.belongsTo(models.Educations)
       models.Educations.hasMany(Job)
 
@@ -25,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
 
       Job.belongsTo(models.Role)
       models.Role.hasMany(Job)
+
+      Job.belongsTo(models.Location)
+      models.Location.hasMany(Job)
     }
   }
   Job.init({
@@ -36,10 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     jobShortDescription: DataTypes.STRING,
     jobLongDescription: DataTypes.STRING,
     industry: DataTypes.STRING,
-    LocationId: DataTypes.INTEGER,
     EducationId: DataTypes.INTEGER,
     LevelId: DataTypes.INTEGER,
     RoleId: DataTypes.INTEGER,
+    LocationId: DataTypes.INTEGER,
     image: DataTypes.STRING,
     url: DataTypes.STRING
   }, {

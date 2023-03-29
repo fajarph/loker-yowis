@@ -17,6 +17,7 @@ const categories = require("./routes/category.js")
 const educations = require("./routes/education.js")
 const level = require("./routes/level.js")
 const role = require("./routes/role.js")
+const province = require("./routes/province.js")
 
 const sessionStore = SequelizeStore(session.Store)
 
@@ -51,6 +52,7 @@ app.use(categories)
 app.use(educations)
 app.use(level)
 app.use(role)
+app.use(province)
 
 store.sync()
 
