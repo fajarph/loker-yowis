@@ -9,16 +9,19 @@ import Navbar from './Navbar'
 const FormEditJobs = () => {
     const [companyName, setCompanyName] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
-    const [salary, setSalary] = useState("");
-    const [jobRole, steJobRole] = useState("");
-    const [jobLevel, setJobLevel] = useState("");
-    const [jobType, setJobType] = useState("");
-    const [jobLongDescription, setJobLongDescription] = useState("")
-    const [jobShortDescription, setJobShortDescription] = useState("");
-    const [education, setEducation] = useState("");
-    const [industry, setIndustry] = useState("");
     const [locations, setLocation] = useState([])
     const [LocationId, setLocationId] = useState("")
+    const [salary, setSalary] = useState("");
+    const [roles, setRole] = useState([])
+    const [RoleId, setRoleId] = useState("")
+    const [levels, setlevel] = useState([])
+    const [LevelId, setLevelId] = useState("")
+    const [educations, setEducation] = useState([])
+    const [EducationId, setEducationId] = useState("")
+    const [jobType, setJobType] = useState("");
+    const [jobShortDescription, setJobShortDescription] = useState("");
+    const [jobLongDescription, setJobLongDescription] = useState("");
+    const [industry, setIndustry] = useState("");
     const [file, setFile] = useState("")
     const [preview, setPreview] = useState("")
     const navigate = useNavigate();
@@ -32,6 +35,9 @@ const FormEditJobs = () => {
     useEffect(() => {
         dispatch(getMe())
         getLocations()
+        getRoles()
+        getLevels()
+        getEducations()
     }, []);
 
     useEffect(() => {
@@ -57,15 +63,15 @@ const FormEditJobs = () => {
             const formData = new FormData()
             formData.append("companyName", companyName)
             formData.append("companyAddress", companyAddress)
+            formData.append("LocationId", LocationId)
             formData.append("salary", salary)
-            formData.append("jobRole", jobRole)
-            formData.append("jobLevel", jobLevel)
+            formData.append("RoleId", RoleId)
+            formData.append("LevelId", LevelId)
+            formData.append("EducationId", EducationId)
             formData.append("jobType", jobType)
             formData.append("jobShortDescription", jobShortDescription)
             formData.append("jobLongDescription", jobLongDescription)
-            formData.append("education", education)
             formData.append("industry", industry)
-            formData.append("LocationId", LocationId)
             formData.append("file", file)
 
             await axios.patch(`http://localhost:5000/jobs/${id}`, formData, {
@@ -80,26 +86,41 @@ const FormEditJobs = () => {
         }
     }
 
+    const getJobsById = async () => {
+        const response = await axios.get(`http://localhost:5000/jobs/${id}`)
+        setCompanyName(response.data.companyName)
+        setCompanyAddress(response.data.companyAddress)
+        setLocationId(response.data.LocationId)
+        setSalary(response.data.salary)
+        setRoleId(response.data.RoleId)
+        setLevelId(response.data.LevelId)
+        setEducationId(response.data.EducationId)
+        setJobType(response.data.jobType)
+        setJobShortDescription(response.data.jobShortDescription)
+        setJobLongDescription(response.data.jobLongDescription)
+        setIndustry(response.data.industry)
+        setFile(response.data.image)
+        setPreview(response.data.url)
+    }
+
     const getLocations = async () => {
         const response = await axios.get("http://localhost:5000/locations")
         setLocation(response.data);
     }
 
-    const getJobsById = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs/${id}`)
-        setCompanyName(response.data.companyName)
-        setCompanyAddress(response.data.companyAddress)
-        setSalary(response.data.salary)
-        steJobRole(response.data.jobRole)
-        setJobLevel(response.data.jobLevel)
-        setJobType(response.data.jobType)
-        setJobShortDescription(response.data.jobShortDescription)
-        setJobLongDescription(response.data.jobLongDescription)
-        setEducation(response.data.education)
-        setIndustry(response.data.industry)
-        setLocationId(response.data.LocationId)
-        setFile(response.data.image)
-        setPreview(response.data.url)
+    const getRoles = async () => {
+        const response = await axios.get("http://localhost:5000/roles")
+        setRole(response.data);
+    }
+
+    const getLevels = async () => {
+        const response = await axios.get("http://localhost:5000/levels")
+        setlevel(response.data);
+    }
+
+    const getEducations = async () => {
+        const response = await axios.get("http://localhost:5000/educations")
+        setEducation(response.data);
     }
 
   return (
@@ -107,7 +128,7 @@ const FormEditJobs = () => {
         <Navbar/>
         <div>
         <form onSubmit={SaveJobs} className='container justify-content-center mt-5 mb-5'>
-                <div className="mb-3">
+        <div className="mb-3">
                     <label className="form-label">Company Name</label>
                     <input 
                         type="Username" 
@@ -127,19 +148,9 @@ const FormEditJobs = () => {
                         placeholder='Company Address'
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Salary</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        value={salary} 
-                        onChange={(e) => setSalary(e.target.value)}
-                        placeholder='Salary'
-                    />
-                </div>
                 <div className='field'>
                     <label className='label'>Location</label>
-                    <div className="control">
+                    <div className="control mt-2">
                         <select 
                         className="form-select" 
                         value={LocationId} 
@@ -152,45 +163,60 @@ const FormEditJobs = () => {
                         </select>
                     </div>
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Job Role</label>
-                    <select
-                        className="form-select" 
-                        value={jobRole} 
-                        onChange={(e) => steJobRole(e.target.value)}
-                        placeholder='Job Role'
-                    >
-                        <option selected hidden>Job Role</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Engineer">Engineer</option>
-                        <option value="Accountant">Accountant</option>
-                        <option value="Human Resources Specialist">Human Resources Specialist</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Data Scientist">Data Scientist</option>
-                        <option value="Programmer">Programmer</option>
-                        <option value="Designer">Designer</option>
-                        <option value="Project Manager">Project Manager</option>
-                        <option value="Web Developer">Web Developer</option>
-                        <option value="Writer">Writer</option>
-                        <option value="Penerjemah">Penerjemah</option>
-                        <option value="Customer Service ">Customer Service </option>
-                        <option value="Trainer">Trainer</option>
-                        <option value="Supervisor">Supervisor</option>
-                    </select>
+                <div className="mb-3 mt-3">
+                    <label className="form-label">Salary</label>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        value={salary} 
+                        onChange={(e) => setSalary(e.target.value)}
+                        placeholder='Salary'
+                    />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Job Level</label>
-                    <select
+                <div className='field'>
+                    <label className='label'>Job Role</label>
+                    <div className="control mt-2">
+                        <select 
                         className="form-select" 
-                        value={jobLevel} 
-                        onChange={(e) => setJobLevel(e.target.value)}
-                        placeholder='Job Level'
-                    >
-                        <option selected hidden>Job Level</option>
-                        <option value="Junior">Junior</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Senior">Senior</option>
-                    </select>
+                        value={RoleId} 
+                        onChange={(e) => setRoleId(e.target.value)}
+                        >
+                            <option selected hidden>Select Job Role</option>
+                            {roles.map((role) => (
+                                <option value={role.id}>{role.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className='field'>
+                    <label className='label'>Job Level</label>
+                    <div className="control mt-2">
+                        <select 
+                        className="form-select" 
+                        value={LevelId} 
+                        onChange={(e) => setLevelId(e.target.value)}
+                        >
+                            <option selected hidden>Select Job Level</option>
+                            {levels.map((level) => (
+                                <option value={level.id}>{level.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className='field'>
+                    <label className='label'>Education</label>
+                    <div className="control mt-2">
+                        <select 
+                        className="form-select" 
+                        value={EducationId} 
+                        onChange={(e) => setEducationId(e.target.value)}
+                        >
+                            <option selected hidden>Select Education</option>
+                            {educations.map((education) => (
+                                <option value={education.id}>{education.name}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Job Type</label>
@@ -201,21 +227,9 @@ const FormEditJobs = () => {
                         placeholder='Job Type'
                     >
                         <option selected hidden>Job Type</option>
-                        <option value="General Manager">General Manager</option>
-                        <option value="Akunting">Akunting</option>
-                        <option value="Analis">Analis</option>
-                        <option value="Jurnalis">Jurnalis</option>
-                        <option value="Karyawan Restoran">Karyawan Restoran</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Programmer">Programmer</option>
-                        <option value="Arsitek">Arsitek</option>
-                        <option value="Guru">Guru</option>
-                        <option value="Programmer">Programmer</option>
-                        <option value="Penulis">Penulis</option>
-                        <option value="Penerjemah">Penerjemah</option>
-                        <option value="Insinyur">Insinyur</option>
-                        <option value="Psikolog">Psikolog</option>
-                        <option value="Fotografer">Fotografer</option>
+                        <option value="Kontrak">Kontrak</option>
+                        <option value="Purna Waktu / Full Time">Purna Waktu / Full Time</option>
+                        <option value="Tetap">Tetap</option>
                     </select>
                 </div>
                 <div className="mb-3">
@@ -247,16 +261,6 @@ const FormEditJobs = () => {
                         'removeformat | help',
                         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                         }}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Education</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        value={education} 
-                        onChange={(e) => setEducation(e.target.value)}
-                        placeholder='Education'
                     />
                 </div>
                 <div className="mb-3">

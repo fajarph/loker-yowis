@@ -18,7 +18,6 @@ const JobList = () => {
     const [educations, setEducation] = useState([])
     const [EducationId, setEducationId] = useState("")
     const [msg, setMsg] = useState("")
-    const [companyAddress, setCompanyAddress] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const {isError, user} = useSelector(
