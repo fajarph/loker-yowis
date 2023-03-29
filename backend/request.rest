@@ -3,7 +3,7 @@ GET http://localhost:5000/users
 
 //Get All Job
 ###
-GET http://localhost:5000/jobs?search_query=Fajar&EducationId=1&page=0&limit=5
+GET http://localhost:5000/jobs?search_query=&EducationId=1&page=0&limit=5
 
 ###
 //Get All Education
@@ -104,7 +104,7 @@ POST http://localhost:5000/categories
 Content-Type: application/json
 
 {
-    "name": "Automotive"
+    "name": "Administrasi"
 }
 
 //Create Role
@@ -113,17 +113,17 @@ POST http://localhost:5000/roles
 Content-Type: application/json
 
 {
-    "name": "Automotive",
-    "CategoryId": ""
+    "name": "Staf Admin",
+    "CategoryId": 1
 }
 
 //Create Level
 ###
-POST http://localhost:5000/level
+POST http://localhost:5000/levels
 Content-Type: application/json
 
 {
-    "name": "Automotive"
+    "name": "Senior"
 }
 
 //Update User

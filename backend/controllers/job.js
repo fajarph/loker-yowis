@@ -7,7 +7,7 @@ const getJobs = async(req, res) => {
     const page = parseInt(req.query.page) || 0
     const limit = parseInt(req.query.limit) || 10
     const search = req.query.search_query || ""
-    const EducationId = req.query.EducationId || ""
+    const EducationId = req.query.EducationId || 0
     const offset = limit * page
     const totalRows = await Job.count({
         where:{
@@ -132,21 +132,20 @@ const createJob = async(req, res) => {
     if(req.files === null) return res.status(400).json({msg: "No File Uploaded"})
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress
+    const LocationId = req.body.LocationId
     const salary = req.body.salary
+    const RoleId = req.body.RoleId
+    const EducationId = req.body.EducationId
+    const LevelId = req.body.LevelId
     const jobType = req.body.jobType
     const jobShortDescription = req.body.jobShortDescription
     const jobLongDescription = req.body.jobLongDescription
     const industry = req.body.industry
-    const EducationId = req.body.EducationId
-    const LevelId = req.body.LevelId
-    const RoleId = req.body.RoleId
-    const LocationId = req.body.LocationId
     const file = req.files.file
     const fileSize = file.data.lenght
     const ext = path.extname(file.name)
     const fileName = file.md5 + ext
     const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`
-    
     const allowedType = ['.png','.jpg','jpeg']
 
     if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Ivalid Image"})
@@ -158,15 +157,15 @@ const createJob = async(req, res) => {
             await Job.create({
                 companyName: companyName, 
                 companyAddress: companyAddress, 
+                LocationId: LocationId,
                 salary: salary,
+                RoleId: RoleId,
+                EducationId: EducationId,
+                LevelId: LevelId,
                 jobType: jobType,
                 jobShortDescription: jobShortDescription,
                 jobLongDescription: jobLongDescription,
                 industry: industry,
-                EducationId: EducationId,
-                LevelId: LevelId,
-                RoleId: RoleId,
-                LocationId: LocationId,
                 image: fileName,
                 url: url
             })
@@ -214,30 +213,30 @@ const updateJob = async(req, res) => {
 
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress
+    const LocationId = req.body.LocationId
     const salary = req.body.salary
+    const RoleId = req.body.RoleId
+    const EducationId = req.body.EducationId
+    const LevelId = req.body.LevelId
     const jobType = req.body.jobType
     const jobShortDescription = req.body.jobShortDescription
     const jobLongDescription = req.body.jobLongDescription
     const industry = req.body.industry
-    const EducationId = req.body.EducationId
-    const LevelId = req.body.LevelId
-    const RoleId = req.body.RoleId
-    const LocationId = req.body.LocationId
     const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`;
 
     try {
         await Job.update({
             companyName: companyName, 
             companyAddress: companyAddress, 
+            LocationId: LocationId,
             salary: salary, 
+            RoleId: RoleId,
+            EducationId: EducationId,
+            LevelId: LevelId,
             jobType: jobType,
             jobShortDescription: jobShortDescription,
             jobLongDescription: jobLongDescription,
             industry: industry,
-            EducationId: EducationId,
-            LevelId: LevelId,
-            RoleId: RoleId,
-            LocationId: LocationId,
             image: fileName, 
             url: url
         },{

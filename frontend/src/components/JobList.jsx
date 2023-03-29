@@ -15,6 +15,8 @@ const JobList = () => {
     const [rows, setRows] = useState(0)
     const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
+    const [educations, setEducation] = useState([])
+    const [EducationId, setEducationId] = useState("")
     const [msg, setMsg] = useState("")
     const [companyAddress, setCompanyAddress] = useState("");
     const navigate = useNavigate();
@@ -22,6 +24,10 @@ const JobList = () => {
     const {isError, user} = useSelector(
         (state) => state.auth
     );
+
+    useEffect(() => {
+        getEducations()
+    }, [])
 
     useEffect(() => {
         getJobs()
@@ -35,11 +41,16 @@ const JobList = () => {
     }, [isError, navigate]);
 
     const getJobs = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs?search_query=${keyword}&page=${page}&limit=${limit}`)
+        const response = await axios.get(`http://localhost:5000/jobs?search_query=${keyword}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
         setJobs(response.data.result)
         setPage(response.data.page)
         setPages(response.data.totalPage)
         setRows(response.data.totalRows)
+    }
+
+    const getEducations = async () => {
+        const response = await axios.get("http://localhost:5000/educations")
+        setEducation(response.data);
     }
 
     const deleteJob = async (id) => {
@@ -59,7 +70,7 @@ const JobList = () => {
     const searchData = (e) => {
         e.preventDefault()
         setPage(0)
-        setKeyword(query)
+        setKeyword([query, EducationId])
     }
 
   return (
@@ -81,8 +92,8 @@ const JobList = () => {
                             <div className='col-4'>
                                 <select 
                                     className='form-select' 
-                                    value={companyAddress} 
-                                    onChange={(e) => setCompanyAddress(e.target.value)}
+                                    value={EducationId} 
+                                    onChange={(e) => setEducationId(e.target.value)}
                                 >
                                     <option selected hidden>Semua Lokasi</option>
                                     <option value="Bekasi">Bekasi</option>
@@ -96,10 +107,10 @@ const JobList = () => {
                             <div className='col-4'>
                                 <select 
                                     className='form-select' 
-                                    value={companyAddress} 
-                                    onChange={(e) => setCompanyAddress(e.target.value)}
+                                    value={EducationId} 
+                                    onChange={(e) => setEducationId(e.target.value)}
                                 >
-                                    <option selected hidden>Semua Kategori</option>
+                                    <option selected hidden>Semua Lokasi</option>
                                     <option value="Bekasi">Bekasi</option>
                                     <option value="Business Analyst">Business Analyst</option>
                                     <option value="Chef">Chef</option>
@@ -110,17 +121,14 @@ const JobList = () => {
                             </div>
                             <div className='col-4'>
                                 <select 
-                                    className='form-select' 
-                                    value={companyAddress} 
-                                    onChange={(e) => setCompanyAddress(e.target.value)}
+                                className="form-select" 
+                                value={EducationId} 
+                                onChange={(e) => setEducationId(e.target.value)}
                                 >
                                     <option selected hidden>Semua Pendidikan</option>
-                                    <option value="Bekasi">Bekasi</option>
-                                    <option value="Business Analyst">Business Analyst</option>
-                                    <option value="Chef">Chef</option>
-                                    <option value="Content Creator">Content Creator</option>
-                                    <option value="Customer Service Representative">Customer Service Representative</option>
-                                    <option value="Marketing">Marketing</option>
+                                    {educations.map((education) => (
+                                        <option value={education.id}>{education.name}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -168,7 +176,7 @@ const JobList = () => {
                                     </tr>
                                     <tr className='col-5'>
                                         <td className='h5'>Pendidikan</td>
-                                        <td>{job.education}</td>
+                                        <td>{job.EducationId}</td>
                                     </tr>
                                     <tr className='col-5'>
                                         <td className='h5'>Lokasi</td>
@@ -205,7 +213,7 @@ const JobList = () => {
             <p className='mt-2'>
                 Total Rows: {rows} Page: {rows ? page + 1 : 0} of {pages}
             </p>
-            <p className='d-flex justify-content-center text-danger'>{msg}</p>
+            <p className='d-flex justify-content-center fw-bold text-dark'>{msg}</p>
             <nav 
                 className="pagination justify-content-center"
                 key={rows}
