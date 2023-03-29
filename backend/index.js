@@ -13,11 +13,9 @@ const auth = require("./routes/auth.js")
 const users = require("./routes/user.js")
 const jobs = require("./routes/job.js")
 const locations = require("./routes/location.js")
-const categories = require("./routes/category.js")
 const educations = require("./routes/education.js")
 const level = require("./routes/level.js")
 const role = require("./routes/role.js")
-const province = require("./routes/province.js")
 
 const sessionStore = SequelizeStore(session.Store)
 
@@ -48,11 +46,9 @@ app.use(auth)
 app.use(users)
 app.use(jobs)
 app.use(locations)
-app.use(categories)
 app.use(educations)
 app.use(level)
 app.use(role)
-app.use(province)
 
 store.sync()
 

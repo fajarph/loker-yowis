@@ -3,15 +3,11 @@ GET http://localhost:5000/users
 
 //Get All Job
 ###
-GET http://localhost:5000/jobs?search_query=&EducationId=1&page=0&limit=5
+GET http://localhost:5000/jobs?search_query=&EducationId=3&page=0&limit=5
 
 ###
 //Get All Education
 GET http://localhost:5000/educations
-
-###
-//Get All Category
-GET http://localhost:5000/categories
 
 ###
 //Get All Job Role
@@ -20,10 +16,6 @@ GET http://localhost:5000/roles
 ###
 //Get All Job Level
 GET http://localhost:5000/levels
-
-###
-//Get All Province
-GET http://localhost:5000/provinces
 
 ###
 //Get All Location
@@ -68,26 +60,14 @@ Content-Type: application/json
     "LocationId": 1
 }
 
-//Create Province
-###
-POST http://localhost:5000/provinces
-Content-Type: application/json
-
-{
-    "name": "Yogyakarta"
-}
-
 //Create Location
 ###
 POST http://localhost:5000/locations
 Content-Type: application/json
 
 {
-    "name": "Gianyar",
-    "ProvinceId": 3
+    "name": "Gianyar"
 }
-
-
 
 //Create Education
 ###
@@ -96,15 +76,6 @@ Content-Type: application/json
 
 {
     "name": "SMA / SMK / STM"
-}
-
-//Create Category
-###
-POST http://localhost:5000/categories
-Content-Type: application/json
-
-{
-    "name": "Administrasi"
 }
 
 //Create Role

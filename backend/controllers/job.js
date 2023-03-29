@@ -30,23 +30,11 @@ const getJobs = async(req, res) => {
             },
             {
                 model: Role,
-                attributes: ['id', 'name', 'CategoryId'],
-                include: [
-                    {
-                        model: Category,
-                        attributes: ['id', 'name']
-                    }
-                ]
+                attributes: ['id', 'name']
             },
             {
                 model: Location,
-                attributes: ['id', 'name', "ProvinceId"],
-                include: [
-                    {
-                        model: Province,
-                        attributes: ['id', 'name']
-                    }
-                ]
+                attributes: ['id', 'name']
             },
             {
                 model: Level,
@@ -76,23 +64,12 @@ const getJobs = async(req, res) => {
             },
             {
                 model: Role,
-                attributes: ['id', 'name', 'CategoryId'],
-                include: [
-                    {
-                        model: Category,
-                        attributes: ['id', 'name']
-                    }
-                ]
+                attributes: ['id', 'name']
             },
             {
                 model: Location,
-                attributes: ['id', 'name', "ProvinceId"],
-                include: [
-                    {
-                        model: Province,
-                        attributes: ['id', 'name']
-                    }
-                ]
+                attributes: ['id', 'name']
+                
             },
             {
                 model: Level,
@@ -250,23 +227,11 @@ const updateJob = async(req, res) => {
                 },
                 {
                     model: Role,
-                    attributes: ['id', 'name', 'CategoryId'],
-                    include: [
-                        {
-                            model: Category,
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                    attributes: ['id', 'name']
                 },
                 {
                     model: Location,
-                    attributes: ['id', 'name', "ProvinceId"],
-                    include: [
-                        {
-                            model: Province,
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                    attributes: ['id', 'name']
                 },
                 {
                     model: Level,

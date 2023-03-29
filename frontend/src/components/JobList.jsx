@@ -17,6 +17,8 @@ const JobList = () => {
     const [query, setQuery] = useState("")
     const [educations, setEducation] = useState([])
     const [EducationId, setEducationId] = useState("")
+    const [categories, setCategory] = useState([])
+    const [CategoryId, setCategoryId] = useState("")
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -26,6 +28,7 @@ const JobList = () => {
 
     useEffect(() => {
         getEducations()
+        getCategories()
     }, [])
 
     useEffect(() => {
@@ -52,6 +55,11 @@ const JobList = () => {
         setEducation(response.data);
     }
 
+    const getCategories = async () => {
+        const response = await axios.get("http://localhost:5000/categories")
+        setCategory(response.data);
+    }
+
     const deleteJob = async (id) => {
         await axios.delete(`http://localhost:5000/jobs/${id}`)
         getJobs()
@@ -69,7 +77,7 @@ const JobList = () => {
     const searchData = (e) => {
         e.preventDefault()
         setPage(0)
-        setKeyword([query, EducationId])
+        setKeyword([query] + [EducationId])
     }
 
   return (
@@ -77,67 +85,61 @@ const JobList = () => {
         <Navbar/>
         <div className='container mt-5 mb-5'>
             <form onSubmit={searchData}>
-                <div className='d-flex justify-content-center row'>
-                    <div className="col-11">
-                        <div className='row'>
-                            <div className='col-md-12'>
-                                <input 
-                                    type="text" 
-                                    className="form-control"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                />
-                            </div>
-                            <div className='col-4'>
-                                <select 
-                                    className='form-select' 
-                                    value={EducationId} 
-                                    onChange={(e) => setEducationId(e.target.value)}
-                                >
-                                    <option selected hidden>Semua Lokasi</option>
-                                    <option value="Bekasi">Bekasi</option>
-                                    <option value="Business Analyst">Business Analyst</option>
-                                    <option value="Chef">Chef</option>
-                                    <option value="Content Creator">Content Creator</option>
-                                    <option value="Customer Service Representative">Customer Service Representative</option>
-                                    <option value="Marketing">Marketing</option>
-                                </select>
-                            </div>
-                            <div className='col-4'>
-                                <select 
-                                    className='form-select' 
-                                    value={EducationId} 
-                                    onChange={(e) => setEducationId(e.target.value)}
-                                >
-                                    <option selected hidden>Semua Lokasi</option>
-                                    <option value="Bekasi">Bekasi</option>
-                                    <option value="Business Analyst">Business Analyst</option>
-                                    <option value="Chef">Chef</option>
-                                    <option value="Content Creator">Content Creator</option>
-                                    <option value="Customer Service Representative">Customer Service Representative</option>
-                                    <option value="Marketing">Marketing</option>
-                                </select>
-                            </div>
-                            <div className='col-4'>
-                                <select 
-                                className="form-select" 
-                                value={EducationId} 
-                                onChange={(e) => setEducationId(e.target.value)}
-                                >
-                                    <option selected hidden>Semua Pendidikan</option>
-                                    {educations.map((education) => (
-                                        <option value={education.id}>{education.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
+                <div class="input-group d-flex justify-content-center">
+                    <div class="form-outline col-10 input-group-lg">
+                        <input 
+                            type="text" 
+                            className="form-control"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
                     </div>
-                    <div className='col-1'>
-                        <button type="submit" className="btn btn-dark row">Search</button>
+                    <button type="submit" class="btn btn-dark">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                <div className='input-group d-flex justify-content-evenly'>
+                    <div className='form-outline col-3 input-group-lg'>
+                        <select 
+                            className='form-select' 
+                            value={EducationId} 
+                            onChange={(e) => setEducationId(e.target.value)}
+                        >
+                            <option className='bg-dark text-white'>Semua Lokasi</option>
+                            <option value="Bekasi">Bekasi</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                            <option value="Chef">Chef</option>
+                            <option value="Content Creator">Content Creator</option>
+                            <option value="Customer Service Representative">Customer Service Representative</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div className='form-outline col-3 input-group-lg'>
+                        <select 
+                            className='form-select' 
+                            value={CategoryId} 
+                            onChange={(e) => setCategoryId(e.target.value)}
+                        >
+                            <option className='bg-dark text-white' value={""}>Semua Kategori</option>
+                            {categories.map((category) => (
+                                <option value={category.id}>{category.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='form-outline col-3 input-group-lg'>
+                        <select 
+                        className="form-select"
+                        value={EducationId} 
+                        onChange={(e) => setEducationId(e.target.value)}
+                        >
+                            <option className='bg-dark text-white' value={""}>Semua Pendidikan</option>
+                            {educations.map((education) => (
+                                <option value={education.id}>{education.name}</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
             </form>
-
             <div className='mt-5 container'>
                 <h2>Cari Lowongan kerja</h2>
                 <div className='mt-4'>
