@@ -14,14 +14,13 @@ const JobList = () => {
     const [limit, setlimit] = useState(5)
     const [pages, setPages] = useState(0)
     const [rows, setRows] = useState(0)
-    const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
     const [locations, setLocation] = useState([])
-    const [LocationId, setLocationId] = useState(0)
+    const [LocationId, setLocationId] = useState("")
     const [roles, setRole] = useState([])
-    const [RoleId, setRoleId] = useState(0)
+    const [RoleId, setRoleId] = useState("")
     const [educations, setEducation] = useState([])
-    const [EducationId, setEducationId] = useState(0)
+    const [EducationId, setEducationId] = useState("")
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
     const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -33,11 +32,12 @@ const JobList = () => {
         getEducations()
         getRoles()
         getLocations()
+        getJobs()
     }, [])
 
     useEffect(() => {
         getJobs()
-    }, [page, keyword])
+    }, [page])
 
     useEffect(() => {
         if(isError){
@@ -46,7 +46,7 @@ const JobList = () => {
     }, [isError, navigate]);
 
     const getJobs = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs?search_query=${keyword}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
+        const response = await axios.get(`http://localhost:5000/jobs?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
         setJobs(response.data.result)
         setPage(response.data.page)
         setPages(response.data.totalPage)
@@ -84,9 +84,7 @@ const JobList = () => {
 
     const searchData = (e) => {
         e.preventDefault()
-        setPage(0)
-        setKeyword([query] + [LocationId] + [RoleId] + [EducationId])
-        
+        getJobs()
     }
 
   return (
@@ -94,17 +92,18 @@ const JobList = () => {
         <Navbar/>
         <div className='container mt-5 mb-5'>
             <form onSubmit={searchData}>
-                <div class="input-group d-flex justify-content-center">
-                    <div class="form-outline col-10 input-group-lg">
+                <div className="input-group d-flex justify-content-center">
+                    <div className="form-outline col-10 input-group-lg">
                         <input 
                             type="text" 
                             className="form-control"
                             value={query}
+                            placeholder="Cari nama perusahaan, jenis kontrak, dan jenis industri..."
                             onChange={(e) => setQuery(e.target.value)}
                         />
                     </div>
-                    <button type="submit" class="btn btn-dark">
-                        <i class="bi bi-search"></i>
+                    <button type="submit" className="btn btn-dark">
+                        <i className="bi bi-search"></i>
                     </button>
                 </div>
                 <div className='input-group d-flex justify-content-evenly'>
@@ -116,7 +115,7 @@ const JobList = () => {
                         >
                             <option className='bg-dark text-white' value={""}>Semua Location</option>
                             {locations.map((location) => (
-                                <option value={location.id}>{location.name}</option>
+                                <option key={location.id} value={location.id}>{location.name}</option>
                             ))}
                         </select>
                     </div>
@@ -128,7 +127,7 @@ const JobList = () => {
                         >
                             <option className='bg-dark text-white' value={""}>Semua Kategori</option>
                             {roles.map((role) => (
-                                <option value={role.id}>{role.name}</option>
+                                <option key={role.id} value={role.id}>{role.name}</option>
                             ))}
                         </select>
                     </div>
@@ -140,7 +139,7 @@ const JobList = () => {
                         >
                             <option className='bg-dark text-white' value={""}>Semua Pendidikan</option>
                             {educations.map((education) => (
-                                <option value={education.id}>{education.name}</option>
+                                <option key={education.id} value={education.id}>{education.name}</option>
                             ))}
                         </select>
                     </div>
@@ -205,11 +204,11 @@ const JobList = () => {
                                     </Link>
 
                                     {!isLoggedIn && (
-                                        <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
+                                        <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
                                     )}
 
                                     {user && user.role === "User" && (
-                                        <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
+                                        <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
                                     )}
                                     
                                     {user && user.role === "Admin" && (

@@ -7,27 +7,43 @@ const getJobs = async(req, res) => {
     const page = parseInt(req.query.page) || 0
     const limit = parseInt(req.query.limit) || 10
     const search = req.query.search_query || ""
-    const LocationId = req.query.LocationId || 0
-    const RoleId = req.query.RoleId || 0
-    const EducationId = req.query.EducationId || 0
     const offset = limit * page
+
+    // Define your search parameters
+    const filterParams = {
+        LocationId: req.query.LocationId,
+        RoleId: req.query.RoleId,
+        EducationId: req.query.EducationId
+    };
+  
+    // Filter out parameters with empty or null values
+    const validFilterParams = Object.keys(filterParams).reduce((acc, key) => {
+        if (filterParams[key] !== null && filterParams[key] !== "") {
+        acc[key] = filterParams[key];
+        }
+        return acc;
+    }, {});
+
     const totalRows = await Job.count({
         where:{
-            [Op.or]: [{companyName:{
-                [Op.like]: '%'+search+'%'
-            }}, {companyAddress:{
-                [Op.like]: '%'+search+'%'
-            }}, {jobType:{
-                [Op.like]: '%'+search+'%'
-            }}, {industry:{
-                [Op.like]: '%'+search+'%'
-            }}, {LocationId:{
-                [Op.eq]: LocationId
-            }}, {RoleId:{
-                [Op.eq]: RoleId
-            }}, {EducationId:{
-                [Op.eq]: EducationId
-            }}]
+            [Op.or]: [
+                {
+                    companyName: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    jobType: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    industry:{
+                        [Op.like]: '%'+search+'%'
+                    }
+                }
+            ],
+            [Op.and]: validFilterParams
         },
         include: [
             {
@@ -51,21 +67,24 @@ const getJobs = async(req, res) => {
     const totalPage = Math.ceil(totalRows / limit)
     const result = await Job.findAll({
         where:{
-            [Op.or]: [{companyName:{
-                [Op.like]: '%'+search+'%'
-            }}, {companyAddress:{
-                [Op.like]: '%'+search+'%'
-            }}, {jobType:{
-                [Op.like]: '%'+search+'%'
-            }}, {industry:{
-                [Op.like]: '%'+search+'%'
-            }}, {LocationId:{
-                [Op.eq]: LocationId
-            }}, {RoleId:{
-                [Op.eq]: RoleId
-            }}, {EducationId:{
-                [Op.eq]: EducationId
-            }}]
+            [Op.or]: [
+                {
+                    companyName: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    jobType: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    industry:{
+                        [Op.like]: '%'+search+'%'
+                    }
+                }
+            ],
+            [Op.and]: validFilterParams
         },
         include: [
             {
@@ -92,6 +111,7 @@ const getJobs = async(req, res) => {
             ['id', 'DESC']
         ]
     })
+
     res.json({
         result: result,
         page: page,
