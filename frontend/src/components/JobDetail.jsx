@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
+import { selectIsLoggedIn } from "../features/authSlice"
 import moment from 'moment';
 
 const JobDetail = () => {
@@ -21,6 +22,7 @@ const JobDetail = () => {
     const [url, setUrl] = useState("")
     const { id } = useParams()
     const navigate = useNavigate();
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const {user, isError} = useSelector(
         (state) => state.auth
     );
@@ -112,6 +114,14 @@ const JobDetail = () => {
                                                     )}
 
                                                     {user && user.role === "User" && (
+                                                        <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
+                                                    )}
+
+                                                    {!isLoggedIn && (
+                                                        <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
+                                                    )}
+
+                                                    {!isLoggedIn && (
                                                         <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
                                                     )}
                                                     

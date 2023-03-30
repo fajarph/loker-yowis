@@ -2,8 +2,9 @@ import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import ReactPaginate from 'react-paginate'
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
+import { selectIsLoggedIn } from "../features/authSlice"
 import { Link } from 'react-router-dom'
 import "./style/jobList.css"
 
@@ -16,14 +17,14 @@ const JobList = () => {
     const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
     const [locations, setLocation] = useState([])
-    const [LocationId, setLocationId] = useState("")
+    const [LocationId, setLocationId] = useState(0)
     const [roles, setRole] = useState([])
-    const [RoleId, setRoleId] = useState("")
+    const [RoleId, setRoleId] = useState(0)
     const [educations, setEducation] = useState([])
-    const [EducationId, setEducationId] = useState("")
+    const [EducationId, setEducationId] = useState(0)
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const {isError, user} = useSelector(
         (state) => state.auth
     );
@@ -202,6 +203,10 @@ const JobList = () => {
                                     <Link to={`/jobs/detail/${job.uuid}`} className="btn btn-dark me-1">
                                         SELENGKAPNYA
                                     </Link>
+
+                                    {!isLoggedIn && (
+                                        <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
+                                    )}
 
                                     {user && user.role === "User" && (
                                         <button type="button" className="btn btn-dark me-1"><i class="bi bi-star"></i> SIMPAN</button>
