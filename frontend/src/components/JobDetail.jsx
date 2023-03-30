@@ -158,15 +158,13 @@ const JobDetail = () => {
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
-                                                <div className="row">
-                                                    <div className="d-flex justify-content-center col-3">
+                                                <div className='row'> 
+                                                    <div className='col-3'>
                                                         <img className='image rounded-circle' alt="Image" src={url} style={{width: "60px", height: "60px"}}/>
                                                     </div>
-                                                    <div className="d-flex justify-content-center col-9">
-                                                        <div className="row me-5">
-                                                            <h5 className="fw-bold text-secondary">Job Role</h5>
-                                                            <p className="text-secondary">Company Name</p>
-                                                        </div>
+                                                    <div className="col">
+                                                        <h5 className="fw-bold text-secondary">Job Role</h5>
+                                                        <p className="text-secondary">Company Name</p>
                                                     </div>
                                                 </div>
                                             </div>
