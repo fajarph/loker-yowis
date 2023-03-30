@@ -11,7 +11,7 @@ import "./style/jobList.css"
 const JobList = () => {
     const [jobs, setJobs] = useState([])
     const [page, setPage] = useState(0)
-    const [limit, setlimit] = useState(2)
+    const [limit, setlimit] = useState(5)
     const [pages, setPages] = useState(0)
     const [rows, setRows] = useState(0)
     const [keyword, setKeyword] = useState("")
@@ -218,10 +218,14 @@ const JobList = () => {
                     </div>
                 ))}
             </div>
-            <p className='mt-2'>
-                Total Rows: {rows} Page: {rows ? page + 1 : 0} of {pages}
+            <p className='mt-2' style={{ 
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#333',
+                marginTop: '2rem'
+            }}>
+                Menampilkan {rows ? page + 1 : 0} sampai {pages} Dari {rows} Lowongan
             </p>
-            <p className='d-flex justify-content-center fw-bold text-dark'>{msg}</p>
             <nav 
                 className="pagination justify-content-center"
                 key={rows}
@@ -243,6 +247,7 @@ const JobList = () => {
                     nextLinkClassName={'page-link'}
                 />
             </nav>
+            <p className='d-flex justify-content-center fw-bold text-dark'>{msg}</p>
         </div>
     </>
   )

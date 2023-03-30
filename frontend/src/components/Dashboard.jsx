@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import Navbar from './Navbar';
+import moment from 'moment';
 import "./style/dashboard.css"
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
-    const [createdAt, setCreatedAt] = useState("")
+    const [createdAt, setCreatedAt] = useState("2022-03-30T10:30:00.000Z")
     const [url, setUrl] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -36,6 +37,8 @@ const ProfileUser = () => {
         setCreatedAt(response.data.createdAt)
         setUrl(response.data.url)
     }
+
+    const formattedDate = moment(createdAt).format('MMMM DD, YYYY');
 
   return (
     <div>
@@ -90,11 +93,11 @@ const ProfileUser = () => {
                                     <tr>
                                         <th>{}</th>
                                         <th>
-                                            <Link to={`/profile`} className="custom-link">
+                                            <Link to={`/profile`} className="custom-link h6">
                                                 {username}
                                             </Link>
                                         </th>
-                                        <th>{createdAt}</th>
+                                        <th className='h6'>{formattedDate}</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>

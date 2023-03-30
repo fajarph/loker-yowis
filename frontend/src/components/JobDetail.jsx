@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 const JobDetail = () => {
     const [companyName, setCompanyName] = useState("");
@@ -17,7 +18,7 @@ const JobDetail = () => {
     const [RoleId, setRoleId] = useState("")
     const [LevelId, setLevelId] = useState("")
     const [EducationId, setEducationId] = useState("")
-    const [createdAt, setCreatedAt] = useState("")
+    const [createdAt, setCreatedAt] = useState("2022-03-30T10:30:00.000Z")
     const [url, setUrl] = useState("")
     const { id } = useParams()
     const navigate = useNavigate();
@@ -52,6 +53,8 @@ const JobDetail = () => {
         setCreatedAt(response.data.createdAt)
         setUrl(response.data.url)
     }
+
+    const formattedDate = moment(createdAt).format('MMMM DD, YYYY');
 
     return(
         <div>
@@ -93,7 +96,7 @@ const JobDetail = () => {
                                     </div>
                                     <div className="card mt-4 mb-5">
                                         <div className="card-body">
-                                            <h6 className="fw-bold">Posted Date: {createdAt}</h6>
+                                            <h6 className="fw-bold">Posted Date: {formattedDate}</h6>
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
