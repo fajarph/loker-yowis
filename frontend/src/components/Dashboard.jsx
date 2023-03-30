@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import Navbar from './Navbar';
+import "./style/dashboard.css"
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
@@ -87,9 +88,9 @@ const ProfileUser = () => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th></th>
+                                        <th>{}</th>
                                         <th>
-                                            <Link to={`/profile`}>
+                                            <Link to={`/profile`} className="custom-link">
                                                 {username}
                                             </Link>
                                         </th>

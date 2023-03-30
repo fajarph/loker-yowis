@@ -42,3 +42,8 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
   }
+
+  .custom-link {
+    text-decoration: none;
+    color: #456cb3;
+  }

@@ -169,9 +169,9 @@ const JobList = () => {
                                 <div className='col-3 mt-2'>
                                 <img className='image rounded-circle' alt="Image" src={job.url} style={{width: "64px", height: "64px"}} />
                                 </div>
-                                <div className='col mt-2'>
-                                    <h5>{job.RoleId}</h5>
-                                </div>
+                                <Link to={`/jobs/detail/${job.uuid}`} className='custom-link col mt-2'>
+                                    <h5>{job.Role.name}</h5>
+                                </Link>
                             </div>
                         </div>
                         <div className='col-4'>
@@ -184,11 +184,11 @@ const JobList = () => {
                                     </tr>
                                     <tr className='col-5'>
                                         <td className='h5'>Pendidikan</td>
-                                        <td value={job.EducationId.id}>{job.EducationId}</td>
+                                        <td>{job.Education.name}</td>
                                     </tr>
                                     <tr className='col-5'>
                                         <td className='h5'>Lokasi</td>
-                                        <td>{job.LocationId}</td>
+                                        <td>{job.Location.name}</td>
                                     </tr>
                                     </tbody>
                                 </table>
