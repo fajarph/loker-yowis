@@ -6,19 +6,22 @@ import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
+import "./style/jobList.css"
 
 const JobList = () => {
     const [jobs, setJobs] = useState([])
     const [page, setPage] = useState(0)
-    const [limit, setlimit] = useState(5)
+    const [limit, setlimit] = useState(1)
     const [pages, setPages] = useState(0)
     const [rows, setRows] = useState(0)
     const [keyword, setKeyword] = useState("")
     const [query, setQuery] = useState("")
+    const [locations, setLocation] = useState([])
+    const [LocationId, setLocationId] = useState("")
+    const [roles, setRole] = useState([])
+    const [RoleId, setRoleId] = useState("")
     const [educations, setEducation] = useState([])
     const [EducationId, setEducationId] = useState("")
-    const [categories, setCategory] = useState([])
-    const [CategoryId, setCategoryId] = useState("")
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -28,7 +31,8 @@ const JobList = () => {
 
     useEffect(() => {
         getEducations()
-        getCategories()
+        getRoles()
+        getLocations()
     }, [])
 
     useEffect(() => {
@@ -43,21 +47,26 @@ const JobList = () => {
     }, [isError, navigate]);
 
     const getJobs = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs?search_query=${keyword}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
+        const response = await axios.get(`http://localhost:5000/jobs?search_query=${keyword}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
         setJobs(response.data.result)
         setPage(response.data.page)
         setPages(response.data.totalPage)
         setRows(response.data.totalRows)
     }
 
+    const getLocations = async () => {
+        const response = await axios.get("http://localhost:5000/locations")
+        setLocation(response.data);
+    }
+
+    const getRoles = async () => {
+        const response = await axios.get("http://localhost:5000/roles")
+        setRole(response.data);
+    }
+
     const getEducations = async () => {
         const response = await axios.get("http://localhost:5000/educations")
         setEducation(response.data);
-    }
-
-    const getCategories = async () => {
-        const response = await axios.get("http://localhost:5000/categories")
-        setCategory(response.data);
     }
 
     const deleteJob = async (id) => {
@@ -77,7 +86,8 @@ const JobList = () => {
     const searchData = (e) => {
         e.preventDefault()
         setPage(0)
-        setKeyword([query] + [EducationId])
+        setKeyword([query] + [LocationId] + [RoleId] + [EducationId])
+        
     }
 
   return (
@@ -102,27 +112,24 @@ const JobList = () => {
                     <div className='form-outline col-3 input-group-lg'>
                         <select 
                             className='form-select' 
-                            value={EducationId} 
-                            onChange={(e) => setEducationId(e.target.value)}
+                            value={LocationId} 
+                            onChange={(e) => setLocationId(e.target.value)}
                         >
-                            <option className='bg-dark text-white'>Semua Lokasi</option>
-                            <option value="Bekasi">Bekasi</option>
-                            <option value="Business Analyst">Business Analyst</option>
-                            <option value="Chef">Chef</option>
-                            <option value="Content Creator">Content Creator</option>
-                            <option value="Customer Service Representative">Customer Service Representative</option>
-                            <option value="Marketing">Marketing</option>
+                            <option className='bg-dark text-white' value={""}>Semua Location</option>
+                            {locations.map((location) => (
+                                <option value={location.id}>{location.name}</option>
+                            ))}
                         </select>
                     </div>
                     <div className='form-outline col-3 input-group-lg'>
                         <select 
                             className='form-select' 
-                            value={CategoryId} 
-                            onChange={(e) => setCategoryId(e.target.value)}
+                            value={RoleId} 
+                            onChange={(e) => setRoleId(e.target.value)}
                         >
                             <option className='bg-dark text-white' value={""}>Semua Kategori</option>
-                            {categories.map((category) => (
-                                <option value={category.id}>{category.name}</option>
+                            {roles.map((role) => (
+                                <option value={role.id}>{role.name}</option>
                             ))}
                         </select>
                     </div>
@@ -155,7 +162,7 @@ const JobList = () => {
                         </div>
                     </div>
                 </div>
-                {jobs.map((job, index) => (
+                {jobs.map((job) => (
                     <div key={job.id} className='row border border-1'>
                         <div className='col-3 mt-3'>
                             <div className='row'> 
@@ -177,11 +184,11 @@ const JobList = () => {
                                     </tr>
                                     <tr className='col-5'>
                                         <td className='h5'>Pendidikan</td>
-                                        <td>{job.EducationId}</td>
+                                        <td value={job.EducationId.id}>{job.EducationId}</td>
                                     </tr>
                                     <tr className='col-5'>
                                         <td className='h5'>Lokasi</td>
-                                        <td>{job.companyAddress}</td>
+                                        <td>{job.LocationId}</td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -1,4 +1,4 @@
-const {Job, Location, Category, Educations, Role, Level, Province} = require('../models')
+const {Job, Location, Educations, Role, Level,} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')
@@ -7,6 +7,8 @@ const getJobs = async(req, res) => {
     const page = parseInt(req.query.page) || 0
     const limit = parseInt(req.query.limit) || 10
     const search = req.query.search_query || ""
+    const LocationId = req.query.LocationId || 0
+    const RoleId = req.query.RoleId || 0
     const EducationId = req.query.EducationId || 0
     const offset = limit * page
     const totalRows = await Job.count({
@@ -19,6 +21,10 @@ const getJobs = async(req, res) => {
                 [Op.like]: '%'+search+'%'
             }}, {industry:{
                 [Op.like]: '%'+search+'%'
+            }}, {LocationId:{
+                [Op.eq]: LocationId
+            }}, {RoleId:{
+                [Op.eq]: RoleId
             }}, {EducationId:{
                 [Op.eq]: EducationId
             }}]
@@ -53,6 +59,10 @@ const getJobs = async(req, res) => {
                 [Op.like]: '%'+search+'%'
             }}, {industry:{
                 [Op.like]: '%'+search+'%'
+            }}, {LocationId:{
+                [Op.eq]: LocationId
+            }}, {RoleId:{
+                [Op.eq]: RoleId
             }}, {EducationId:{
                 [Op.eq]: EducationId
             }}]
