@@ -7,6 +7,7 @@ import { getMe } from "../features/authSlice"
 import Navbar from './Navbar';
 import moment from 'moment';
 import "./style/dashboard.css"
+import myImage from "./img/job.jpg"
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
@@ -48,7 +49,11 @@ const ProfileUser = () => {
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
                         <div className='d-flex justify-content-center mt-4'>
-                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                            {url ? (
+                                <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                            ) : (
+                                <div className='d-flex justify-content-center fw-bold'>Lengkapi Profile</div>
+                            )}
                         </div>
                         <h5 className='d-flex justify-content-center mt-3 text-body-secondary'>{username}</h5>
                     </div>
@@ -62,9 +67,13 @@ const ProfileUser = () => {
                         </div>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                <Link to={`/edit/profile`} className="btn btn-dark">
-                                    Edit Profile
-                                </Link>
+                                {url ? (
+                                    <Link to={`/edit/profile`} className="btn btn-dark">
+                                        Edit Profile
+                                    </Link>
+                                ) : (
+                                    ""
+                                )}
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3 mb-3'>
@@ -78,35 +87,52 @@ const ProfileUser = () => {
                         </div>
                     </div>
                 </div>
-                <div className='col-9'>
-                    <div className='border border-1 rounded mb-5'>
-                        <div className='row ms-3 mt-3 mb-3'>
-                            <table>
-                                <thead>
-                                    <tr className='mb-5'>
-                                        <th className='col-2'>ID</th>
-                                        <th className='col-3'>PROFILE</th>
-                                        <th className='col-8'>DIBUAT</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>{}</th>
-                                        <th>
-                                            <Link to={`/profile`} className="custom-link h6">
-                                                {username}
-                                            </Link>
-                                        </th>
-                                        <th className='h6'>{formattedDate}</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                            </table>
+                {username ? (
+                    <div className='col-9'>
+                        <div className='border border-1 rounded mb-5'>
+                            <div className='row ms-3 mt-3 mb-3'>
+                                <table>
+                                    <thead>
+                                        <tr className='mb-5'>
+                                            <th className='col-2'>ID</th>
+                                            <th className='col-3'>PROFILE</th>
+                                            <th className='col-8'>DIBUAT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>{}</th>
+                                            <th>
+                                                <Link to={`/profile`} className="custom-link h6">
+                                                    {username}
+                                                </Link>
+                                            </th>
+                                            <th className='h6'>{formattedDate}</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <div className='col-9'>
+                        <h4 className='d-flex justify-content-center'>
+                            Lengkapi Profile Anda
+                        </h4>
+                        <div className='d-flex justify-content-center mt-3'>
+                            <Link to={`/edit/profile`} className=" col-3 btn btn-dark d-flex justify-content-center">
+                                <i class="bi bi-pencil-fill me-1"></i>Lengkapi Profile
+                            </Link>
+                        </div>
+                        <div className='d-flex justify-content-center mt-3'>
+                            <img src={myImage} alt="My Image" />
+                        </div>
+                    </div>
+                )}
+                
             </div>
         </div>
     </div>

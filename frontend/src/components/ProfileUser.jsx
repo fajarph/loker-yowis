@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import Navbar from './Navbar';
 import { getMe } from "../features/authSlice"
+import myImage from "./img/job.jpg"
 
 const ProfileUser = () => {
     const [username, setUsername] = useState("")
@@ -69,9 +70,13 @@ const ProfileUser = () => {
                         </div>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                <Link to={`/edit/profile`} className="btn btn-dark">
-                                    Edit Profile
-                                </Link>
+                                {url ? (
+                                    <Link to={`/edit/profile`} className="btn btn-dark">
+                                        Edit Profile
+                                    </Link>
+                                ) : (
+                                    ""
+                                )}
                             </h6>
                         </div>
                         <div className='mt-3 ms-3 me-3 mb-3'>
@@ -123,6 +128,9 @@ const ProfileUser = () => {
                             <Link to={`/edit/profile`} className=" col-3 btn btn-dark d-flex justify-content-center">
                                 <i class="bi bi-pencil-fill me-1"></i>Lengkapi Profile
                             </Link>
+                        </div>
+                        <div className='d-flex justify-content-center mt-3'>
+                            <img src={myImage} alt="My Image" />
                         </div>
                     </div>
                 )}

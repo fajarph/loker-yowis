@@ -125,7 +125,7 @@ const JobList = () => {
                             value={RoleId} 
                             onChange={(e) => setRoleId(e.target.value)}
                         >
-                            <option className='bg-dark text-white' value={""}>Semua Kategori</option>
+                            <option className='bg-dark text-white' value={""}>Semua Role</option>
                             {roles.map((role) => (
                                 <option key={role.id} value={role.id}>{role.name}</option>
                             ))}
