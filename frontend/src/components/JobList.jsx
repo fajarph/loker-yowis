@@ -3,7 +3,6 @@ import axios from 'axios'
 import Navbar from './Navbar'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from "react-redux"
-import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import "./style/jobList.css"
@@ -37,7 +36,6 @@ const JobList = () => {
 
     useEffect(() => {
         getJobs()
-        dispatch(getMe())
     }, [page, keyword])
 
     useEffect(() => {

@@ -8,7 +8,8 @@ import Dashboard from "./components/Dashboard";
 import JobDetail from "./components/JobDetail";
 import AddJob from "./pages/AddJob";
 import EditJob from "./pages/EditJob";
-import Home from "./pages/Home";
+import Home from "./components/Home";
+
 
 function App() {
   return (
