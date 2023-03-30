@@ -11,7 +11,7 @@ import "./style/jobList.css"
 const JobList = () => {
     const [jobs, setJobs] = useState([])
     const [page, setPage] = useState(0)
-    const [limit, setlimit] = useState(1)
+    const [limit, setlimit] = useState(2)
     const [pages, setPages] = useState(0)
     const [rows, setRows] = useState(0)
     const [keyword, setKeyword] = useState("")
@@ -170,7 +170,7 @@ const JobList = () => {
                                 <img className='image rounded-circle' alt="Image" src={job.url} style={{width: "64px", height: "64px"}} />
                                 </div>
                                 <div className='col mt-2'>
-                                    <h5>{job.jobRole}</h5>
+                                    <h5>{job.RoleId}</h5>
                                 </div>
                             </div>
                         </div>

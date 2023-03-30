@@ -9,23 +9,23 @@
   }
   
   .pagination .page-item .page-link {
-    color: #000;
-    border: 1px solid #000;
+    color: #212529;
+    border: 1px solid #212529;
     background-color: transparent;
     transition: all 0.3s ease-in-out;
   }
   
   .pagination .page-item.active .page-link {
-    background-color: #000;
+    background-color: #212529;
     color: #fff;
-    border: 1px solid #000;
+    border: 1px solid #212529;
   }
   
   .pagination .page-item.disabled .page-link {
     pointer-events: none;
     color: #fff;
     border: 1px solid #fff;
-    background-color: #000;
+    background-color: #212529;
   }
   
   .pagination .page-item:first-child .page-link,
@@ -42,4 +42,3 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
   }
-  
