@@ -47,3 +47,19 @@
     text-decoration: none;
     color: #456cb3;
   }
+
+  .select-1 {
+    margin-left: 2px;
+    width: 310px;
+  }
+
+  .select-2 {
+    width: 310px;
+    margin-left: -36px;
+  }
+
+  .select-3 {
+    margin-left: -74px;
+    width: 310px;
+  }
+  

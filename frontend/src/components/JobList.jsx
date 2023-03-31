@@ -109,11 +109,11 @@ const JobList = () => {
                 <div className='input-group d-flex justify-content-evenly'>
                     <div className='form-outline col-3 input-group-lg'>
                         <select 
-                            className='form-select' 
+                            className='form-select select-1' 
                             value={LocationId} 
                             onChange={(e) => setLocationId(e.target.value)}
                         >
-                            <option className='bg-dark text-white' value={""}>Semua Location</option>
+                            <option className='option bg-dark text-white' value={""}>Semua Location</option>
                             {locations.map((location) => (
                                 <option key={location.id} value={location.id}>{location.name}</option>
                             ))}
@@ -121,11 +121,11 @@ const JobList = () => {
                     </div>
                     <div className='form-outline col-3 input-group-lg'>
                         <select 
-                            className='form-select' 
+                            className='form-select select-2' 
                             value={RoleId} 
                             onChange={(e) => setRoleId(e.target.value)}
                         >
-                            <option className='bg-dark text-white' value={""}>Semua Role</option>
+                            <option className='option bg-dark text-white' value={""}>Semua Role</option>
                             {roles.map((role) => (
                                 <option key={role.id} value={role.id}>{role.name}</option>
                             ))}
@@ -133,11 +133,11 @@ const JobList = () => {
                     </div>
                     <div className='form-outline col-3 input-group-lg'>
                         <select 
-                        className="form-select"
+                        className="form-select select-3"
                         value={EducationId} 
                         onChange={(e) => setEducationId(e.target.value)}
                         >
-                            <option className='bg-dark text-white' value={""}>Semua Pendidikan</option>
+                            <option className='option bg-dark text-white' value={""}>Semua Pendidikan</option>
                             {educations.map((education) => (
                                 <option key={education.id} value={education.id}>{education.name}</option>
                             ))}
