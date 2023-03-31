@@ -94,7 +94,6 @@ const ProfileUser = () => {
                     <div className='col-9'>
                         <div className='d-flex justify-content-between'>
                             <h5>User Profile</h5>
-                            <h5>{role}</h5>
                         </div>
                         <div className='border border-1 rounded mt-2 mb-5'>
                             <div className='row mt-3 mb-5'>
@@ -108,10 +107,12 @@ const ProfileUser = () => {
                                             <div className='col-6'>
                                                 <h5>Nomer Hp</h5>
                                                 <h5>Status</h5>
+                                                <h5>Role</h5>
                                             </div>
                                             <div className='col'>
                                                 <h5>: {nohp}</h5>
                                                 <h5>: {status}</h5>
+                                                <h5>: {role}</h5>
                                             </div>
                                         </div>
                                     </div>
