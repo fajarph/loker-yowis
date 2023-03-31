@@ -126,7 +126,26 @@ const getJobById = async(req, res) => {
         const response = await Job.findOne({
             where:{
                 uuid: req.params.id
-            }
+            },
+            include: [
+                {
+                    model: Educations,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Role,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Location,
+                    attributes: ['id', 'name']
+                    
+                },
+                {
+                    model: Level,
+                    attributes: ['id', 'name']
+                },
+            ]
         });
         res.status(200).json(response);
     } catch (error) {
