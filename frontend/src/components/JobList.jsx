@@ -10,6 +10,7 @@ import "./style/jobList.css"
 
 const JobList = () => {
     const [jobs, setJobs] = useState([])
+    const [userJobIds, setUserJobIds] = useState([])
     const [page, setPage] = useState(0)
     const [limit, setlimit] = useState(5)
     const [pages, setPages] = useState(0)
@@ -32,6 +33,7 @@ const JobList = () => {
         getEducations()
         getRoles()
         getLocations()
+        getSaveUserJobIds()
     }, [])
 
     useEffect(() => {
@@ -70,6 +72,11 @@ const JobList = () => {
     const deleteJob = async (id) => {
         await axios.delete(`http://localhost:5000/jobs/${id}`)
         getJobs()
+    }
+
+    const getSaveUserJobIds = async () => {
+        const response = await axios.get(`http://localhost:5000/userjobs`)
+        console.log(response.data)
     }
 
     const changePage =({selected}) => {
@@ -202,11 +209,7 @@ const JobList = () => {
                                         SELENGKAPNYA
                                     </Link>
 
-                                    {!isLoggedIn && (
-                                        <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
-                                    )}
-
-                                    {user && user.role === "User" && (
+                                    {(!isLoggedIn || user && user.role === "User") && (
                                         <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
                                     )}
                                     

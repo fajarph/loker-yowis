@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
 
       Job.belongsTo(models.Location)
       models.Location.hasMany(Job)
+
+      Job.belongsToMany(sequelize.models.User, { through: sequelize.models.UserJob });
     }
   }
   Job.init({

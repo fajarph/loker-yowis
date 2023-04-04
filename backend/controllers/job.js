@@ -1,4 +1,4 @@
-const {Job, Location, Educations, Role, Level,} = require('../models')
+const {Job, User, UserJob, Location, Educations, Role, Level,} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')
@@ -314,10 +314,34 @@ const deleteJob = async(req, res) => {
     }
 }
 
+const getSaveUserJobIds = async(req, res) => {
+    try {
+        const response = await UserJob.findAll();
+        res.status(200).json(response);
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const createUserJob = async(req, res) => {
+    try {
+        const {UserId, JobId} = req.body;
+        await UserJob.create({
+            UserId: UserId,
+            JobId: JobId
+        })
+        res.status(201).json({msg: "UserJob Created"});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     getJobs,
     getJobById,
     createJob,
     updateJob,
-    deleteJob
+    deleteJob,
+    getSaveUserJobIds,
+    createUserJob
 }

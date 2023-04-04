@@ -6,6 +6,10 @@ GET http://localhost:5000/users
 GET http://localhost:5000/jobs?search_query=&EducationId=3&page=0&limit=5
 
 ###
+//Get All UserJobs
+GET http://localhost:5000/userjobs
+
+###
 //Get All Education
 GET http://localhost:5000/educations
 
@@ -29,6 +33,16 @@ GET http://localhost:5000/users/b4a3292e-b5f4-4836-bbbb-abebbd77c5dc
 //Get Single Job 
 ###
 GET http://localhost:5000/jobs/c7129cab-dbab-4a5c-8884-3a9aebc4f974
+
+//Create User
+###
+POST http://localhost:5000/userjobs
+Content-Type: application/json
+
+{
+    "UserId": 2,
+    "JobId": 1
+}
 
 //Create User
 ###

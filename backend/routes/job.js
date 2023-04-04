@@ -9,6 +9,8 @@ router.get('/jobs/:id', controllers.getJobById)
 router.post('/jobs', validation.createJob, middleware.adminOnly, controllers.createJob)
 router.patch('/jobs/:id', middleware.adminOnly, controllers.updateJob)
 router.delete('/jobs/:id', middleware.adminOnly, controllers.deleteJob)
+router.get('/userjobs', controllers.getSaveUserJobIds)
+router.post('/userjobs', controllers.createUserJob)
 
 
 module.exports = router
