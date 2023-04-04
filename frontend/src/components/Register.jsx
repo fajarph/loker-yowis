@@ -8,6 +8,8 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [confPassword, setConfPassword] = useState("")
     const [role, setRole] = useState("")
+    const [msg, setMsg] = useState("")
+    const [errMsgs, setErrMsgs] = useState([])
     const navigate = useNavigate()
 
     const saveUser = async(e) => {
@@ -21,7 +23,22 @@ const Register = () => {
             })
             navigate("/login")
         } catch (error) {
-            console.log(error);
+            if(error.response) {
+                setMsg(error.response.data.msg)
+                setErrMsgs(error.response.data.message)
+            }
+        }
+    }
+
+    const filterErrMsgs = (fieldName) => {
+        if (errMsgs.length === 0) {
+            return
+        }
+        
+        const item = errMsgs.filter((err) => err.path[0] === fieldName)[0]
+
+        if (item) {
+            return item.message
         }
     }
 
@@ -31,6 +48,7 @@ const Register = () => {
         <div className='container-fluid'>
             <h2 className="fw-bold  text-uppercase text-center text-dark mt-5">Register</h2>
             <form onSubmit={saveUser} className='container justify-content-center'>
+                <p className='text-center'>{msg}</p>
                 <div className="mb-3">
                     <label className="form-label">Email</label>
                     <input 
@@ -41,6 +59,9 @@ const Register = () => {
                         placeholder='Email'
                     />
                 </div>
+                {
+                    filterErrMsgs('email') && <p className='text-danger'>{filterErrMsgs('email')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Password</label>
                     <input 
@@ -51,6 +72,9 @@ const Register = () => {
                         placeholder='Password'
                     />
                 </div>
+                {
+                    filterErrMsgs('password') && <p className='text-danger'>{filterErrMsgs('password')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Confirm Password</label>
                     <input 
@@ -61,6 +85,9 @@ const Register = () => {
                         placeholder='Confirm Password'
                     />
                 </div>
+                {
+                    filterErrMsgs('confPassword') && <p className='text-danger'>{filterErrMsgs('confPassword')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Role</label>
                     <select
@@ -74,6 +101,9 @@ const Register = () => {
                         <option value="User">User</option>
                     </select>
                 </div>
+                {
+                    filterErrMsgs('role') && <p className='text-danger'>{filterErrMsgs('role')}</p>
+                }
                 <button type="submit" className="btn btn-dark">Submit</button>
                 <p className="text-dark mt-3">
                     You have an account?

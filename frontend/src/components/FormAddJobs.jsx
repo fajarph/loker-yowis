@@ -22,6 +22,8 @@ const FormAddJobs = () => {
     const [industry, setIndustry] = useState("");
     const [file, setFile] = useState("")
     const [preview, setPreview] = useState("")
+    const [msg, setMsg] = useState("")
+    const [errMsgs, setErrMsgs] = useState([])
     const navigate = useNavigate(); 
     const editorRef = useRef(null);
 
@@ -67,8 +69,23 @@ const FormAddJobs = () => {
                 jobLongDescription
             });
             navigate(`/jobs`)
-        } catch (error) {
-            console.log(error);
+        } catch(error) {
+            if(error.response) {
+                setMsg(error.response.data.msg)
+                setErrMsgs(error.response.data.message)
+            }
+        }
+    }
+
+    const filterErrMsgs = (fieldName) => {
+        if (errMsgs.length === 0) {
+            return
+        }
+        
+        const item = errMsgs.filter((err) => err.path[0] === fieldName)[0]
+
+        if (item) {
+            return item.message
         }
     }
 
@@ -97,6 +114,7 @@ const FormAddJobs = () => {
         <Navbar/>
         <div>
             <form onSubmit={SaveJobs} className='container justify-content-center mt-5 mb-5'>
+                <p className='has-text-centered'>{msg}</p>
                 <div className="mb-3">
                     <label className="form-label">Company Name</label>
                     <input 
@@ -107,6 +125,9 @@ const FormAddJobs = () => {
                         placeholder='Company Name'
                     />
                 </div>
+                {
+                    filterErrMsgs('companyName') && <p className='text-danger'>{filterErrMsgs('companyName')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Company Address</label>
                     <input 
@@ -117,6 +138,9 @@ const FormAddJobs = () => {
                         placeholder='Company Address'
                     />
                 </div>
+                {
+                    filterErrMsgs('companyAddress') && <p className='text-danger'>{filterErrMsgs('companyAddress')}</p>
+                }
                 <div className='field'>
                     <label className='label'>Location</label>
                     <div className="control mt-2">
@@ -132,6 +156,9 @@ const FormAddJobs = () => {
                         </select>
                     </div>
                 </div>
+                {
+                    filterErrMsgs('LocationId') && <p className='text-danger'>{filterErrMsgs('LocationId')}</p>
+                }
                 <div className="mb-3 mt-3">
                     <label className="form-label">Salary</label>
                     <input 
@@ -142,6 +169,9 @@ const FormAddJobs = () => {
                         placeholder='Salary'
                     />
                 </div>
+                {
+                    filterErrMsgs('salary') && <p className='text-danger'>{filterErrMsgs('salary')}</p>
+                }
                 <div className='field'>
                     <label className='label'>Job Role</label>
                     <div className="control mt-2">
@@ -157,6 +187,9 @@ const FormAddJobs = () => {
                         </select>
                     </div>
                 </div>
+                {
+                    filterErrMsgs('RoleId') && <p className='text-danger'>{filterErrMsgs('RoleId')}</p>
+                }
                 <div className='field'>
                     <label className='label'>Job Level</label>
                     <div className="control mt-2">
@@ -172,6 +205,9 @@ const FormAddJobs = () => {
                         </select>
                     </div>
                 </div>
+                {
+                    filterErrMsgs('LevelId') && <p className='text-danger'>{filterErrMsgs('LevelId')}</p>
+                }
                 <div className='field'>
                     <label className='label'>Education</label>
                     <div className="control mt-2">
@@ -187,6 +223,9 @@ const FormAddJobs = () => {
                         </select>
                     </div>
                 </div>
+                {
+                    filterErrMsgs('EducationId') && <p className='text-danger'>{filterErrMsgs('EducationId')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Job Type</label>
                     <select
@@ -201,6 +240,9 @@ const FormAddJobs = () => {
                         <option value="Tetap">Tetap</option>
                     </select>
                 </div>
+                {
+                    filterErrMsgs('jobType') && <p className='text-danger'>{filterErrMsgs('jobType')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Job Short Description</label>
                     <textarea 
@@ -211,6 +253,9 @@ const FormAddJobs = () => {
                         placeholder='Job Short Description'
                     />
                 </div>
+                {
+                    filterErrMsgs('jobShortDescription') && <p className='text-danger'>{filterErrMsgs('jobShortDescription')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Job Long Description</label>
                     <Editor
@@ -232,6 +277,9 @@ const FormAddJobs = () => {
                         }}
                     />
                 </div>
+                {
+                    filterErrMsgs('jobLongDescription') && <p className='text-danger'>{filterErrMsgs('jobLongDescription')}</p>
+                }
                 <div className="mb-3">
                     <label className="form-label">Industry</label>
                     <input 
@@ -256,6 +304,9 @@ const FormAddJobs = () => {
                         </div>
                     </div>
                 </div>
+                {
+                    filterErrMsgs('file') && <p className='text-danger'>{filterErrMsgs('file')}</p>
+                }
 
                 {preview ? (
                     <figure className="image rounded">

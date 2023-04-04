@@ -154,7 +154,6 @@ const getJobById = async(req, res) => {
 }
 
 const createJob = async(req, res) => {
-    console.log(req.body)
     if(req.files === null) return res.status(400).json({msg: "No File Uploaded"})
     const companyName = req.body.companyName
     const companyAddress = req.body.companyAddress

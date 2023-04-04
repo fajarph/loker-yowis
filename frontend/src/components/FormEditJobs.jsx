@@ -28,7 +28,7 @@ const FormEditJobs = () => {
     const { id } = useParams()
     const editorRef = useRef(null);
     const dispatch = useDispatch()
-    const {user, isError, isSuccess, isLoading, message} = useSelector(
+    const {user} = useSelector(
         (state) => state.auth
     );
 
@@ -246,7 +246,7 @@ const FormEditJobs = () => {
                     <label className="form-label">Job Long Description</label>
                     <Editor
                         onInit={(_, editor) => editorRef.current = editor}
-                        initialValue=""
+                        initialValue={jobLongDescription}
                         init={{
                         height: 350,
                         menubar: false,

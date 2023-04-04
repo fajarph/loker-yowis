@@ -20,7 +20,7 @@ const ProfileUser = () => {
         (state) => state.auth
     );
 
-     useEffect(() => {
+    useEffect(() => {
         dispatch(getMe())
     }, []);
 

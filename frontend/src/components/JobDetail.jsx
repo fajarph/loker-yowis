@@ -8,6 +8,10 @@ import { selectIsLoggedIn } from "../features/authSlice"
 import moment from 'moment';
 
 const JobDetail = () => {
+    const [query, setQuery] = useState("")
+    const [LocationId, setLocationId] = useState("")
+    const [RoleId, setRoleId] = useState("")
+    const [EducationId, setEducationId] = useState("")
     const [companyName, setCompanyName] = useState("");
     const [salary, setSalary] = useState("");
     const [jobType, setJobType] = useState("");
@@ -50,7 +54,6 @@ const JobDetail = () => {
         setRole(response.data.Role)
         setLevel(response.data.Level)
         setCreatedAt(response.data.createdAt)
-        
         setUrl(response.data.url)
     }
 
@@ -71,7 +74,7 @@ const JobDetail = () => {
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
                                                 <h6><i className="bi bi-building-fill"></i> {companyName}</h6>
                                                 <h6><i className="bi bi-geo-alt-fill"></i> {Location.name}</h6>
-                                                <h6><i className="bi bi-folder-fill"></i> {Role.name}</h6>
+                                                <i className="bi bi-folder-fill"></i><Link to={`/jobs?RoleId=${RoleId}`}> {Role.name}</Link>
                                                 <h6><i className="bi bi-cash"></i> {salary}</h6>
                                             </div>
                                         </div>
@@ -114,16 +117,8 @@ const JobDetail = () => {
                                                         <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
                                                     )}
 
-                                                    {user && user.role === "User" && (
-                                                        <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
-                                                    )}
-
                                                     {!isLoggedIn && (
                                                         <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
-                                                    )}
-
-                                                    {!isLoggedIn && (
-                                                        <button type="button" className="btn btn-dark">LAMAR PEKERJAAN</button>
                                                     )}
                                                     
                                                 </div>

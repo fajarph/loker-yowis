@@ -16,7 +16,6 @@ const verifyUser = async(req, res, next) => {
 }
 
 const adminOnly = async(req, res, next) => {
-    console.log("Lihat disini", req.session)
     const user = await User.findOne({
         where: {
             uuid: req.session.userId

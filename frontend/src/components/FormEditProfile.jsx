@@ -15,7 +15,7 @@ const FormEditProfile = () => {
     const [preview, setPreview] = useState("")
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {user, isError, isSuccess, isLoading, message} = useSelector(
+    const {user, isError} = useSelector(
         (state) => state.auth
     );
 
@@ -27,7 +27,10 @@ const FormEditProfile = () => {
         if (user !== undefined) {
             getUserById();
         }
-    }, [user]);
+        if(isError){
+            navigate("/")
+        }   
+    }, [user, isError, navigate]);
 
     const loadImage = (e) => {
         const image = e.target.files[0]

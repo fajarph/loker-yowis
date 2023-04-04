@@ -32,7 +32,6 @@ const JobList = () => {
         getEducations()
         getRoles()
         getLocations()
-        getJobs()
     }, [])
 
     useEffect(() => {
