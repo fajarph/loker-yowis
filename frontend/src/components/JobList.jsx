@@ -10,7 +10,6 @@ import "./style/jobList.css"
 
 const JobList = () => {
     const [jobs, setJobs] = useState([])
-    const [userJobIds, setUserJobIds] = useState([])
     const [page, setPage] = useState(0)
     const [limit, setlimit] = useState(5)
     const [pages, setPages] = useState(0)
@@ -33,7 +32,6 @@ const JobList = () => {
         getEducations()
         getRoles()
         getLocations()
-        getSaveUserJobIds()
     }, [])
 
     useEffect(() => {
@@ -72,11 +70,6 @@ const JobList = () => {
     const deleteJob = async (id) => {
         await axios.delete(`http://localhost:5000/jobs/${id}`)
         getJobs()
-    }
-
-    const getSaveUserJobIds = async () => {
-        const response = await axios.get(`http://localhost:5000/userjobs`)
-        console.log(response.data)
     }
 
     const changePage =({selected}) => {
@@ -209,7 +202,31 @@ const JobList = () => {
                                         SELENGKAPNYA
                                     </Link>
 
-                                    {(!isLoggedIn || user && user.role === "User") && (
+                                    {!isLoggedIn && (
+                                        <div>
+                                            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div className="text-center text-dark mt-4 fw-bold">
+                                                            <h3>Simpan dengan akun Loker.Yowis</h3>
+                                                        </div>
+                                                        <div className="text-center mt-4">
+                                                            <p>Login dan simpan pekerjaan ini dan peluang lain seperti ini dengan akun Loker.Yowis gratis.</p>
+                                                        </div>
+                                                        <div className="d-flex justify-content-center">
+                                                            
+                                                            <button to={'/register'} type="submit" class="btn btn-dark btn-lg" data-bs-dismiss="modal">CLOSE</button>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
+                                        </div>
+                                    )}
+
+                                    {user && user.role === "User" && (
                                         <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
                                     )}
                                     

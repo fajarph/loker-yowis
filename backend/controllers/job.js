@@ -316,7 +316,9 @@ const deleteJob = async(req, res) => {
 
 const getSaveUserJobIds = async(req, res) => {
     try {
-        const response = await UserJob.findAll();
+        const response = await UserJob.findAll({
+            attributes:["id"]
+        });
         res.status(200).json(response);
     } catch (error) {
         console.log(error.message);

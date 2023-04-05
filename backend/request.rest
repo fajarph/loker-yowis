@@ -3,7 +3,7 @@ GET http://localhost:5000/users
 
 //Get All Job
 ###
-GET http://localhost:5000/jobs?search_query=&EducationId=3&page=0&limit=5
+GET http://localhost:5000/jobs?search_query=fajar&page=0&limit=5
 
 ###
 //Get All UserJobs
@@ -80,7 +80,7 @@ POST http://localhost:5000/locations
 Content-Type: application/json
 
 {
-    "name": "Wonogiri"
+    "name": "Aceh"
 }
 
 //Create Education
@@ -98,7 +98,7 @@ POST http://localhost:5000/roles
 Content-Type: application/json
 
 {
-    "name": ""
+    "name": "Administrasi"
 }
 
 //Create Level
