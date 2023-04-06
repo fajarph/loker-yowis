@@ -42,6 +42,10 @@ const schema = {
             "any.required": "Description is required!!",
             "string.empty": "Description can't be empty!!"
         }),
+        industry: Joi.string().required().messages({
+            "any.required": "Industry type is required!!",
+            "string.empty": "Industry type can't be empty!!"
+        }),
         file: Joi.string().messages({
             "any.required": "Image is required!!",
             "string.empty": "Image can't be empty!!"

@@ -238,6 +238,8 @@ const FormAddJobs = () => {
                         <option value="Kontrak">Kontrak</option>
                         <option value="Purna Waktu / Full Time">Purna Waktu / Full Time</option>
                         <option value="Tetap">Tetap</option>
+                        <option value="Freelance">Freelance</option>
+                        <option value="Paruh Waktu / Part Time">Paruh Waktu / Part Time</option>
                     </select>
                 </div>
                 {
@@ -290,6 +292,9 @@ const FormAddJobs = () => {
                         placeholder='Industry'
                     />
                 </div>
+                {
+                    filterErrMsgs('industry') && <p className='text-danger'>{filterErrMsgs('industry')}</p>
+                }
                 <div className='field'>
                     <label className='label '>Image</label>
                     <div className='control'>

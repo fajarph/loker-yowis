@@ -52,6 +52,19 @@ const JobList = () => {
         setRows(response.data.totalRows)
     }
 
+    const saveUserJobids = async(e, jobId) => {
+        e.preventDefault()
+
+        try {
+            await axios.post('http://localhost:5000/userjobs', {
+                UserId: user.id,
+                JobId: jobId
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const getLocations = async () => {
         const response = await axios.get("http://localhost:5000/locations")
         setLocation(response.data);
@@ -67,7 +80,9 @@ const JobList = () => {
         setEducation(response.data);
     }
 
-    const deleteJob = async (id) => {
+    const deleteJob = async (e, id) => {
+        e.preventDefault()
+
         await axios.delete(`http://localhost:5000/jobs/${id}`)
         getJobs()
     }
@@ -227,11 +242,11 @@ const JobList = () => {
                                     )}
 
                                     {user && user.role === "User" && (
-                                        <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
+                                        <button onClick={(e) => { saveUserJobids(e, job.id) }} type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
                                     )}
                                     
                                     {user && user.role === "Admin" && (
-                                        <button onClick={()=> deleteJob(job.uuid)} type="button" className="btn btn-dark">Delete</button>
+                                        <button onClick={(e)=> deleteJob(e, job.uuid)} type="button" className="btn btn-dark">Delete</button>
                                     )}
                                 </div>
                             </div>

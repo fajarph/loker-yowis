@@ -317,7 +317,10 @@ const deleteJob = async(req, res) => {
 const getSaveUserJobIds = async(req, res) => {
     try {
         const response = await UserJob.findAll({
-            attributes:["id"]
+            where: {
+                UserId: req.query.user_id
+            },
+            attributes: ["JobId"]
         });
         res.status(200).json(response);
     } catch (error) {
@@ -329,8 +332,8 @@ const createUserJob = async(req, res) => {
     try {
         const {UserId, JobId} = req.body;
         await UserJob.create({
-            UserId: UserId,
-            JobId: JobId
+            UserId: parseInt(UserId),
+            JobId: parseInt(JobId)
         })
         res.status(201).json({msg: "UserJob Created"});
     } catch (error) {

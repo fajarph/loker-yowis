@@ -7,7 +7,7 @@ GET http://localhost:5000/jobs?search_query=fajar&page=0&limit=5
 
 ###
 //Get All UserJobs
-GET http://localhost:5000/userjobs
+GET http://localhost:5000/userjobs?user_id=1
 
 ###
 //Get All Education
@@ -40,8 +40,8 @@ POST http://localhost:5000/userjobs
 Content-Type: application/json
 
 {
-    "UserId": 2,
-    "JobId": 1
+    "UserId": 1,
+    "JobId": 5
 }
 
 //Create User
@@ -80,7 +80,7 @@ POST http://localhost:5000/locations
 Content-Type: application/json
 
 {
-    "name": "Aceh"
+    "name": "Sleman"
 }
 
 //Create Education
@@ -98,7 +98,7 @@ POST http://localhost:5000/roles
 Content-Type: application/json
 
 {
-    "name": "Administrasi"
+    "name": "Warehouse"
 }
 
 //Create Level
