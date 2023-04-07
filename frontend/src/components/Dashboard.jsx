@@ -9,7 +9,7 @@ import moment from 'moment';
 import "./style/dashboard.css"
 import myImage from "./img/job.jpg"
 
-const ProfileUser = () => {
+const Dashboard = () => {
     const [username, setUsername] = useState("")
     const [createdAt, setCreatedAt] = useState("2022-03-30T10:30:00.000Z")
     const [url, setUrl] = useState("")
@@ -139,4 +139,4 @@ const ProfileUser = () => {
   )
 }
 
-export default ProfileUser
+export default Dashboard

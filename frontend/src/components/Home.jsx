@@ -1,10 +1,10 @@
 import React from 'react'
-import JobList from './JobList'
+import Navbar from './Navbar'
 
 const Home = () => {
   return (
     <div>
-        <JobList/>
+        <Navbar></Navbar>
     </div>
   )
 }

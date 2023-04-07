@@ -34,6 +34,10 @@ GET http://localhost:5000/users/b4a3292e-b5f4-4836-bbbb-abebbd77c5dc
 ###
 GET http://localhost:5000/jobs/c7129cab-dbab-4a5c-8884-3a9aebc4f974
 
+//Get Save UserJob 
+###
+GET http://localhost:5000/userjobs?user_id=4
+
 //Create User
 ###
 POST http://localhost:5000/userjobs

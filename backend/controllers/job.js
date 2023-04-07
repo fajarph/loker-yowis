@@ -316,12 +316,17 @@ const deleteJob = async(req, res) => {
 
 const getSaveUserJobIds = async(req, res) => {
     try {
-        const response = await UserJob.findAll({
+        const result = await UserJob.findAll({
             where: {
                 UserId: req.query.user_id
             },
             attributes: ["JobId"]
         });
+
+        jobIds = result.map((job) => job.JobId)
+
+        response = [...new Set(jobIds)]
+
         res.status(200).json(response);
     } catch (error) {
         console.log(error.message);

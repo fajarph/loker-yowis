@@ -2,7 +2,8 @@ import React, { useState, useEffect} from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import ReactPaginate from 'react-paginate'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
 import { selectIsLoggedIn } from "../features/authSlice"
 import { Link } from 'react-router-dom'
@@ -10,6 +11,7 @@ import "./style/jobList.css"
 
 const JobList = () => {
     const [jobs, setJobs] = useState([])
+    const [userJobIds, setUserJobIds] = useState([])
     const [page, setPage] = useState(0)
     const [limit, setlimit] = useState(5)
     const [pages, setPages] = useState(0)
@@ -23,6 +25,7 @@ const JobList = () => {
     const [EducationId, setEducationId] = useState("")
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const {isError, user} = useSelector(
         (state) => state.auth
@@ -32,17 +35,19 @@ const JobList = () => {
         getEducations()
         getRoles()
         getLocations()
+        getUserJobIds()
     }, [])
 
     useEffect(() => {
         getJobs()
+        dispatch(getMe())
     }, [page])
 
     useEffect(() => {
         if(isError){
             navigate("/")
         }   
-    }, [isError, navigate]);
+    }, [user, isError, navigate]);
 
     const getJobs = async () => {
         const response = await axios.get(`http://localhost:5000/jobs?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
@@ -52,14 +57,39 @@ const JobList = () => {
         setRows(response.data.totalRows)
     }
 
+    const getUserJobIds = async () => {
+        const response = await axios.get(`http://localhost:5000/userjobs?user_id=${user.id}`)
+        setUserJobIds(response.data)
+    }
+
     const saveUserJobids = async(e, jobId) => {
         e.preventDefault()
+        e.target.disabled = true
 
         try {
             await axios.post('http://localhost:5000/userjobs', {
                 UserId: user.id,
                 JobId: jobId
             })
+            
+            e.target.disabled = false
+            window.location.reload()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const deleteSavedUserJobids = async(e, jobId) => {
+        e.preventDefault()
+        e.target.disabled = true
+
+        try {
+            await axios.delete('http://localhost:5000/userjobs/delete', {
+                UserId: user.id,
+                JobId: jobId
+            })
+            
+            e.target.disabled = false
         } catch (error) {
             console.log(error);
         }
@@ -82,7 +112,6 @@ const JobList = () => {
 
     const deleteJob = async (e, id) => {
         e.preventDefault()
-
         await axios.delete(`http://localhost:5000/jobs/${id}`)
         getJobs()
     }
@@ -242,7 +271,10 @@ const JobList = () => {
                                     )}
 
                                     {user && user.role === "User" && (
-                                        <button onClick={(e) => { saveUserJobids(e, job.id) }} type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
+                                        <button onClick={(e) => { saveUserJobids(e, job.id) }} type="button" className="btn btn-dark me-1">
+                                            <i className={`bi ${userJobIds.includes(job.id) ? 'bi-star-fill' : 'bi-star'}`}></i>
+                                            {userJobIds.includes(job.id) ? " TERSIMPAN" : " SIMPAN"}
+                                        </button>
                                     )}
                                     
                                     {user && user.role === "Admin" && (
