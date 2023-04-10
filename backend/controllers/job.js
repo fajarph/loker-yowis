@@ -346,6 +346,25 @@ const createUserJob = async(req, res) => {
     }
 }
 
+const deleteUserJob = async (req, res) => {
+
+    try {
+        const {UserId, JobId} = req.body;
+        const query = {
+            where: {
+                UserId: UserId,
+                JobId: JobId
+            }
+        }
+  
+        await UserJob.destroy(query);
+
+        res.status(200).json({ msg: "UserJob deleted" });
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+};
+
 module.exports = {
     getJobs,
     getJobById,
@@ -353,5 +372,6 @@ module.exports = {
     updateJob,
     deleteJob,
     getSaveUserJobIds,
-    createUserJob
+    createUserJob,
+    deleteUserJob
 }

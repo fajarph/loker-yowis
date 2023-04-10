@@ -58,8 +58,10 @@ const JobList = () => {
     }
 
     const getUserJobIds = async () => {
-        const response = await axios.get(`http://localhost:5000/userjobs?user_id=${user.id}`)
-        setUserJobIds(response.data)
+        if (user) {
+            const response = await axios.get(`http://localhost:5000/userjobs?user_id=${user.id}`)
+            setUserJobIds(response.data)
+        }
     }
 
     const saveUserJobids = async(e, jobId) => {
@@ -71,9 +73,8 @@ const JobList = () => {
                 UserId: user.id,
                 JobId: jobId
             })
-            
+            getUserJobIds()
             e.target.disabled = false
-            window.location.reload()
         } catch (error) {
             console.log(error);
         }
@@ -81,18 +82,13 @@ const JobList = () => {
 
     const deleteSavedUserJobids = async(e, jobId) => {
         e.preventDefault()
-        e.target.disabled = true
-
-        try {
-            await axios.delete('http://localhost:5000/userjobs/delete', {
-                UserId: user.id,
-                JobId: jobId
-            })
-            
-            e.target.disabled = false
-        } catch (error) {
-            console.log(error);
-        }
+        console.log(user.id);
+        console.log(jobId);
+        await axios.post(`http://localhost:5000/deleteuserjobs`, {
+            UserId: user.id,
+            JobId: jobId
+        })
+        getUserJobIds()
     }
 
     const getLocations = async () => {
@@ -271,7 +267,17 @@ const JobList = () => {
                                     )}
 
                                     {user && user.role === "User" && (
-                                        <button onClick={(e) => { saveUserJobids(e, job.id) }} type="button" className="btn btn-dark me-1">
+                                        <button 
+                                            onClick={(e) => { 
+                                                if (userJobIds.includes(job.id)) {
+                                                    deleteSavedUserJobids(e, job.id);
+                                                } else {
+                                                    saveUserJobids(e, job.id);
+                                                }
+                                            }} 
+                                            type="button" 
+                                            className="btn btn-dark me-1"
+                                        >
                                             <i className={`bi ${userJobIds.includes(job.id) ? 'bi-star-fill' : 'bi-star'}`}></i>
                                             {userJobIds.includes(job.id) ? " TERSIMPAN" : " SIMPAN"}
                                         </button>

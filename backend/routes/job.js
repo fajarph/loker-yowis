@@ -11,6 +11,7 @@ router.patch('/jobs/:id', middleware.adminOnly, controllers.updateJob)
 router.delete('/jobs/:id', middleware.adminOnly, controllers.deleteJob)
 router.get('/userjobs', controllers.getSaveUserJobIds)
 router.post('/userjobs', controllers.createUserJob)
+router.post('/deleteuserjobs', controllers.deleteUserJob)
 
 
 module.exports = router
