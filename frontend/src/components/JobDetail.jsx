@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from 'axios'
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
 import { selectIsLoggedIn } from "../features/authSlice"
 import moment from 'moment';
 
 const JobDetail = () => {
-    const [query, setQuery] = useState("")
-    const [LocationId, setLocationId] = useState("")
-    const [RoleId, setRoleId] = useState("")
-    const [EducationId, setEducationId] = useState("")
+    const [jobsRoleByIds, setJobsRoleByIds] = useState([])
     const [companyName, setCompanyName] = useState("");
+    const [titleCompanny, setTitleCompanny] = useState("");
     const [salary, setSalary] = useState("");
     const [jobType, setJobType] = useState("");
     const [jobShortDescription, setJobShortDescription] = useState("");
@@ -25,6 +24,7 @@ const JobDetail = () => {
     const [createdAt, setCreatedAt] = useState("2022-03-30T10:30:00.000Z")
     const [url, setUrl] = useState("")
     const { id } = useParams()
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const {user, isError} = useSelector(
@@ -33,17 +33,23 @@ const JobDetail = () => {
 
     useEffect(() => {
         getJobDetail()
+        dispatch(getMe())
     }, []);
+
+    useEffect(() => {
+        getJobsRoleById()
+    }, [Role.id]);
 
     useEffect(() => {
         if(isError){
             navigate("/")
         }   
-    }, [isError, navigate]);
+    }, [user, isError, navigate]);
 
     const getJobDetail = async () => {
         const response = await axios.get(`http://localhost:5000/jobs/${id}`)
         setCompanyName(response.data.companyName)
+        setTitleCompanny(response.data.titleCompanny)
         setSalary(response.data.salary)
         setJobType(response.data.jobType)
         setJobShortDescription(response.data.jobShortDescription)
@@ -55,6 +61,13 @@ const JobDetail = () => {
         setLevel(response.data.Level)
         setCreatedAt(response.data.createdAt)
         setUrl(response.data.url)
+    }
+
+    const getJobsRoleById = async () => {
+        if (Role) {
+            const response = await axios.get(`http://localhost:5000/jobsbyroleid?role_id=${Role.id}&location_id=${Location.id}`)
+            setJobsRoleByIds(response.data);
+        }
     }
 
     const formattedDate = moment(createdAt).format('MMMM DD, YYYY');
@@ -70,11 +83,11 @@ const JobDetail = () => {
                                 <div className="entry-content">
                                     <div className="card mt-5">
                                         <div className="card-body">
-                                            <h4 className="fw-bold">Lowongan Kerja</h4>
+                                            <h4 className="fw-bold">Lowongan Kerja {titleCompanny}</h4>
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
                                                 <h6><i className="bi bi-building-fill"></i> {companyName}</h6>
                                                 <h6><i className="bi bi-geo-alt-fill"></i> {Location.name}</h6>
-                                                <i className="bi bi-folder-fill"></i><Link to={`/jobs?RoleId=${RoleId}`}> {Role.name}</Link>
+                                                <h6><i className="bi bi-folder-fill"></i> {Role.name}</h6>
                                                 <h6><i className="bi bi-cash"></i> {salary}</h6>
                                             </div>
                                         </div>
@@ -115,10 +128,10 @@ const JobDetail = () => {
 
                                                     {!isLoggedIn && (
                                                         <div>
-                                                            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                                                                <div class="modal-dialog modal-dialog-centered">
-                                                                    <div class="modal-content">
-                                                                    <div class="modal-body">
+                                                            <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
+                                                                <div className="modal-dialog modal-dialog-centered">
+                                                                    <div className="modal-content">
+                                                                    <div className="modal-body">
                                                                         <div className="text-center text-dark mt-4 fw-bold">
                                                                             <h3>Simpan dengan akun Loker.Yowis</h3>
                                                                         </div>
@@ -127,7 +140,7 @@ const JobDetail = () => {
                                                                         </div>
                                                                         <div className="d-flex justify-content-center">
                                                                             
-                                                                            <button to={'/register'} type="submit" class="btn btn-dark btn-lg" data-bs-dismiss="modal">CLOSE</button>
+                                                                            <button to={'/register'} type="submit" className="btn btn-dark btn-lg" data-bs-dismiss="modal">CLOSE</button>
                                                                         </div>
                                                                     </div>
                                                                     </div>
@@ -174,15 +187,17 @@ const JobDetail = () => {
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
-                                                <div className='row'> 
-                                                    <div className='col-3'>
-                                                        <img className='image rounded-circle' alt="Image" src={url} style={{width: "60px", height: "60px"}}/>
+                                                {jobsRoleByIds.map((lowongan) => (
+                                                    <div key={lowongan.id} className='row'> 
+                                                        <div className='col-3'>
+                                                            <img className='image rounded-circle' alt="Image" src={lowongan.url} style={{width: "60px", height: "60px"}}/>
+                                                        </div>
+                                                        <div className="col">
+                                                            <Link to={`/jobs/detail/${lowongan.uuid}`} className="fw-bold text-secondary">{lowongan.titleCompanny}</Link>
+                                                            <p className="text-secondary">{lowongan.companyName}</p>
+                                                        </div>
                                                     </div>
-                                                    <div className="col">
-                                                        <h5 className="fw-bold text-secondary">Job Role</h5>
-                                                        <p className="text-secondary">Company Name</p>
-                                                    </div>
-                                                </div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>

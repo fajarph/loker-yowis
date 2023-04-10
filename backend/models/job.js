@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   Job.init({
     uuid: DataTypes.STRING,
     companyName: DataTypes.STRING,
+    titleCompanny: DataTypes.STRING,
     companyAddress: DataTypes.STRING,
     salary: DataTypes.STRING,
     jobType: DataTypes.STRING,

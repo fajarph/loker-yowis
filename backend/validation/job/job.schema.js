@@ -6,6 +6,10 @@ const schema = {
             "string.empty": "Company name can't be empty!!",
             'string.max': 'Company name length must be less than or equal to {{#limit}} characters long'
         }),
+        titleCompanny: Joi.string().required().messages({
+            "any.required": "Title companny is required!!",
+            "string.empty": "Title companny can't be empty!!"
+        }),
         companyAddress: Joi.string().max(255).required().messages({
             "string.empty": "Company address can't be empty!!",
             'string.max': 'Company address length must be less than or equal to {{#limit}} characters long'

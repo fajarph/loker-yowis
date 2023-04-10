@@ -8,6 +8,7 @@ import Navbar from './Navbar'
 
 const FormEditJobs = () => {
     const [companyName, setCompanyName] = useState("");
+    const [titleCompanny, setTitleCompanny] = useState("");
     const [companyAddress, setCompanyAddress] = useState("");
     const [locations, setLocation] = useState([])
     const [LocationId, setLocationId] = useState("")
@@ -62,6 +63,7 @@ const FormEditJobs = () => {
 
             const formData = new FormData()
             formData.append("companyName", companyName)
+            formData.append("titleCompanny", titleCompanny)
             formData.append("companyAddress", companyAddress)
             formData.append("LocationId", LocationId)
             formData.append("salary", salary)
@@ -89,6 +91,7 @@ const FormEditJobs = () => {
     const getJobsById = async () => {
         const response = await axios.get(`http://localhost:5000/jobs/${id}`)
         setCompanyName(response.data.companyName)
+        setTitleCompanny(response.data.titleCompanny)
         setCompanyAddress(response.data.companyAddress)
         setLocationId(response.data.LocationId)
         setSalary(response.data.salary)
@@ -127,8 +130,8 @@ const FormEditJobs = () => {
     <div>
         <Navbar/>
         <div>
-        <form onSubmit={SaveJobs} className='container justify-content-center mt-5 mb-5'>
-        <div className="mb-3">
+            <form onSubmit={SaveJobs} className='container justify-content-center mt-5 mb-5'>
+                <div className="mb-3">
                     <label className="form-label">Company Name</label>
                     <input 
                         type="Username" 
@@ -136,6 +139,16 @@ const FormEditJobs = () => {
                         value={companyName} 
                         onChange={(e) => setCompanyName(e.target.value)}
                         placeholder='Company Name'
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Title Companny</label>
+                    <input 
+                        type="title" 
+                        className="form-control" 
+                        value={titleCompanny} 
+                        onChange={(e) => setTitleCompanny(e.target.value)}
+                        placeholder='Title Companny'
                     />
                 </div>
                 <div className="mb-3">

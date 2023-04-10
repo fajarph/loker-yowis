@@ -1,4 +1,4 @@
-const {Job, User, UserJob, Location, Educations, Role, Level,} = require('../models')
+const {Job, UserJob, Location, Educations, Role, Level,} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')
@@ -29,6 +29,11 @@ const getJobs = async(req, res) => {
             [Op.or]: [
                 {
                     companyName: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    titleCompanny: {
                         [Op.like]: '%'+search+'%'
                     }
                 },
@@ -70,6 +75,11 @@ const getJobs = async(req, res) => {
             [Op.or]: [
                 {
                     companyName: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    titleCompanny: {
                         [Op.like]: '%'+search+'%'
                     }
                 },
@@ -156,6 +166,7 @@ const getJobById = async(req, res) => {
 const createJob = async(req, res) => {
     if(req.files === null) return res.status(400).json({msg: "No File Uploaded"})
     const companyName = req.body.companyName
+    const titleCompanny = req.body.titleCompanny
     const companyAddress = req.body.companyAddress
     const LocationId = req.body.LocationId
     const salary = req.body.salary
@@ -180,7 +191,8 @@ const createJob = async(req, res) => {
         if(err) return res.status(500).json({msg: err.message})
         try {
             await Job.create({
-                companyName: companyName, 
+                companyName: companyName,
+                titleCompanny: titleCompanny,
                 companyAddress: companyAddress, 
                 LocationId: LocationId,
                 salary: salary,
@@ -237,6 +249,7 @@ const updateJob = async(req, res) => {
     }
 
     const companyName = req.body.companyName
+    const titleCompanny = req.body.titleCompanny
     const companyAddress = req.body.companyAddress
     const LocationId = req.body.LocationId
     const salary = req.body.salary
@@ -251,10 +264,11 @@ const updateJob = async(req, res) => {
 
     try {
         await Job.update({
-            companyName: companyName, 
-            companyAddress: companyAddress, 
+            companyName: companyName,
+            titleCompanny: titleCompanny,
+            companyAddress: companyAddress,
             LocationId: LocationId,
-            salary: salary, 
+            salary: salary,
             RoleId: RoleId,
             EducationId: EducationId,
             LevelId: LevelId,
@@ -262,7 +276,7 @@ const updateJob = async(req, res) => {
             jobShortDescription: jobShortDescription,
             jobLongDescription: jobLongDescription,
             industry: industry,
-            image: fileName, 
+            image: fileName,
             url: url
         },{
             where:{
@@ -314,6 +328,21 @@ const deleteJob = async(req, res) => {
     }
 }
 
+const getJobsByRoleId = async(req, res) => {
+    try {
+        const response = await Job.findAll({
+            where: {
+                RoleId: req.query.role_id,
+                LocationId: req.query.location_id
+            }
+        });
+
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+}
+
 const getSaveUserJobIds = async(req, res) => {
     try {
         const result = await UserJob.findAll({
@@ -329,7 +358,7 @@ const getSaveUserJobIds = async(req, res) => {
 
         res.status(200).json(response);
     } catch (error) {
-        console.log(error.message);
+        res.status(400).json({ msg: error.message });
     }
 }
 
@@ -342,7 +371,7 @@ const createUserJob = async(req, res) => {
         })
         res.status(201).json({msg: "UserJob Created"});
     } catch (error) {
-        console.log(error.message);
+        res.status(400).json({ msg: error.message });
     }
 }
 
@@ -371,6 +400,7 @@ module.exports = {
     createJob,
     updateJob,
     deleteJob,
+    getJobsByRoleId,
     getSaveUserJobIds,
     createUserJob,
     deleteUserJob

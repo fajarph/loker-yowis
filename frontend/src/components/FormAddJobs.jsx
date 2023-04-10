@@ -6,6 +6,7 @@ import Navbar from './Navbar'
 
 const FormAddJobs = () => {
     const [companyName, setCompanyName] = useState("");
+    const [titleCompanny, setTitleCompanny] = useState("")
     const [companyAddress, setCompanyAddress] = useState("");
     const [locations, setLocation] = useState([])
     const [LocationId, setLocationId] = useState("")
@@ -50,6 +51,7 @@ const FormAddJobs = () => {
 
             const formData = new FormData()
             formData.append("companyName", companyName)
+            formData.append("titleCompanny", titleCompanny)
             formData.append("companyAddress", companyAddress)
             formData.append("LocationId", LocationId)
             formData.append("salary", salary)
@@ -118,7 +120,7 @@ const FormAddJobs = () => {
                 <div className="mb-3">
                     <label className="form-label">Company Name</label>
                     <input 
-                        type="Username" 
+                        type="name" 
                         className="form-control" 
                         value={companyName} 
                         onChange={(e) => setCompanyName(e.target.value)}
@@ -127,6 +129,19 @@ const FormAddJobs = () => {
                 </div>
                 {
                     filterErrMsgs('companyName') && <p className='text-danger'>{filterErrMsgs('companyName')}</p>
+                }
+                <div className="mb-3">
+                    <label className="form-label">Title Companny</label>
+                    <input 
+                        type="title" 
+                        className="form-control" 
+                        value={titleCompanny} 
+                        onChange={(e) => setTitleCompanny(e.target.value)}
+                        placeholder='Title Companny'
+                    />
+                </div>
+                {
+                    filterErrMsgs('titleCompanny') && <p className='text-danger'>{filterErrMsgs('titleCompanny')}</p>
                 }
                 <div className="mb-3">
                     <label className="form-label">Company Address</label>

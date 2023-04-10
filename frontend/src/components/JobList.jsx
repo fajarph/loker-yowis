@@ -207,7 +207,7 @@ const JobList = () => {
                                 <img className='image rounded-circle' alt="Image" src={job.url} style={{width: "64px", height: "64px"}} />
                                 </div>
                                 <Link to={`/jobs/detail/${job.uuid}`} className='custom-link col mt-2'>
-                                    <h5>{job.Role.name}</h5>
+                                    <h5>{job.titleCompanny}</h5>
                                 </Link>
                             </div>
                         </div>

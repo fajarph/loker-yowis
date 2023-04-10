@@ -6,8 +6,12 @@ GET http://localhost:5000/users
 GET http://localhost:5000/jobs?search_query=fajar&page=0&limit=5
 
 ###
+//Get All User
+GET http://localhost:5000/jobsbyroleid?role_id=7&location_id=15
+
+###
 //Get All UserJobs
-GET http://localhost:5000/userjobs?user_id=1
+GET http://localhost:5000/userjobs?user_id=4
 
 ###
 //Get All Education
