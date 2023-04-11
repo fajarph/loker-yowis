@@ -333,7 +333,10 @@ const getJobsByRoleId = async(req, res) => {
         const response = await Job.findAll({
             where: {
                 RoleId: req.query.role_id,
-                LocationId: req.query.location_id
+                LocationId: req.query.location_id,
+                [Op.not]: {
+                    uuid: req.query.job_id
+                }
             }
         });
 

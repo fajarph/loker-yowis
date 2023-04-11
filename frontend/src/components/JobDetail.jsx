@@ -38,7 +38,7 @@ const JobDetail = () => {
 
     useEffect(() => {
         getJobsRoleById()
-    }, [Role.id]);
+    }, [Role.id, Location.id]);
 
     useEffect(() => {
         if(isError){
@@ -65,7 +65,7 @@ const JobDetail = () => {
 
     const getJobsRoleById = async () => {
         if (Role) {
-            const response = await axios.get(`http://localhost:5000/jobsbyroleid?role_id=${Role.id}&location_id=${Location.id}`)
+            const response = await axios.get(`http://localhost:5000/jobsbyroleid?role_id=${Role.id}&location_id=${Location.id}&job_id=${id}`)
             setJobsRoleByIds(response.data);
         }
     }
@@ -87,7 +87,7 @@ const JobDetail = () => {
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
                                                 <h6><i className="bi bi-building-fill"></i> {companyName}</h6>
                                                 <h6><i className="bi bi-geo-alt-fill"></i> {Location.name}</h6>
-                                                <h6><i className="bi bi-folder-fill"></i> {Role.name}</h6>
+                                                {/* <Link to={`/jobs?${}`}><i className="bi bi-folder-fill"></i> {Role.name}</Link> */}
                                                 <h6><i className="bi bi-cash"></i> {salary}</h6>
                                             </div>
                                         </div>
