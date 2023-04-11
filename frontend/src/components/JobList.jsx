@@ -23,6 +23,8 @@ const JobList = () => {
     const [RoleId, setRoleId] = useState("")
     const [educations, setEducation] = useState([])
     const [EducationId, setEducationId] = useState("")
+    const [levels, setLevels] = useState([])
+    const [LevelId, setLevelId] = useState("")
     const [msg, setMsg] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -35,6 +37,7 @@ const JobList = () => {
         getEducations()
         getRoles()
         getLocations()
+        getLevels()
         getUserJobIds()
     }, [])
 
@@ -50,7 +53,7 @@ const JobList = () => {
     }, [user, isError, navigate]);
 
     const getJobs = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&page=${page}&limit=${limit}`)
+        const response = await axios.get(`http://localhost:5000/jobs?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&LevelId=${LevelId}&page=${page}&limit=${limit}`)
         setJobs(response.data.result)
         setPage(response.data.page)
         setPages(response.data.totalPage)
@@ -104,6 +107,11 @@ const JobList = () => {
     const getEducations = async () => {
         const response = await axios.get("http://localhost:5000/educations")
         setEducation(response.data);
+    }
+
+    const getLevels = async () => {
+        const response = await axios.get("http://localhost:5000/levels")
+        setLevels(response.data);
     }
 
     const deleteJob = async (e, id) => {
@@ -179,6 +187,18 @@ const JobList = () => {
                             <option className='option bg-dark text-white' value={""}>Semua Pendidikan</option>
                             {educations.map((education) => (
                                 <option key={education.id} value={education.id}>{education.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='form-outline col-3 input-group-lg'>
+                        <select 
+                        className="form-select select-4"
+                        value={LevelId} 
+                        onChange={(e) => setLevelId(e.target.value)}
+                        >
+                            <option className='option bg-dark text-white' value={""}>Semua Level</option>
+                            {levels.map((level) => (
+                                <option key={level.id} value={level.id}>{level.name}</option>
                             ))}
                         </select>
                     </div>

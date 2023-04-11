@@ -13,7 +13,8 @@ const getJobs = async(req, res) => {
     const filterParams = {
         LocationId: req.query.LocationId,
         RoleId: req.query.RoleId,
-        EducationId: req.query.EducationId
+        EducationId: req.query.EducationId,
+        LevelId: req.query.LevelId
     };
   
     // Filter out parameters with empty or null values

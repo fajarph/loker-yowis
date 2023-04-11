@@ -49,17 +49,22 @@
   }
 
   .select-1 {
-    margin-left: 2px;
-    width: 310px;
+    margin-left: 73px;
+    width: 232px;
   }
 
   .select-2 {
-    width: 310px;
-    margin-left: -36px;
+    width: 232px;
+    margin-left: 26px;
   }
 
   .select-3 {
-    margin-left: -74px;
-    width: 310px;
+    margin-left: -20px;
+    width: 232px;
+  }
+
+  .select-4 {
+    margin-left: -67px;
+    width: 232px;
   }
   

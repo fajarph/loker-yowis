@@ -89,10 +89,10 @@ const JobDetail = () => {
                                                     <i className="bi bi-building-fill"></i> <Link className="custom-link" to={`/jobs?search_query=${companyName}`}> {companyName}</Link>
                                                 </h6>
                                                 <h6>
-                                                    <i className="bi bi-geo-alt-fill"></i> <Link className="custom-link" to={`/jobs?LocationId${Location}`}> {Location.name}</Link>
+                                                    <i className="bi bi-geo-alt-fill"></i> <Link className="custom-link" to={`/jobs?LocationId=${Location.id}`}> {Location.name}</Link>
                                                 </h6>
                                                 <h6>
-                                                    <i className="bi bi-folder-fill"></i> <Link className="custom-link" to={`/jobs?RoleId=${Role}`}> {Role.name}</Link>
+                                                    <i className="bi bi-folder-fill"></i> <Link className="custom-link" to={`/jobs?RoleId=${Role.id}`}> {Role.name}</Link>
                                                 </h6>
                                                 <h6>
                                                     <i className="bi bi-cash"></i> <Link className="custom-link" to={`/jobs?search_query=${salary}`}> {salary}</Link>
@@ -103,13 +103,13 @@ const JobDetail = () => {
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-md-3">
-                                                        <h6>Level Pekerjaan : <Link className="custom-link">{Level.name}</Link></h6>
+                                                        <h6>Level Pekerjaan : <Link className="custom-link" to={`/jobs?EducationId=${Level.id}`}>{Level.name}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
                                                         <h6>Industri :<br/> <Link className="custom-link" to={`/jobs?search_query=${industry}`}>{industry}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
-                                                        <h6>Pendidikan :<br/> <Link className="custom-link">{Education.name}</Link></h6>
+                                                        <h6>Pendidikan :<br/> <Link className="custom-link" to={`/jobs?EducationId=${Education.id}`}>{Education.name}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
                                                         <h6>Tipe Pekerjaan : <Link className="custom-link" to={`/jobs?search_query=${jobType}`}>{jobType}</Link></h6>
