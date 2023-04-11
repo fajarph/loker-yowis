@@ -85,26 +85,34 @@ const JobDetail = () => {
                                         <div className="card-body">
                                             <h4 className="fw-bold">Lowongan Kerja {titleCompanny}</h4>
                                             <div className="d-flex justify-content-between mt-2 ms-2 me-5">
-                                                <h6><i className="bi bi-building-fill"></i> {companyName}</h6>
-                                                <h6><i className="bi bi-geo-alt-fill"></i> {Location.name}</h6>
-                                                {/* <Link to={`/jobs?${}`}><i className="bi bi-folder-fill"></i> {Role.name}</Link> */}
-                                                <h6><i className="bi bi-cash"></i> {salary}</h6>
+                                                <h6>
+                                                    <i className="bi bi-building-fill"></i> <Link className="custom-link" to={`/jobs?search_query=${companyName}`}> {companyName}</Link>
+                                                </h6>
+                                                <h6>
+                                                    <i className="bi bi-geo-alt-fill"></i> <Link className="custom-link" to={`/jobs?LocationId${Location}`}> {Location.name}</Link>
+                                                </h6>
+                                                <h6>
+                                                    <i className="bi bi-folder-fill"></i> <Link className="custom-link" to={`/jobs?RoleId=${Role}`}> {Role.name}</Link>
+                                                </h6>
+                                                <h6>
+                                                    <i className="bi bi-cash"></i> <Link className="custom-link" to={`/jobs?search_query=${salary}`}> {salary}</Link>
+                                                </h6>
                                             </div>
                                         </div>
                                         <div className="card">
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-md-3">
-                                                        <h6>Level Pekerjaan : {Level.name}</h6>
+                                                        <h6>Level Pekerjaan : <Link className="custom-link">{Level.name}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
-                                                        <h6>Industri :<br/> {industry}</h6>
+                                                        <h6>Industri :<br/> <Link className="custom-link" to={`/jobs?search_query=${industry}`}>{industry}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
-                                                        <h6>Pendidikan :<br/> {Education.name}</h6>
+                                                        <h6>Pendidikan :<br/> <Link className="custom-link">{Education.name}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
-                                                        <h6>Tipe Pekerjaan : {jobType}</h6>
+                                                        <h6>Tipe Pekerjaan : <Link className="custom-link" to={`/jobs?search_query=${jobType}`}>{jobType}</Link></h6>
                                                     </div>
                                                 </div>
                                             </div>

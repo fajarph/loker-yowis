@@ -38,6 +38,11 @@ const getJobs = async(req, res) => {
                     }
                 },
                 {
+                    salary: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
                     jobType: {
                         [Op.like]: '%'+search+'%'
                     }
@@ -80,6 +85,11 @@ const getJobs = async(req, res) => {
                 },
                 {
                     titleCompanny: {
+                        [Op.like]: '%'+search+'%'
+                    }
+                },
+                {
+                    salary: {
                         [Op.like]: '%'+search+'%'
                     }
                 },
