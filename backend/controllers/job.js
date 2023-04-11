@@ -19,7 +19,7 @@ const getJobs = async(req, res) => {
   
     // Filter out parameters with empty or null values
     const validFilterParams = Object.keys(filterParams).reduce((acc, key) => {
-        if (filterParams[key] !== null && filterParams[key] !== "") {
+        if (filterParams[key] !== null && filterParams[key] !== "" && filterParams[key] !== undefined) {
         acc[key] = filterParams[key];
         }
         return acc;

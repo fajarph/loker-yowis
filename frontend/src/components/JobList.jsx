@@ -4,8 +4,7 @@ import Navbar from './Navbar'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
-import { useNavigate } from 'react-router-dom';
-import { selectIsLoggedIn } from "../features/authSlice"
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 import "./style/jobList.css"
 
@@ -26,9 +25,9 @@ const JobList = () => {
     const [levels, setLevels] = useState([])
     const [LevelId, setLevelId] = useState("")
     const [msg, setMsg] = useState("")
+    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const isLoggedIn = useSelector(selectIsLoggedIn);
     const {isError, user} = useSelector(
         (state) => state.auth
     );
@@ -52,8 +51,20 @@ const JobList = () => {
         }   
     }, [user, isError, navigate]);
 
-    const getJobs = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&LevelId=${LevelId}&page=${page}&limit=${limit}`)
+    const getJobs = async (isFromSearchButton = false) => {
+        let search = window.location.search
+
+        if (isFromSearchButton) {
+            search = ''
+            setSearchParams({})
+        }
+
+        if (!search) {
+            search = `?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&LevelId=${LevelId}&page=${page}&limit=${limit}`
+        }
+
+        const response = await axios.get(`http://localhost:5000/jobs${search}`)
+
         setJobs(response.data.result)
         setPage(response.data.page)
         setPages(response.data.totalPage)
@@ -131,7 +142,7 @@ const JobList = () => {
 
     const searchData = (e) => {
         e.preventDefault()
-        getJobs()
+        getJobs(true)
     }
 
   return (
@@ -181,24 +192,24 @@ const JobList = () => {
                     <div className='form-outline col-3 input-group-lg'>
                         <select 
                         className="form-select select-3"
-                        value={EducationId} 
-                        onChange={(e) => setEducationId(e.target.value)}
-                        >
-                            <option className='option bg-dark text-white' value={""}>Semua Pendidikan</option>
-                            {educations.map((education) => (
-                                <option key={education.id} value={education.id}>{education.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className='form-outline col-3 input-group-lg'>
-                        <select 
-                        className="form-select select-4"
                         value={LevelId} 
                         onChange={(e) => setLevelId(e.target.value)}
                         >
                             <option className='option bg-dark text-white' value={""}>Semua Level</option>
                             {levels.map((level) => (
                                 <option key={level.id} value={level.id}>{level.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='form-outline col-3 input-group-lg'>
+                        <select 
+                        className="form-select select-4"
+                        value={EducationId} 
+                        onChange={(e) => setEducationId(e.target.value)}
+                        >
+                            <option className='option bg-dark text-white' value={""}>Semua Education</option>
+                            {educations.map((education) => (
+                                <option key={education.id} value={education.id}>{education.name}</option>
                             ))}
                         </select>
                     </div>
@@ -261,30 +272,6 @@ const JobList = () => {
                                     <Link to={`/jobs/detail/${job.uuid}`} className="btn btn-dark me-1">
                                         SELENGKAPNYA
                                     </Link>
-
-                                    {!isLoggedIn && (
-                                        <div>
-                                            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div className="text-center text-dark mt-4 fw-bold">
-                                                            <h3>Simpan dengan akun Loker.Yowis</h3>
-                                                        </div>
-                                                        <div className="text-center mt-4">
-                                                            <p>Login dan simpan pekerjaan ini dan peluang lain seperti ini dengan akun Loker.Yowis gratis.</p>
-                                                        </div>
-                                                        <div className="d-flex justify-content-center">
-                                                            
-                                                            <button to={'/register'} type="submit" class="btn btn-dark btn-lg" data-bs-dismiss="modal">CLOSE</button>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
-                                        </div>
-                                    )}
 
                                     {user && user.role === "User" && (
                                         <button 

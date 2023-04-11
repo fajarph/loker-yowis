@@ -95,13 +95,13 @@ const Dashboard = () => {
                                     <thead>
                                         <tr className='mb-5'>
                                             <th className='col-2'>ID</th>
-                                            <th className='col-3'>PROFILE</th>
-                                            <th className='col-8'>DIBUAT</th>
+                                            <th className='col-3'>Name</th>
+                                            <th className='col-8'>Dibuat</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>{}</th>
+                                            <th className='h6'>{user.id}</th>
                                             <th>
                                                 <Link to={`/profile`} className="custom-link h6">
                                                     {username}

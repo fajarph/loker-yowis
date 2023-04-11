@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
-import { selectIsLoggedIn } from "../features/authSlice"
 import moment from 'moment';
 
 const JobDetail = () => {
@@ -26,7 +25,6 @@ const JobDetail = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const isLoggedIn = useSelector(selectIsLoggedIn);
     const {user, isError} = useSelector(
         (state) => state.auth
     );
@@ -103,7 +101,7 @@ const JobDetail = () => {
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-md-3">
-                                                        <h6>Level Pekerjaan : <Link className="custom-link" to={`/jobs?EducationId=${Level.id}`}>{Level.name}</Link></h6>
+                                                        <h6>Level Pekerjaan : <Link className="custom-link" to={`/jobs?LevelId=${Level.id}`}>{Level.name}</Link></h6>
                                                     </div>
                                                     <div className="col-md-3">
                                                         <h6>Industri :<br/> <Link className="custom-link" to={`/jobs?search_query=${industry}`}>{industry}</Link></h6>
@@ -132,30 +130,6 @@ const JobDetail = () => {
 
                                                     {user && user.role === "Admin" && (
                                                         <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
-                                                    )}
-
-                                                    {!isLoggedIn && (
-                                                        <div>
-                                                            <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
-                                                                <div className="modal-dialog modal-dialog-centered">
-                                                                    <div className="modal-content">
-                                                                    <div className="modal-body">
-                                                                        <div className="text-center text-dark mt-4 fw-bold">
-                                                                            <h3>Simpan dengan akun Loker.Yowis</h3>
-                                                                        </div>
-                                                                        <div className="text-center mt-4">
-                                                                            <p>Login dan simpan pekerjaan ini dan peluang lain seperti ini dengan akun Loker.Yowis gratis.</p>
-                                                                        </div>
-                                                                        <div className="d-flex justify-content-center">
-                                                                            
-                                                                            <button to={'/register'} type="submit" className="btn btn-dark btn-lg" data-bs-dismiss="modal">CLOSE</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
-                                                        </div>
                                                     )}
 
                                                     {user && user.role === "User" && (
