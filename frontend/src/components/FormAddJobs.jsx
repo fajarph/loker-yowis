@@ -166,7 +166,7 @@ const FormAddJobs = () => {
                         >
                             <option selected hidden>Select Location</option>
                             {locations.map((location) => (
-                                <option value={location.id}>{location.name}</option>
+                                <option key={location.id} value={location.id}>{location.name}</option>
                             ))}
                         </select>
                     </div>
@@ -197,7 +197,7 @@ const FormAddJobs = () => {
                         >
                             <option selected hidden>Select Job Role</option>
                             {roles.map((role) => (
-                                <option value={role.id}>{role.name}</option>
+                                <option key={role.id} value={role.id}>{role.name}</option>
                             ))}
                         </select>
                     </div>
@@ -215,7 +215,7 @@ const FormAddJobs = () => {
                         >
                             <option selected hidden>Select Job Level</option>
                             {levels.map((level) => (
-                                <option value={level.id}>{level.name}</option>
+                                <option key={level.id} value={level.id}>{level.name}</option>
                             ))}
                         </select>
                     </div>
@@ -233,7 +233,7 @@ const FormAddJobs = () => {
                         >
                             <option selected hidden>Select Education</option>
                             {educations.map((education) => (
-                                <option value={education.id}>{education.name}</option>
+                                <option key={education.id} value={education.id}>{education.name}</option>
                             ))}
                         </select>
                     </div>

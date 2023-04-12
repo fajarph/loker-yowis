@@ -33,10 +33,12 @@ const Dashboard = () => {
     }, [user, isError, navigate]);
 
     const getUserById = async () => {
-        const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
-        setUsername(response.data.username)
-        setCreatedAt(response.data.createdAt)
-        setUrl(response.data.url)
+        if(user) {
+            const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
+            setUsername(response.data.username)
+            setCreatedAt(response.data.createdAt)
+            setUrl(response.data.url)
+        }
     }
 
     const formattedDate = moment(createdAt).format('MMMM DD, YYYY');
@@ -124,7 +126,7 @@ const Dashboard = () => {
                         </h4>
                         <div className='d-flex justify-content-center mt-3'>
                             <Link to={`/edit/profile`} className=" col-3 btn btn-dark d-flex justify-content-center">
-                                <i class="bi bi-pencil-fill me-1"></i>Lengkapi Profile
+                                <i className="bi bi-pencil-fill me-1"></i>Lengkapi Profile
                             </Link>
                         </div>
                         <div className='d-flex justify-content-center mt-3'>

@@ -1,4 +1,4 @@
-const { User, Location, Category, Education } = require('../models')
+const { User } = require('../models')
 const argon2 = require('argon2')
 const fs = require("fs")
 const path = require("path")

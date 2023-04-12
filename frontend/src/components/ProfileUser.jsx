@@ -34,14 +34,16 @@ const ProfileUser = () => {
     }, [user, isError, navigate]);
 
     const getUserById = async () => {
-        const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
-        setUsername(response.data.username)
-        setNohp(response.data.nohp)
-        setStatus(response.data.status)
-        setInstagramUrl(response.data.instagramUrl)
-        setFacebookUrl(response.data.facebookUrl)
-        setRole(response.data.role)
-        setUrl(response.data.url)
+        if(user) {
+            const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
+            setUsername(response.data.username)
+            setNohp(response.data.nohp)
+            setStatus(response.data.status)
+            setInstagramUrl(response.data.instagramUrl)
+            setFacebookUrl(response.data.facebookUrl)
+            setRole(response.data.role)
+            setUrl(response.data.url)
+        }
     }
 
   return (
@@ -127,7 +129,7 @@ const ProfileUser = () => {
                         </h4>
                         <div className='d-flex justify-content-center mt-3'>
                             <Link to={`/edit/profile`} className=" col-3 btn btn-dark d-flex justify-content-center">
-                                <i class="bi bi-pencil-fill me-1"></i>Lengkapi Profile
+                                <i className="bi bi-pencil-fill me-1"></i>Lengkapi Profile
                             </Link>
                         </div>
                         <div className='d-flex justify-content-center mt-3'>
