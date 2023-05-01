@@ -18,25 +18,40 @@ const level = require("./routes/level.js")
 const role = require("./routes/role.js")
 
 const sessionStore = SequelizeStore(session.Store)
-
 const store = new sessionStore({
     db: db 
 })
 
+const isProduction = process.env.NODE_ENV === 'production'
+
+;(async()=>{
+    await db.sync()
+})()
+
 app.use(session({
     secret: process.env.SESS_SECRET,
-    resave: false,
-    saveUninitialized: true,
     store: store,
     cookie: {
-        secure: 'auto'
-    }
+        secure: isProduction,
+        maxAge: 1000 * 60 * 60 * 48,
+        httpOnly: isProduction,
+        sameSite: 'none'
+    },
+    resave: false, // we support the touch method so per the express-session docs this should be set to false
+    proxy: true // if you do SSL outside of node.
 }))
 
+store.sync()
+
+let clientUrl = 'http://localhost:3000'
+if (isProduction) {
+    clientUrl = 'https://loker-yowis-client.onrender.com'
+}
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin: clientUrl
 }))
+
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(FileUpload())
