@@ -20,7 +20,6 @@
     "express-fileupload": "^1.4.0",
     "express-session": "^1.17.3",
     "joi": "^17.9.1",
-    "mysql2": "^3.2.4",
     "nodemon": "^2.0.21",
     "pg": "^8.9.0",
     "postgres": "^3.3.3",
