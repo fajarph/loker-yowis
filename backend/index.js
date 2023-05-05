@@ -4,9 +4,9 @@ const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')
 const FileUpload = require("express-fileupload")
 const db = require("./config/Database.js")
-const dotenv = require('dotenv')
-const app = express()
 const PORT = 5000
+const app = express()
+const dotenv = require('dotenv')
 dotenv.config()
 
 const auth = require("./routes/auth.js")
