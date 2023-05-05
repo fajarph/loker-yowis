@@ -65,8 +65,6 @@ app.use(educations)
 app.use(level)
 app.use(role)
 
-store.sync()
-
 app.listen(PORT, () => {
     console.log(`Server Menyala di PORT ` +PORT);
 })
