@@ -22,7 +22,7 @@ const store = new sessionStore({
     db: db 
 })
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV || 'postgresql://postgres:<27fajar03>@localhost:5432/<info_loker_by_yowis>'
 
 ;(async()=>{
     await db.sync()
