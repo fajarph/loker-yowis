@@ -48,7 +48,7 @@ const FormEditProfile = () => {
         formData.append("facebookUrl", facebookUrl)
         formData.append("file", file)
         try {
-            await axios.patch(`http://localhost:5000/users/${user.uuid}`, formData,{
+            await axios.patch(`${process.env.REACT_APP_API_URL}/users/${user.uuid}`, formData,{
                 headers:{
                     "Content-Type": "multipart/form-data"
                 }
@@ -60,7 +60,7 @@ const FormEditProfile = () => {
     }
 
     const getUserById = async () => {
-        const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user.uuid}`)
         setUsername(response.data.username)
         setNohp(response.data.nohp)
         setStatus(response.data.status)

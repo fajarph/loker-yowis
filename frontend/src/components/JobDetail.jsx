@@ -45,7 +45,7 @@ const JobDetail = () => {
     }, [user, isError, navigate]);
 
     const getJobDetail = async () => {
-        const response = await axios.get(`http://localhost:5000/jobs/${id}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/jobs/${id}`)
         setCompanyName(response.data.companyName)
         setTitleCompanny(response.data.titleCompanny)
         setSalary(response.data.salary)
@@ -63,7 +63,7 @@ const JobDetail = () => {
 
     const getJobsRoleById = async () => {
         if (Role) {
-            const response = await axios.get(`http://localhost:5000/jobsbyroleid?role_id=${Role.id}&location_id=${Location.id}&job_id=${id}`)
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/jobsbyroleid?role_id=${Role.id}&location_id=${Location.id}&job_id=${id}`)
             setJobsRoleByIds(response.data);
         }
     }

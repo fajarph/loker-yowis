@@ -15,7 +15,7 @@ const Register = () => {
     const saveUser = async(e) => {
         e.preventDefault()
         try {
-            await axios.post('http://localhost:5000/users', {
+            await axios.post(`${process.env.REACT_APP_API_URL}/users`, {
                 email: email,
                 password: password,
                 confPassword: confPassword,

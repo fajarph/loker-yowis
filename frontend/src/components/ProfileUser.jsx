@@ -35,7 +35,7 @@ const ProfileUser = () => {
 
     const getUserById = async () => {
         if(user) {
-            const response = await axios.get(`http://localhost:5000/users/${user.uuid}`)
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user.uuid}`)
             setUsername(response.data.username)
             setNohp(response.data.nohp)
             setStatus(response.data.status)

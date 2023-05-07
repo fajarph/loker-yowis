@@ -63,7 +63,7 @@ const JobList = () => {
             search = `?search_query=${query}&LocationId=${LocationId}&RoleId=${RoleId}&EducationId=${EducationId}&LevelId=${LevelId}&page=${page}&limit=${limit}`
         }
 
-        const response = await axios.get(`http://localhost:5000/jobs${search}`)
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/jobs${search}`)
 
         setJobs(response.data.result)
         setPage(response.data.page)
@@ -73,7 +73,7 @@ const JobList = () => {
 
     const getUserJobIds = async () => {
         if (user) {
-            const response = await axios.get(`http://localhost:5000/userjobs?user_id=${user.id}`)
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/userjobs?user_id=${user.id}`)
             setUserJobIds(response.data)
         }
     }
@@ -83,7 +83,7 @@ const JobList = () => {
         e.target.disabled = true
 
         try {
-            await axios.post('http://localhost:5000/userjobs', {
+            await axios.post(`${process.env.REACT_APP_API_URL}/userjobs`, {
                 UserId: user.id,
                 JobId: jobId
             })
@@ -98,7 +98,7 @@ const JobList = () => {
         e.preventDefault()
         console.log(user.id);
         console.log(jobId);
-        await axios.post(`http://localhost:5000/deleteuserjobs`, {
+        await axios.post(`${process.env.REACT_APP_API_URL}/deleteuserjobs`, {
             UserId: user.id,
             JobId: jobId
         })
@@ -106,28 +106,28 @@ const JobList = () => {
     }
 
     const getLocations = async () => {
-        const response = await axios.get("http://localhost:5000/locations")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/locations`)
         setLocation(response.data);
     }
 
     const getRoles = async () => {
-        const response = await axios.get("http://localhost:5000/roles")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/roles`)
         setRole(response.data);
     }
 
     const getEducations = async () => {
-        const response = await axios.get("http://localhost:5000/educations")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/educations`)
         setEducation(response.data);
     }
 
     const getLevels = async () => {
-        const response = await axios.get("http://localhost:5000/levels")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/levels`)
         setLevels(response.data);
     }
 
     const deleteJob = async (e, id) => {
         e.preventDefault()
-        await axios.delete(`http://localhost:5000/jobs/${id}`)
+        await axios.delete(`${process.env.REACT_APP_API_URL}/jobs/${id}`)
         getJobs()
     }
 

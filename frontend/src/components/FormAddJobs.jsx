@@ -64,7 +64,7 @@ const FormAddJobs = () => {
             formData.append("industry", industry)
             formData.append("file", file)
             
-            await axios.post(`http://localhost:5000/jobs`, formData, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/jobs`, formData, {
                 headers:{
                     "Content-Type": "multipart/form-data"
                 },
@@ -92,22 +92,22 @@ const FormAddJobs = () => {
     }
 
     const getLocations = async () => {
-        const response = await axios.get("http://localhost:5000/locations")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/locations`)
         setLocation(response.data);
     }
 
     const getRoles = async () => {
-        const response = await axios.get("http://localhost:5000/roles")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/roles`)
         setRole(response.data);
     }
 
     const getLevels = async () => {
-        const response = await axios.get("http://localhost:5000/levels")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/levels`)
         setlevel(response.data);
     }
 
     const getEducations = async () => {
-        const response = await axios.get("http://localhost:5000/educations")
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/educations`)
         setEducation(response.data);
     }
 
