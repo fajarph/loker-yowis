@@ -54,7 +54,7 @@ Content-Type: application/json
 
 //Create User
 ###
-POST http://localhost:5000/users
+POST https://loker-yowis-api.onrender.com/users
 Content-Type: application/json
 
 {
@@ -152,11 +152,11 @@ Content-Type: application/json
 
 ###
 //Cek Akun
-GET http://localhost:5000/me
+GET https://loker-yowis-api.onrender.com/me
 
 ###
 //Login User
-POST http://localhost:5000/login
+POST https://loker-yowis-api.onrender.com/login
 Content-Type: application/json
 
 {

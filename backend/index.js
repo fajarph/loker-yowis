@@ -19,7 +19,7 @@ const role = require("./routes/role.js")
 
 const sessionStore = SequelizeStore(session.Store)
 const store = new sessionStore({
-    db: db 
+    db: db,
 })
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -28,18 +28,27 @@ const isProduction = process.env.NODE_ENV === 'production'
     await db.sync()
 })()
 
-app.use(session({
+let sessionConfig = {
     secret: process.env.SESS_SECRET,
-    store: store,
-    cookie: {
-        secure: isProduction,
-        maxAge: 1000 * 60 * 60 * 48,
-        httpOnly: isProduction,
-        sameSite: 'none'
-    },
-    resave: false, // we support the touch method so per the express-session docs this should be set to false
-    proxy: true // if you do SSL outside of node.
-}))
+    store: store
+}
+
+if (isProduction) {
+    sessionConfig = {
+        secret: process.env.SESS_SECRET,
+        store: store,
+        cookie: {
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 48,
+            httpOnly: true,
+            sameSite: 'none'
+        },
+        resave: false, // we support the touch method so per the express-session docs this should be set to false
+        proxy: true // if you do SSL outside of node.
+    }
+}
+
+app.use(session(sessionConfig))
 
 store.sync()
 
