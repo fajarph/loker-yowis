@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Navbar from "./Navbar";
 
 const Register = () => {
@@ -107,9 +107,9 @@ const Register = () => {
                 <button type="submit" className="btn btn-dark">Submit</button>
                 <p className="text-dark mt-3">
                     You have an account?
-                    <a href="/login">
+                    <Link to={'/login'}>
                         Sign In
-                    </a>
+                    </Link>
                 </p>
             </form>
         </div>

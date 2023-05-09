@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LoginUser, reset } from "../features/authSlice"
 import Navbar from "./Navbar";
 
@@ -52,7 +52,7 @@ const Login = () => {
                     />
                 </div>
                 <button type="submit" className="btn btn-dark">{isLoading ? 'Loading...' : "Login"}</button>
-                <p className="text-dark mt-3">Don't have an account?<a href="/register" className='signin'>Sign Up</a></p>
+                <p className="text-dark mt-3">Don't have an account?<Link to={'/login'} className='signin'>Sign Up</Link></p>
             </form>
         </div>
     </>
