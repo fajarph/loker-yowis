@@ -73,7 +73,7 @@ const FormEditProfile = () => {
     <div>
         <Navbar/>
         <div>
-        <form onSubmit={EditUser} className='container justify-content-center mt-5'>
+        <form onSubmit={EditUser} className='container justify-content-center mt-5 mb-5'>
                 <div className="mb-3">
                     <label className="form-label">Username</label>
                     <input 
@@ -87,7 +87,7 @@ const FormEditProfile = () => {
                 <div className="mb-3">
                     <label className="form-label">No Hp</label>
                     <input 
-                        type="text" 
+                        type="number" 
                         className="form-control"
                         value={nohp}
                         onChange={(e) => setNohp(e.target.value)}
