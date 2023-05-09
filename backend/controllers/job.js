@@ -178,7 +178,6 @@ const createJob = async(req, res) => {
     if(req.files === null) return res.status(400).json({msg: "No File Uploaded"})
     const companyName = req.body.companyName
     const titleCompanny = req.body.titleCompanny
-    const companyAddress = req.body.companyAddress
     const LocationId = req.body.LocationId
     const salary = req.body.salary
     const RoleId = req.body.RoleId
@@ -204,7 +203,6 @@ const createJob = async(req, res) => {
             await Job.create({
                 companyName: companyName,
                 titleCompanny: titleCompanny,
-                companyAddress: companyAddress, 
                 LocationId: LocationId,
                 salary: salary,
                 RoleId: RoleId,
@@ -261,7 +259,6 @@ const updateJob = async(req, res) => {
 
     const companyName = req.body.companyName
     const titleCompanny = req.body.titleCompanny
-    const companyAddress = req.body.companyAddress
     const LocationId = req.body.LocationId
     const salary = req.body.salary
     const RoleId = req.body.RoleId
@@ -277,7 +274,6 @@ const updateJob = async(req, res) => {
         await Job.update({
             companyName: companyName,
             titleCompanny: titleCompanny,
-            companyAddress: companyAddress,
             LocationId: LocationId,
             salary: salary,
             RoleId: RoleId,

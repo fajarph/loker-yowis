@@ -7,7 +7,6 @@ import Navbar from './Navbar'
 const FormAddJobs = () => {
     const [companyName, setCompanyName] = useState("");
     const [titleCompanny, setTitleCompanny] = useState("")
-    const [companyAddress, setCompanyAddress] = useState("");
     const [locations, setLocation] = useState([])
     const [LocationId, setLocationId] = useState("")
     const [salary, setSalary] = useState("");
@@ -52,7 +51,6 @@ const FormAddJobs = () => {
             const formData = new FormData()
             formData.append("companyName", companyName)
             formData.append("titleCompanny", titleCompanny)
-            formData.append("companyAddress", companyAddress)
             formData.append("LocationId", LocationId)
             formData.append("salary", salary)
             formData.append("RoleId", RoleId)
@@ -142,19 +140,6 @@ const FormAddJobs = () => {
                 </div>
                 {
                     filterErrMsgs('titleCompanny') && <p className='text-danger'>{filterErrMsgs('titleCompanny')}</p>
-                }
-                <div className="mb-3">
-                    <label className="form-label">Company Address</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        value={companyAddress} 
-                        onChange={(e) => setCompanyAddress(e.target.value)}
-                        placeholder='Company Address'
-                    />
-                </div>
-                {
-                    filterErrMsgs('companyAddress') && <p className='text-danger'>{filterErrMsgs('companyAddress')}</p>
                 }
                 <div className='field'>
                     <label className='label'>Location</label>

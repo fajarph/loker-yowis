@@ -9,7 +9,6 @@ import Navbar from './Navbar'
 const FormEditJobs = () => {
     const [companyName, setCompanyName] = useState("");
     const [titleCompanny, setTitleCompanny] = useState("");
-    const [companyAddress, setCompanyAddress] = useState("");
     const [locations, setLocation] = useState([])
     const [LocationId, setLocationId] = useState("")
     const [salary, setSalary] = useState("");
@@ -64,7 +63,6 @@ const FormEditJobs = () => {
             const formData = new FormData()
             formData.append("companyName", companyName)
             formData.append("titleCompanny", titleCompanny)
-            formData.append("companyAddress", companyAddress)
             formData.append("LocationId", LocationId)
             formData.append("salary", salary)
             formData.append("RoleId", RoleId)
@@ -92,7 +90,6 @@ const FormEditJobs = () => {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/jobs/${id}`)
         setCompanyName(response.data.companyName)
         setTitleCompanny(response.data.titleCompanny)
-        setCompanyAddress(response.data.companyAddress)
         setLocationId(response.data.LocationId)
         setSalary(response.data.salary)
         setRoleId(response.data.RoleId)
@@ -149,16 +146,6 @@ const FormEditJobs = () => {
                         value={titleCompanny} 
                         onChange={(e) => setTitleCompanny(e.target.value)}
                         placeholder='Title Companny'
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Company Address</label>
-                    <input 
-                        type="text" 
-                        className="form-control"
-                        value={companyAddress} 
-                        onChange={(e) => setCompanyAddress(e.target.value)}
-                        placeholder='Company Address'
                     />
                 </div>
                 <div className='field'>
