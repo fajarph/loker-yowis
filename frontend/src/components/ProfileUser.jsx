@@ -99,8 +99,28 @@ const ProfileUser = () => {
                         </div>
                         <div className='border border-1 rounded mt-2 mb-5'>
                             <div className='row mt-3 mb-5'>
-                                <div className='col-3 d-flex justify-content-center'>
-                                    <img className='image rounded-circle' alt="Image" src={url} style={{width: "150px", height: "150px"}}/>
+                                <div className='col-3'>
+                                    <div className='row'>
+                                        <div className='col-1 ms-4'>
+                                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "150px", height: "150px"}}/>
+                                        </div>
+                                        <div className='d-flex justify-content-center mt-3'> 
+                                            {instagramUrl ? (
+                                                <a href={instagramUrl} target="_blank" className='bg-body-secondary border border-1 rounded-circle d-flex justify-content-center me-2' style={{width: "35px", height: "35px"}}>
+                                                    <i className="bi bi-instagram mt-1"></i>
+                                                </a>
+                                            ) : (
+                                                ""
+                                            )}
+                                            {facebookUrl ? (
+                                                <a href={facebookUrl} target="_blank" className='bg-body-secondary border border-1 rounded-circle d-flex justify-content-center ms-2' style={{width: "35px", height: "35px"}}>
+                                                    <i class="bi bi-facebook mt-1"></i>
+                                                </a>
+                                            ) : (
+                                                ""
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className='col-6 ms-2'>
                                     <div className=''>

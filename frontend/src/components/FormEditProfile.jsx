@@ -114,7 +114,7 @@ const FormEditProfile = () => {
                         className="form-control" 
                         value={instagramUrl}
                         onChange={(e) => setInstagramUrl(e.target.value)}
-                        placeholder='Instagram'
+                        placeholder='Your instagram url'
                     />
                 </div>
                 <div className="mb-3">
@@ -124,7 +124,7 @@ const FormEditProfile = () => {
                         className="form-control"
                         value={facebookUrl}
                         onChange={(e) => setFacebookUrl(e.target.value)}
-                        placeholder='Facebook'
+                        placeholder='Your facebook url'
                     />
                 </div>
                 <div className='field'>
