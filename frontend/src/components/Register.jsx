@@ -97,8 +97,7 @@ const Register = () => {
                         placeholder='Job Role'
                     >
                         <option selected hidden>Select Role</option>
-                        <option value="Admin">Admin</option>
-                        <option value="User">User</option>
+                        <option selected value="User">User</option>
                     </select>
                 </div>
                 {
