@@ -9,12 +9,15 @@ const Home = () => {
         <div className='container'>
           <div className='d-flex justify-content-center mt-5'>
             <div className='row'>
-              <h1>
-                Welcome to Lokeryowis!
-              </h1>
-              <h3>
-                The job search website that can help you find the right job that matches your criteria. Please explore the various job vacancies available and discover exciting career
-              </h3>
+              <div>
+                <h1>
+                  Selamat datang di LokerYowis! 
+                </h1>
+                <p>
+                  Website lowongan pekerjaan yang dapat membantu Anda menemukan pekerjaan yang tepat dan sesuai dengan kriteria Anda. Silakan jelajahi berbagai lowongan pekerjaan yang tersedia dan temukan peluang karir yang menarik untuk Anda. Terima kasih sudah mengunjungi LokerYowis!
+                </p>
+              </div>
+              
             </div>
             <img src={myImage} alt="My Image" />
           </div>
