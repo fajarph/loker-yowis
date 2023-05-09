@@ -132,10 +132,6 @@ const JobDetail = () => {
                                                         <Link to={`/edit/jobs/${id}`} type="button" className="btn btn-dark me-1">Edit Jobs</Link>
                                                     )}
 
-                                                    {user && user.role === "User" && (
-                                                        <button type="button" className="btn btn-dark me-1"><i className="bi bi-star"></i> SIMPAN</button>
-                                                    )}
-
                                                 </div>
                                             </div>
                                         </div>
