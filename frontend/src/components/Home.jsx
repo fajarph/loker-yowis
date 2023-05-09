@@ -10,7 +10,7 @@ const Home = () => {
           <div className='d-flex justify-content-center mt-5'>
             <div className='row'>
               <div>
-                <h1>
+                <h1 className='fw-bold'>
                   Selamat datang di LokerYowis! 
                 </h1>
                 <p>
