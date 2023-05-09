@@ -97,16 +97,16 @@ const Register = () => {
                         placeholder='Job Role'
                     >
                         <option selected hidden>Select Role</option>
-                        <option selected value="User">User</option>
+                        <option value="User">User</option>
                     </select>
                 </div>
                 {
                     filterErrMsgs('role') && <p className='text-danger'>{filterErrMsgs('role')}</p>
                 }
-                <button type="submit" className="btn btn-dark">Submit</button>
+                <button type="submit" className="btn btn-dark">Register</button>
                 <p className="text-dark mt-3">
                     You have an account?
-                    <Link to={'/login'}>
+                    <Link className='custom-link fw-bold' to={'/login'}>
                         Sign In
                     </Link>
                 </p>

@@ -52,7 +52,7 @@ const Login = () => {
                     />
                 </div>
                 <button type="submit" className="btn btn-dark">{isLoading ? 'Loading...' : "Login"}</button>
-                <p className="text-dark mt-3">Don't have an account?<Link to={'/register'} className='signin'>Sign Up</Link></p>
+                <p className="text-dark mt-3">Don't have an account?<Link to={'/register'} className='custom-link fw-bold'>Sign Up</Link></p>
             </form>
         </div>
     </>
