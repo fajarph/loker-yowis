@@ -1,7 +1,5 @@
 # LokerYowis
 
-LokerYowis adalah sebuah website yang menyediakan informasi lowongan pekerjaan terbaru di Indonesia. Dengan LokerYowis, kamu dapat dengan mudah mencari lowongan pekerjaan yang sesuai dengan minat, keahlian, dan pengalaman kerja kamu.
-
 # Cara menjalankan backend
 
 1. Buka terminal dan jalankan `cd backend`
