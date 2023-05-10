@@ -2,11 +2,15 @@ const { User } = require('../models')
 const argon2 = require('argon2')
 const fs = require("fs")
 const path = require("path")
+const {
+    S3Client,
+    PutObjectCommand
+} = require("@aws-sdk/client-s3");
 
 const getUsers = async(req, res) => {
     try {
         const response = await User.findAll({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "role", "image", "url"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "role", "imageurl"]
         });
         res.status(200).json(response)
     } catch (error) {
@@ -17,7 +21,7 @@ const getUsers = async(req, res) => {
 const getUserById = async(req, res) => {
     try {
         const response = await User.findOne({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl","role", "image", "url"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl","role", "imageurl"],
             where: {
                 uuid: req.params.id
             }
@@ -56,12 +60,21 @@ const updateUser = async(req, res) => {
             return res.status(404).json({msg: "User Tidak Ditemukan"})
         }
 
-        let fileName = user.image
         if (req.files !== null) {
+            const s3Config = {
+                accessKeyId: process.env.AWS_ACCESS_KEY,
+                secretAccessKey: process.env.AWS_SECRET_KEY,
+                region: process.env.AWS_S3_REGION,
+            };
+
+            console.log(s3Config)
+            
+            let imageurl = ''
+            const s3Client = new S3Client(s3Config);
             const file = req.files.file
             const fileSize = file.size
             const ext = path.extname(file.name)
-            fileName = file.md5 + ext
+            const fileName = file.md5 + ext
             const allowedType = ['.png','.jpg','jpeg']
 
             if (!allowedType.includes(ext.toLowerCase())) {
@@ -72,17 +85,21 @@ const updateUser = async(req, res) => {
                 return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
             }
 
-            if (user.image) {
-                const filepath = `./public/users/${user.image}`
-                fs.unlinkSync(filepath)
-            }
+            const bucketParams = {
+                Bucket: process.env.AWS_S3_BUCKET,
+                Key: fileName,
+                Body: file.data,
+            };
 
-            file.mv(`./public/users/${fileName}`, (err)=>{
-                if(err) {
-                    return res.status(500).json({msg: err.message})
-                }
-            })
-        } else if (!user.image) {
+            console.log(bucketParams);
+
+            try {
+                const data = await s3Client.send(new PutObjectCommand(bucketParams));
+            } catch (err) {
+                console.log(err);
+                return res.status(500).json({msg: "Upload error" + err.message})
+            }
+        } else if (!user.imageurl) {
             return res.status(422).json({msg: "Image harus diunggah"})
         }
 
@@ -91,7 +108,6 @@ const updateUser = async(req, res) => {
         const status = req.body.status
         const instagramUrl = req.body.instagramUrl
         const facebookUrl = req.body.facebookUrl
-        const url = `${req.protocol}://${req.get("host")}/users/${fileName}`
 
         await User.update({
             username: username,
@@ -99,8 +115,7 @@ const updateUser = async(req, res) => {
             status: status,
             instagramUrl: instagramUrl,
             facebookUrl: facebookUrl,
-            image: fileName,
-            url: url
+            imageurl: imageurl
         },{
             where:{
                 uuid: req.params.id
