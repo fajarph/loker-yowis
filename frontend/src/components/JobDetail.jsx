@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import './style/jobDetail.css'
 
 const JobDetail = () => {
     const [jobsRoleByIds, setJobsRoleByIds] = useState([])
@@ -171,7 +172,7 @@ const JobDetail = () => {
                                                             <img className='image rounded-circle' alt="Image" src={lowongan.url} style={{width: "60px", height: "60px"}}/>
                                                         </div>
                                                         <div className="col">
-                                                            <Link to={`/jobs/detail/${lowongan.uuid}`} className="fw-bold text-secondary">{lowongan.titleCompanny}</Link>
+                                                            <Link onClick={() => window.location.href = `/jobs/detail/${lowongan.uuid}`} className="fw-bold text-secondary link-detail">{lowongan.titleCompanny}</Link>
                                                             <p className="text-secondary">{lowongan.companyName}</p>
                                                         </div>
                                                     </div>
