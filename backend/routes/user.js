@@ -7,7 +7,7 @@ const router = Router()
 router.get('/users', controllers.getUsers)
 router.get('/users/:id', controllers.getUserById)
 router.post('/users', validation.createUser, controllers.createUser)
-router.patch('/users/:id', controllers.updateUser)
+router.patch('/users/:id', middleware.verifyUser, controllers.updateUser)
 router.delete('/users/:id', controllers.deleteUser)
 
 
