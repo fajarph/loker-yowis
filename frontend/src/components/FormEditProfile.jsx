@@ -67,7 +67,7 @@ const FormEditProfile = () => {
         setInstagramUrl(response.data.instagramUrl)
         setFacebookUrl(response.data.facebookUrl)
         setFile(response.data.image)
-        setPreview(response.data.url)
+        setPreview(response.data.imageUrl)
     }
   return (
     <div>

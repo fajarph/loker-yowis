@@ -12,7 +12,7 @@ import myImage from "./img/job.jpg"
 const Dashboard = () => {
     const [username, setUsername] = useState("")
     const [createdAt, setCreatedAt] = useState("2022-03-30T10:30:00.000Z")
-    const [url, setUrl] = useState("")
+    const [imageUrl, setImageUrl] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const {user, isError} = useSelector(
@@ -37,7 +37,7 @@ const Dashboard = () => {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/${user.uuid}`)
             setUsername(response.data.username)
             setCreatedAt(response.data.createdAt)
-            setUrl(response.data.url)
+            setImageUrl(response.data.imageUrl)
         }
     }
 
@@ -51,8 +51,8 @@ const Dashboard = () => {
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
                         <div className='d-flex justify-content-center mt-4'>
-                            {url ? (
-                                <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                            {imageUrl ? (
+                                <img className='image rounded-circle' alt="Image" src={imageUrl} style={{width: "100px", height: "100px"}}/>
                             ) : (
                                 <div className='d-flex justify-content-center fw-bold'>Lengkapi Profile</div>
                             )}
@@ -69,7 +69,7 @@ const Dashboard = () => {
                         </div>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                {url ? (
+                                {imageUrl ? (
                                     <Link to={`/edit/profile`} className="btn btn-dark">
                                         Edit Profile
                                     </Link>

@@ -13,7 +13,7 @@ const ProfileUser = () => {
     const [instagramUrl, setInstagramUrl] = useState("")
     const [facebookUrl, setFacebookUrl] = useState("")
     const [role, setRole] = useState("")
-    const [url, setUrl] = useState("")
+    const [imageUrl, setImageUrl] = useState("")
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user, isError} = useSelector(
@@ -42,7 +42,7 @@ const ProfileUser = () => {
             setInstagramUrl(response.data.instagramUrl)
             setFacebookUrl(response.data.facebookUrl)
             setRole(response.data.role)
-            setUrl(response.data.url)
+            setImageUrl(response.data.imageUrl)
         }
     }
 
@@ -54,8 +54,8 @@ const ProfileUser = () => {
                 <div className='col-3'>
                     <div className='border border-1 bg-body-secondary rounded-top'>
                         <div className='d-flex justify-content-center mt-4'>
-                            {url ? (
-                                <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                            {imageUrl ? (
+                                <img className='image rounded-circle' alt="Image" src={imageUrl} style={{width: "100px", height: "100px"}}/>
                             ) : (
                                 <div className='d-flex justify-content-center fw-bold'>Lengkapi Profile</div>
                             )}
@@ -72,7 +72,7 @@ const ProfileUser = () => {
                         </div>
                         <div className='mt-3 ms-3 me-3'>
                             <h6 className='row'>
-                                {url ? (
+                                {imageUrl ? (
                                     <Link to={`/edit/profile`} className="btn btn-dark">
                                         Edit Profile
                                     </Link>
@@ -102,7 +102,7 @@ const ProfileUser = () => {
                                 <div className='col-3'>
                                     <div className='row'>
                                         <div className='col-1 ms-4'>
-                                            <img className='image rounded-circle' alt="Image" src={url} style={{width: "150px", height: "150px"}}/>
+                                            <img className='image rounded-circle' alt="Image" src={imageUrl} style={{width: "150px", height: "150px"}}/>
                                         </div>
                                         <div className='d-flex justify-content-center mt-3'> 
                                             {instagramUrl ? (
