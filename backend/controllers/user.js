@@ -10,7 +10,7 @@ const {
 const getUsers = async(req, res) => {
     try {
         const response = await User.findAll({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "role", "imageurl"]
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl", "role", "imageUrl"]
         });
         res.status(200).json(response)
     } catch (error) {
@@ -21,7 +21,7 @@ const getUsers = async(req, res) => {
 const getUserById = async(req, res) => {
     try {
         const response = await User.findOne({
-            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl","role", "imageurl"],
+            attributes:["uuid", "email", "username", "nohp", "status", "instagramUrl", "facebookUrl","role", "imageUrl"],
             where: {
                 uuid: req.params.id
             }
@@ -102,7 +102,7 @@ const updateUser = async(req, res) => {
             status: status,
             instagramUrl: instagramUrl,
             facebookUrl: facebookUrl,
-            imageurl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/users/${fileName}`
+            imageUrl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/users/${fileName}`
         },{
             where:{
                 uuid: req.params.id
