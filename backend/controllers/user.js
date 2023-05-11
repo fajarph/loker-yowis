@@ -55,73 +55,59 @@ const updateUser = async(req, res) => {
                 uuid: req.params.id
             }
         });
-
         if (!user) {
             return res.status(404).json({msg: "User Tidak Ditemukan"})
         }
-
+        let fileName
         if (req.files !== null) {
             const s3Config = {
-                accessKeyId: process.env.AWS_ACCESS_KEY,
-                secretAccessKey: process.env.AWS_SECRET_KEY,
                 region: process.env.AWS_S3_REGION,
-            };
-
-            console.log(s3Config)
-            
-            let imageurl = ''
+                credentials: {
+                    accessKeyId: process.env.AWS_ACCESS_KEY,
+                    secretAccessKey: process.env.AWS_SECRET_KEY,
+                }
+            }
             const s3Client = new S3Client(s3Config);
             const file = req.files.file
             const fileSize = file.size
             const ext = path.extname(file.name)
-            const fileName = file.md5 + ext
+            fileName = file.md5 + ext
             const allowedType = ['.png','.jpg','jpeg']
-
             if (!allowedType.includes(ext.toLowerCase())) {
                 return res.status(422).json({msg: "Invalid Image"})
             }
-
             if (fileSize > 5000000) {
                 return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
             }
-
             const bucketParams = {
                 Bucket: process.env.AWS_S3_BUCKET,
-                Key: fileName,
-                Body: file.data,
+                Key: `users/${fileName}`,
+                Body: file.data
             };
-
-            console.log(bucketParams);
-
             try {
-                const data = await s3Client.send(new PutObjectCommand(bucketParams));
+                await s3Client.send(new PutObjectCommand(bucketParams));
             } catch (err) {
                 console.log(err);
                 return res.status(500).json({msg: "Upload error" + err.message})
             }
-        } else if (!user.imageurl) {
-            return res.status(422).json({msg: "Image harus diunggah"})
         }
-
         const username = req.body.username
         const nohp = req.body.nohp
         const status = req.body.status
         const instagramUrl = req.body.instagramUrl
         const facebookUrl = req.body.facebookUrl
-
         await User.update({
             username: username,
             nohp: nohp,
             status: status,
             instagramUrl: instagramUrl,
             facebookUrl: facebookUrl,
-            imageurl: imageurl
+            imageurl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/users/${fileName}`
         },{
             where:{
                 uuid: req.params.id
             }
         })
-
         res.status(200).json({msg: "Users Updated Successfully"})
     } catch (error) {
         console.log(error.message);
