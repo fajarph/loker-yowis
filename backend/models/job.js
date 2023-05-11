@@ -43,8 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     LevelId: DataTypes.INTEGER,
     RoleId: DataTypes.INTEGER,
     LocationId: DataTypes.INTEGER,
-    image: DataTypes.STRING,
-    url: DataTypes.STRING
+    imageUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Job',

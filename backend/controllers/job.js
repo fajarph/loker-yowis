@@ -2,29 +2,35 @@ const {Job, UserJob, Location, Educations, Role, Level,} = require('../models')
 const path = require("path")
 const fs = require("fs")
 const { Op } = require('sequelize')
+const {
+    S3Client,
+    PutObjectCommand
+} = require("@aws-sdk/client-s3");
+const s3Config = {
+    region: process.env.AWS_S3_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
+    }
+}
 
 const getJobs = async(req, res) => {
     const page = parseInt(req.query.page) || 0
     const limit = parseInt(req.query.limit) || 10
     const search = req.query.search_query || ""
     const offset = limit * page
-
-    // Define your search parameters
     const filterParams = {
         LocationId: req.query.LocationId,
         RoleId: req.query.RoleId,
         EducationId: req.query.EducationId,
         LevelId: req.query.LevelId
     };
-  
-    // Filter out parameters with empty or null values
     const validFilterParams = Object.keys(filterParams).reduce((acc, key) => {
         if (filterParams[key] !== null && filterParams[key] !== "" && filterParams[key] !== undefined) {
         acc[key] = filterParams[key];
         }
         return acc;
     }, {});
-
     const totalRows = await Job.count({
         where:{
             [Op.or]: [
@@ -132,7 +138,6 @@ const getJobs = async(req, res) => {
             ['id', 'DESC']
         ]
     })
-
     res.json({
         result: result,
         page: page,
@@ -187,39 +192,44 @@ const createJob = async(req, res) => {
     const jobShortDescription = req.body.jobShortDescription
     const jobLongDescription = req.body.jobLongDescription
     const industry = req.body.industry
+    const s3Client = new S3Client(s3Config);
     const file = req.files.file
     const fileSize = file.data.lenght
     const ext = path.extname(file.name)
     const fileName = file.md5 + ext
-    const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`
     const allowedType = ['.png','.jpg','jpeg']
-
     if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Ivalid Image"})
     if(fileSize > 5000000) return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"})
-
-    file.mv(`./public/jobs/${fileName}`, async(err)=>{
-        if(err) return res.status(500).json({msg: err.message})
-        try {
-            await Job.create({
-                companyName: companyName,
-                titleCompanny: titleCompanny,
-                LocationId: LocationId,
-                salary: salary,
-                RoleId: RoleId,
-                EducationId: EducationId,
-                LevelId: LevelId,
-                jobType: jobType,
-                jobShortDescription: jobShortDescription,
-                jobLongDescription: jobLongDescription,
-                industry: industry,
-                image: fileName,
-                url: url
-            })
-            res.status(201).json({msg: "Job Created Succesfully"})
-        } catch (error) {
-            console.log(error.message);
-        }
-    })
+    const bucketParams = {
+        Bucket: process.env.AWS_S3_BUCKET,
+        Key: `jobs/${fileName}`,
+        Body: file.data
+    };
+    try {
+        await s3Client.send(new PutObjectCommand(bucketParams));
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({msg: "Upload error" + err.message})
+    }
+    try {
+        await Job.create({
+            companyName: companyName,
+            titleCompanny: titleCompanny,
+            LocationId: LocationId,
+            salary: salary,
+            RoleId: RoleId,
+            EducationId: EducationId,
+            LevelId: LevelId,
+            jobType: jobType,
+            jobShortDescription: jobShortDescription,
+            jobLongDescription: jobLongDescription,
+            industry: industry,
+            imageUrl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/jobs/${fileName}`
+        })
+        res.status(201).json({msg: "Job Created Succesfully"})
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 const updateJob = async(req, res) => {
@@ -228,35 +238,31 @@ const updateJob = async(req, res) => {
             uuid: req.params.id
         }
     });
-
     if(!job) return res.status(404).json({msg: "Job Tidak Ditemukan"});
-
-    let fileName = "";
-    let imageChanged = false;
-
+    let fileName
     if(req.files === null){
         fileName = job.image;
     }else{
+        const s3Client = new S3Client(s3Config);
         const file = req.files.file;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
         fileName = file.md5 + ext;
         const allowedType = ['.png','.jpg','jpeg'];
-
         if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Image"});
         if(fileSize > 5000000) return res.status(422).json({msg: "Image harus lebih kecil dari 5mb"});
-
-        const filepath = `./public/jobs/${job.image}`;
-        if (fs.existsSync(filepath)) {
-            fs.unlinkSync(filepath);
+        const bucketParams = {
+            Bucket: process.env.AWS_S3_BUCKET,
+            Key: `jobs/${fileName}`,
+            Body: file.data
+        };
+        try {
+            await s3Client.send(new PutObjectCommand(bucketParams));
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({msg: "Upload error" + err.message})
         }
-
-        file.mv(`./public/jobs/${fileName}`, (err)=>{
-            if(err) return res.status(500).json({msg: err.message});
-        });
-        imageChanged = true;
     }
-
     const companyName = req.body.companyName
     const titleCompanny = req.body.titleCompanny
     const LocationId = req.body.LocationId
@@ -268,8 +274,6 @@ const updateJob = async(req, res) => {
     const jobShortDescription = req.body.jobShortDescription
     const jobLongDescription = req.body.jobLongDescription
     const industry = req.body.industry
-    const url = `${req.protocol}://${req.get("host")}/jobs/${fileName}`;
-
     try {
         await Job.update({
             companyName: companyName,
@@ -283,8 +287,7 @@ const updateJob = async(req, res) => {
             jobShortDescription: jobShortDescription,
             jobLongDescription: jobLongDescription,
             industry: industry,
-            image: fileName,
-            url: url
+            imageUrl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/jobs/${fileName}`
         },{
             where:{
                 uuid: req.params.id
@@ -308,7 +311,7 @@ const updateJob = async(req, res) => {
                 },
             ]
         });
-        res.status(200).json({msg: "Job Updated Succesfully", imageChanged: imageChanged});
+        res.status(200).json({msg: "Job Updated Succesfully"});
     } catch (error) {
         console.log(error.message);
     }
@@ -346,7 +349,6 @@ const getJobsByRoleId = async(req, res) => {
                 }
             }
         });
-
         res.status(200).json(response);
     } catch (error) {
         res.status(400).json({ msg: error.message });
@@ -361,11 +363,8 @@ const getSaveUserJobIds = async(req, res) => {
             },
             attributes: ["JobId"]
         });
-
         jobIds = result.map((job) => job.JobId)
-
         response = [...new Set(jobIds)]
-
         res.status(200).json(response);
     } catch (error) {
         res.status(400).json({ msg: error.message });
@@ -386,7 +385,6 @@ const createUserJob = async(req, res) => {
 }
 
 const deleteUserJob = async (req, res) => {
-
     try {
         const {UserId, JobId} = req.body;
         const query = {
@@ -395,9 +393,7 @@ const deleteUserJob = async (req, res) => {
                 JobId: JobId
             }
         }
-  
         await UserJob.destroy(query);
-
         res.status(200).json({ msg: "UserJob deleted" });
     } catch (error) {
         res.status(400).json({ msg: error.message });
