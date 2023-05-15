@@ -22,7 +22,7 @@ const JobDetail = () => {
     const [Level, setLevel] = useState("")
     const [Education, setEducation] = useState("")
     const [createdAt, setCreatedAt] = useState("2022-03-30T10:30:00.000Z")
-    const [url, setUrl] = useState("")
+    const [imageUrl, setImageUrl] = useState("")
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ const JobDetail = () => {
         setRole(response.data.Role)
         setLevel(response.data.Level)
         setCreatedAt(response.data.createdAt)
-        setUrl(response.data.url)
+        setImageUrl(response.data.imageUrl)
     }
 
     const getJobsRoleById = async () => {
@@ -151,7 +151,7 @@ const JobDetail = () => {
                                         <div className="card">
                                             <div className="card-body">
                                                 <div className="d-flex justify-content-center">
-                                                    <img className='image rounded-circle' alt="Image" src={url} style={{width: "100px", height: "100px"}}/>
+                                                    <img className='image rounded-circle' alt="Image" src={imageUrl} style={{width: "100px", height: "100px"}}/>
                                                 </div>
                                                 <div className="mt-4">
                                                     <h6 className="fw-bold text-secondary">Deskripsi Perusahaan</h6>
@@ -169,7 +169,7 @@ const JobDetail = () => {
                                                 {jobsRoleByIds.map((lowongan) => (
                                                     <div key={lowongan.id} className='row'> 
                                                         <div className='col-3'>
-                                                            <img className='image rounded-circle' alt="Image" src={lowongan.url} style={{width: "60px", height: "60px"}}/>
+                                                            <img className='image rounded-circle' alt="Image" src={lowongan.imageUrl} style={{width: "60px", height: "60px"}}/>
                                                         </div>
                                                         <div className="col">
                                                             <Link onClick={() => window.location.href = `/jobs/detail/${lowongan.uuid}`} className="fw-bold text-secondary link-detail">{lowongan.titleCompanny}</Link>

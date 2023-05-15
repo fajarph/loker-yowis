@@ -100,7 +100,7 @@ const FormEditJobs = () => {
         setJobLongDescription(response.data.jobLongDescription)
         setIndustry(response.data.industry)
         setFile(response.data.image)
-        setPreview(response.data.url)
+        setPreview(response.data.imageUrl)
     }
 
     const getLocations = async () => {
