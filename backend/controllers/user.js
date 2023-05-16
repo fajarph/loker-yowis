@@ -1,6 +1,5 @@
 const { User } = require('../models')
 const argon2 = require('argon2')
-const fs = require("fs")
 const path = require("path")
 const {
     S3Client,
@@ -90,6 +89,9 @@ const updateUser = async(req, res) => {
                 console.log(err);
                 return res.status(500).json({msg: "Upload error" + err.message})
             }
+            imageUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/users/${fileName}`
+        } else {
+            imageUrl = user.imageUrl
         }
         const username = req.body.username
         const nohp = req.body.nohp
@@ -102,7 +104,7 @@ const updateUser = async(req, res) => {
             status: status,
             instagramUrl: instagramUrl,
             facebookUrl: facebookUrl,
-            imageUrl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/users/${fileName}`
+            imageUrl: imageUrl
         },{
             where:{
                 uuid: req.params.id
@@ -122,8 +124,6 @@ const deleteUser = async(req, res) => {
     });
     if(!user) return res.status(404).json({msg: "User Tidak Ditemukan"})
     try {
-        const filepath = `./public/users/${user.image}`
-        fs.unlinkSync(filepath)
         await User.destroy({
             where:{
                 id: user.id
