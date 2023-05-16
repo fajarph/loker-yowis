@@ -98,7 +98,6 @@ const Register = () => {
                     >
                         <option selected hidden>Select Role</option>
                         <option value="User">User</option>
-                        <option value="Admin">Admin</option>
                     </select>
                 </div>
                 {
