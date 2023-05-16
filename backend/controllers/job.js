@@ -1,6 +1,5 @@
 const {Job, UserJob, Location, Educations, Role, Level,} = require('../models')
 const path = require("path")
-const fs = require("fs")
 const { Op } = require('sequelize')
 const {
     S3Client,
@@ -211,6 +210,7 @@ const createJob = async(req, res) => {
         console.log(err);
         return res.status(500).json({msg: "Upload error" + err.message})
     }
+    imageUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/jobs/${fileName}`
     try {
         await Job.create({
             companyName: companyName,
@@ -224,7 +224,7 @@ const createJob = async(req, res) => {
             jobShortDescription: jobShortDescription,
             jobLongDescription: jobLongDescription,
             industry: industry,
-            imageUrl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/jobs/${fileName}`
+            imageUrl: imageUrl
         })
         res.status(201).json({msg: "Job Created Succesfully"})
     } catch (error) {
@@ -240,9 +240,7 @@ const updateJob = async(req, res) => {
     });
     if(!job) return res.status(404).json({msg: "Job Tidak Ditemukan"});
     let fileName
-    if(req.files === null){
-        fileName = job.image;
-    }else{
+    if(req.files && req.files.file){
         const s3Client = new S3Client(s3Config);
         const file = req.files.file;
         const fileSize = file.data.length;
@@ -262,6 +260,9 @@ const updateJob = async(req, res) => {
             console.log(err);
             return res.status(500).json({msg: "Upload error" + err.message})
         }
+        imageUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/jobs/${fileName}`
+    }else{
+        imageUrl = job.imageUrl
     }
     const companyName = req.body.companyName
     const titleCompanny = req.body.titleCompanny
@@ -287,7 +288,7 @@ const updateJob = async(req, res) => {
             jobShortDescription: jobShortDescription,
             jobLongDescription: jobLongDescription,
             industry: industry,
-            imageUrl: `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/jobs/${fileName}`
+            imageUrl: imageUrl
         },{
             where:{
                 uuid: req.params.id
@@ -325,8 +326,6 @@ const deleteJob = async(req, res) => {
     })
     if(!job) return res.status(404).json({msg: "No Data Found"})
     try {
-        const filepath = `./public/jobs/${job.image}`
-        fs.unlinkSync(filepath)
         await Job.destroy({
             where:{
                 uuid: req.params.id
